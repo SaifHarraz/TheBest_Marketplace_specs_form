@@ -1,0 +1,2611 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>أداة تصميم متجرك الإلكتروني وتحديد نطاق المرحلة الأولى | E-Commerce Scope Builder</title>
+  
+  <!-- Google Fonts: Cairo (Type scale defined in design system) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          },
+          boxShadow: {
+            'card': '0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.05)',
+            'card-hover': '0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05)',
+            'dialog': '0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.08)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* ========================================================
+       DESIGN SYSTEM CSS RULES
+       - Typography Scale:
+         * Page Title: 28-32px (font-semibold, tracking-tight)
+         * Section Heading: 22-24px (font-semibold)
+         * Card Heading: 16-18px (font-semibold)
+         * Body: 14-15px (font-normal, leading-relaxed)
+         * Form Labels: 13-14px (font-medium)
+         * Meta/Helpers: 12-13px
+         * Buttons: 14px (font-medium)
+       - Spacing Grid: 4, 8, 12, 16, 20, 24, 28, 32, 40, 48px
+       ======================================================== */
+    html, body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: #0f172a;
+      background-color: #f8fafc;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    /* Consistent custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Print Stylesheet */
+    @media print {
+      header, footer, nav, .no-print, button, input[type="file"], .sticky, #toast-container {
+        display: none !important;
+      }
+      body {
+        background: white !important;
+        color: black !important;
+        font-size: 10pt;
+      }
+      .print-page-break {
+        page-break-before: always;
+      }
+      #stage1-container, #stage2-container, #stage3-container, #stage4-container {
+        display: block !important;
+      }
+      .flowchart-canvas {
+        transform: scale(0.85) !important;
+        transform-origin: top center !important;
+        overflow: visible !important;
+      }
+    }
+
+    /* Flowchart Canvas background pattern */
+    .flowchart-wrapper {
+      user-select: none;
+      touch-action: pan-x pan-y;
+      background-size: 20px 20px;
+      background-image: radial-gradient(circle, #e2e8f0 1.2px, transparent 1.2px);
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col text-slate-900 bg-slate-50 selection:bg-blue-100 selection:text-blue-900 font-sans antialiased">
+
+  <!-- APP HEADER (Clean, Compact, Height 64px) -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 gap-x-4">
+        
+        <!-- Brand / Identity -->
+        <div class="flex items-center gap-x-3 min-w-0">
+          <div class="size-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+            <i data-lucide="store" class="size-5"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-x-2">
+              <h1 class="text-base font-bold text-slate-900 leading-tight truncate" id="header-app-title">
+                أداة تصميم متجرك الإلكتروني
+              </h1>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200 shrink-0" id="header-phase-badge">
+                المرحلة الأولى Phase 1
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 font-normal truncate hidden sm:block" id="header-subtitle">
+              تحديد المتطلبات، رحلة العميل، واعتماد النطاق
+            </p>
+          </div>
+        </div>
+
+        <!-- Header Actions: Counter, Autosave, Draft Menu, Language -->
+        <div class="flex items-center gap-x-2 sm:gap-x-3 shrink-0">
+          
+          <!-- Live Completed Counter Pill -->
+          <div id="header-progress-pill" class="hidden md:inline-flex items-center gap-x-1.5 px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
+            <span class="size-2 rounded-full bg-blue-600"></span>
+            <span id="header-progress-text">0/151 مكتمل</span>
+          </div>
+
+          <!-- Autosave Badge -->
+          <div id="autosave-indicator" class="hidden sm:inline-flex items-center gap-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 transition-opacity">
+            <i data-lucide="check" class="size-3.5 text-emerald-600"></i>
+            <span id="autosave-text">تم الحفظ محلياً</span>
+          </div>
+
+          <!-- Preline Dropdown: Draft & Project File Actions -->
+          <div class="relative inline-flex text-start" id="draft-menu-container">
+            <button type="button" onclick="toggleDraftMenu()" class="h-9 px-3 inline-flex items-center gap-x-2 text-xs font-medium rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <i data-lucide="folder-archive" class="size-3.5 text-slate-500"></i>
+              <span id="draft-menu-btn-label">المسودة والملف</span>
+              <i data-lucide="chevron-down" class="size-3 text-slate-400"></i>
+            </button>
+            <div id="draft-menu-dropdown" class="hidden absolute end-0 mt-2 w-56 bg-white border border-slate-200 rounded-xl shadow-dialog z-50 divide-y divide-slate-100 p-1">
+              <div class="py-1">
+                <button onclick="exportJSON(); closeDraftMenu();" class="flex items-center w-full px-3 py-2 text-xs font-medium text-slate-700 rounded-lg hover:bg-slate-50 gap-x-2.5">
+                  <i data-lucide="download" class="size-4 text-blue-600"></i>
+                  <span id="menu-export-label">تصدير ملف المشروع (JSON)</span>
+                </button>
+                <label class="flex items-center w-full px-3 py-2 text-xs font-medium text-slate-700 rounded-lg hover:bg-slate-50 gap-x-2.5 cursor-pointer">
+                  <i data-lucide="upload" class="size-4 text-emerald-600"></i>
+                  <span id="menu-import-label">استيراد ملف مشروع (JSON)</span>
+                  <input type="file" id="json-file-input" accept=".json" onchange="importJSON(event)" class="hidden">
+                </label>
+              </div>
+              <div class="py-1">
+                <button onclick="window.print(); closeDraftMenu();" class="flex items-center w-full px-3 py-2 text-xs font-medium text-slate-700 rounded-lg hover:bg-slate-50 gap-x-2.5">
+                  <i data-lucide="printer" class="size-4 text-slate-600"></i>
+                  <span id="menu-print-label">طباعة / حفظ كملف PDF</span>
+                </button>
+                <button onclick="openResetModal(); closeDraftMenu();" class="flex items-center w-full px-3 py-2 text-xs font-medium text-rose-600 rounded-lg hover:bg-rose-50 gap-x-2.5">
+                  <i data-lucide="rotate-ccw" class="size-4 text-rose-600"></i>
+                  <span id="menu-reset-label">إعادة ضبط المشروع والبدء من جديد</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bilingual Switcher Button -->
+          <button type="button" onclick="toggleLanguage()" class="h-9 px-3 inline-flex items-center gap-x-2 text-xs font-semibold rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <i data-lucide="languages" class="size-3.5 text-slate-500"></i>
+            <span id="lang-toggle-text">English</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- STEPPER NAVIGATION (Standard Height & Proportions) -->
+  <nav class="bg-white border-b border-slate-200 sticky top-16 z-30 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
+      <div id="stage-stepper-container" class="flex items-center justify-between overflow-x-auto gap-x-2 scrollbar-none">
+        <!-- Rendered via renderStepper() -->
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTEXT NOTICE BANNER -->
+  <div class="bg-blue-50/70 border-b border-blue-100 py-2 px-4 no-print">
+    <div class="max-w-7xl mx-auto flex items-center justify-between text-xs text-blue-900 gap-x-3">
+      <div class="flex items-center gap-x-2 min-w-0">
+        <i data-lucide="info" class="size-4 text-blue-600 shrink-0"></i>
+        <span id="banner-privacy-notice" class="truncate font-medium">
+          ملاحظة: تُحفظ هذه البيانات محلياً داخل متصفحك الحالي تلقائياً. عند الانتهاء من المراجعة يمكنك إرسال المتطلبات مباشرة أو تصديرها كملف.
+        </span>
+      </div>
+      <div class="hidden md:flex items-center gap-x-2 shrink-0 font-medium">
+        <span class="text-blue-700 font-normal">البراند:</span>
+        <span id="banner-brand-preview" class="font-bold text-blue-950 font-mono">لم يحدد بعد</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTAINER (Sensible Max Width: max-w-7xl, Centered, Consistent Padding) -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-9">
+    
+    <!-- STAGE 1: Contact & Business Information -->
+    <section id="stage1-container" class="space-y-7">
+      <!-- Injected by renderStage1() -->
+    </section>
+
+    <!-- STAGE 2: Customer Journey Tree -->
+    <section id="stage2-container" class="space-y-7 hidden">
+      <!-- Injected by renderStage2() -->
+    </section>
+
+    <!-- STAGE 3: Feature Catalog -->
+    <section id="stage3-container" class="space-y-7 hidden">
+      <!-- Injected by renderStage3() -->
+    </section>
+
+    <!-- STAGE 4: Review, Confirmation & Submission -->
+    <section id="stage4-container" class="space-y-7 hidden">
+      <!-- Injected by renderStage4() -->
+    </section>
+
+  </main>
+
+  <!-- MODAL: Node Details -->
+  <div id="node-detail-modal" class="fixed inset-0 z-50 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-center justify-center min-h-screen p-4 text-center sm:p-0">
+      <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs transition-opacity" onclick="closeNodeModal()"></div>
+      <div class="inline-block align-bottom bg-white rounded-xl text-start overflow-hidden shadow-dialog transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-slate-200">
+        <div class="p-6 space-y-4" id="node-modal-content">
+          <!-- Dynamic details injected here -->
+        </div>
+        <div class="bg-slate-50 border-t border-slate-200 px-6 py-3 flex justify-end">
+          <button type="button" onclick="closeNodeModal()" class="h-9 px-4 inline-flex items-center text-xs font-semibold rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50" id="node-modal-close-btn">
+            إغلاق
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Dependency Warning -->
+  <div id="dependency-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs" onclick="closeDependencyModal()"></div>
+      <div class="relative bg-white rounded-xl max-w-md w-full p-6 shadow-dialog space-y-4 border border-slate-200">
+        <div class="flex items-center gap-x-3">
+          <div class="size-9 rounded-lg bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center shrink-0">
+            <i data-lucide="alert-triangle" class="size-5"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm" id="dep-modal-title">تنبيه اعتمادية الميزة</h3>
+            <p class="text-xs text-slate-500" id="dep-modal-subtitle">الميزة تتطلب تفعيل ميزات داعمة أخرى</p>
+          </div>
+        </div>
+        <div id="dep-modal-content" class="text-xs text-slate-600 leading-relaxed space-y-3">
+          <!-- Injected dynamic message -->
+        </div>
+        <div class="flex items-center justify-end gap-x-2 pt-3 border-t border-slate-100" id="dep-modal-actions">
+          <button type="button" onclick="closeDependencyModal()" class="h-9 px-3.5 inline-flex items-center text-xs font-medium rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50" id="dep-modal-close-btn">
+            تخطي
+          </button>
+          <button type="button" id="dep-auto-enable-btn" class="h-9 px-4 inline-flex items-center text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow-sm">
+            تفعيل الاعتماديات المطلوبة
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Reset Confirmation -->
+  <div id="reset-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs" onclick="closeResetModal()"></div>
+      <div class="relative bg-white rounded-xl max-w-md w-full p-6 shadow-dialog space-y-4 border border-slate-200">
+        <div class="flex items-center gap-x-3">
+          <div class="size-9 rounded-lg bg-rose-50 text-rose-600 border border-rose-200 flex items-center justify-center shrink-0">
+            <i data-lucide="trash-2" class="size-5"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm" id="reset-modal-title">تأكيد إعادة ضبط المشروع</h3>
+            <p class="text-xs text-slate-500" id="reset-modal-subtitle">سيتم مسح جميع الإدخالات والخيارات المحفوظة</p>
+          </div>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed" id="reset-modal-desc">
+          هل أنت متأكد من رغبتك في مسح كافة الخيارات المسجلة والبدء من جديد؟ لا يمكن التراجع عن هذا الإجراء بعد تنفيذه.
+        </p>
+        <div class="flex justify-end gap-x-2 pt-3 border-t border-slate-100">
+          <button type="button" onclick="closeResetModal()" class="h-9 px-3.5 inline-flex items-center text-xs font-medium rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50" id="reset-cancel-btn">
+            إلغاء
+          </button>
+          <button type="button" onclick="confirmResetProject()" class="h-9 px-4 inline-flex items-center text-xs font-semibold rounded-lg bg-rose-600 text-white hover:bg-rose-700 shadow-sm" id="reset-confirm-btn">
+            تأكيد المسح والبدء من جديد
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="fixed bottom-5 end-5 z-50 flex flex-col gap-y-2 max-w-sm pointer-events-none no-print">
+    <!-- Injected via showToast() -->
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-16 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-y-2">
+      <div class="flex items-center gap-x-2">
+        <span class="size-2 rounded-full bg-blue-600"></span>
+        <span id="footer-text">أداة تحديد متطلبات المتجر الإلكتروني للمرحلة الأولى — مصممة لمواءمة الرؤية التجارية مع التنفيذ البرمجي الدقيق.</span>
+      </div>
+      <p class="text-slate-400 font-mono text-xs shrink-0" id="footer-storage-note">
+        جميع البيانات محفوظة بأمان محلياً في المتصفح.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Preline UI Plugin Script -->
+  <script src="https://cdn.jsdelivr.net/npm/preline@2.4.1/dist/preline.min.js"></script>
+
+  <!-- APPLICATION LOGIC & DATA -->
+  <script>
+    // -------------------------------------------------------------
+    // CONFIGURATION
+    // -------------------------------------------------------------
+    const WEB3FORMS_ACCESS_KEY = "4b12636d-dae7-4f07-b6c0-6eed2a57153c";
+    const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+    const APP_SCHEMA_VERSION = "1.0.0";
+    const STORAGE_KEY = "ecommerce_scope_builder_data_v1";
+
+    // Injected Data Objects
+    const FEATURES = /* __FEATURES_DATA__ */;
+    const CATEGORIES = /* __CATEGORIES_DATA__ */;
+    const JOURNEY_NODES = /* __JOURNEY_NODES__ */;
+
+    // -------------------------------------------------------------
+    // CENTRAL STATE
+    // -------------------------------------------------------------
+    let state = {
+      language: "ar", // 'ar' or 'en'
+      currentStage: 1, // 1 to 4
+      
+      // Contact & Business Information
+      clientInfo: {
+        clientName: "",
+        clientEmail: "",
+        clientPhone: "",
+        brandName: "",
+        industry: "",
+        businessDesc: "",
+        targetAudience: "",
+        mainGoal: "",
+        expectedProducts: "20-100",
+        expectedCategories: "3-8",
+        preferredLanguage: "both",
+        additionalNotes: ""
+      },
+
+      // Feature selections: { [featureId]: 'required' | 'optional' | 'not_needed' | 'undecided' }
+      selections: {},
+
+      // Custom requirements
+      customRequirements: [],
+
+      // Confirmation checkbox on Stage 4
+      confirmed: false,
+
+      // Submission status tracking
+      submissionState: "ready", // 'ready', 'submitting', 'success', 'failure'
+      lastSubmissionTimestamp: null,
+      lastSubmissionError: null,
+      lastSavedTimestamp: null,
+
+      // Journey Interactive View Controls
+      journeyZoom: 1,
+      selectedNodeId: null
+    };
+
+    // -------------------------------------------------------------
+    // TRANSLATIONS DICTIONARY
+    // -------------------------------------------------------------
+    const I18N = {
+      ar: {
+        appTitle: "أداة تصميم متجرك الإلكتروني",
+        appSubtitle: "تحديد المتطلبات، رحلة العميل، واعتماد النطاق",
+        phaseBadge: "المرحلة الأولى Phase 1",
+        draftMenuBtn: "المسودة والملف",
+        exportJSON: "تصدير ملف المشروع (JSON)",
+        importJSON: "استيراد ملف مشروع (JSON)",
+        printPDF: "طباعة / حفظ كملف PDF",
+        resetProject: "إعادة ضبط المشروع والبدء من جديد",
+        savedLocally: "تم الحفظ محلياً",
+        saving: "جاري الحفظ...",
+        privacyNotice: "ملاحظة: تُحفظ هذه البيانات محلياً داخل متصفحك الحالي تلقائياً. عند الانتهاء من المراجعة يمكنك إرسال المتطلبات مباشرة أو تصديرها كملف.",
+        stage1Title: "1. بيانات النشاط والتواصل",
+        stage2Title: "2. رحلة العميل التفاعلية",
+        stage3Title: "3. كتالوج الميزات والخصائص",
+        stage4Title: "4. المراجعة وتأكيد الطلب",
+        
+        // Stage 1
+        s1HeroHeading: "تحديد بيانات النشاط ونطاق المشروع",
+        s1HeroSub: "سجّل بيانات علامتك التجارية والجمهور المستهدف لتحديد معمارية المتجر وخيارات الإطلاق المناسبة.",
+        s1ScopeNotice: "تنبيه هام: يغطي هذا التخطيط متجر علامتك التجارية الخاص المستقل في المرحلة الأولى، ولا يشمل منصات الأسواق متعددة البائعين (Multi-vendor Marketplace).",
+        contactHeading: "بيانات التواصل الأساسية",
+        contactSub: "بيانات للتواصل وتلقي نسخة متطلبات مشروعك الرسمية.",
+        clientNameLabel: "اسم العميل / المسؤول *",
+        clientNamePlace: "مثال: أحمد محمد",
+        clientEmailLabel: "البريد الإلكتروني *",
+        clientEmailPlace: "name@company.com",
+        brandNameLabel: "اسم النشاط التجاري أو البراند *",
+        brandNamePlace: "مثال: لمسة عصرية للأزياء",
+        clientPhoneLabel: "رقم الهاتف / واتساب (اختياري)",
+        clientPhonePlace: "مثال: 01012345678",
+        businessSectionHeading: "معلومات المتجر والرؤية التجارية",
+        industryLabel: "مجال العمل / النشاط",
+        industryPlace: "مثال: ملابس، إلكترونيات، مستحضرات تجميل، أثاث",
+        businessDescLabel: "نبذة عن النشاط والمنتجات",
+        businessDescPlace: "وصف موجز لطبيعة المنتجات والخدمة المقدمة للعملاء...",
+        targetAudienceLabel: "الجمهور المستهدف",
+        targetAudiencePlace: "مثال: شباب وبنات يبحثون عن خامات قطنية ممتازة وتوصيل سريع",
+        mainGoalLabel: "الهدف الرئيسي من إطلاق المتجر",
+        mainGoalPlace: "مثال: نقل المبيعات من منصات التواصل الاجتماعي لمتجر رسمي وتسهيل الطلب والدفع الآلي",
+        expectedProductsLabel: "عدد المنتجات المتوقع عند الإطلاق",
+        expectedCategoriesLabel: "عدد الأقسام والتصنيفات المتوقعة",
+        launchLangLabel: "لغة إطلاق المتجر الأساسية",
+        launchLangAr: "العربية فقط",
+        launchLangEn: "الإنجليزية فقط",
+        launchLangBoth: "كلا اللغتين (عربي وإنجليزي - موصى به)",
+        notesLabel: "ملاحظات وتطلعات إضافية",
+        notesPlace: "أي أفكار خاصة أو مواعيد إطلاق مفضلة...",
+        btnNextToJourney: "متابعة إلى رحلة العميل التفاعلية ←",
+        
+        // Stage 2: Journey
+        s2Heading: "شجرة رحلة العميل التفاعلية (Customer Journey)",
+        s2Sub: "مخطط تفاعلي مباشر يوضح تجربة المشتري خطوة بخطوة من لحظة فتح المتجر وحتى إتمام الشراء، ويتحدث تلقائياً طبقاً للميزات التي تختارها.",
+        zoomIn: "تكبير",
+        zoomOut: "تصغير",
+        fitScreen: "استعادة الحجم",
+        filterAll: "كافة المحطات",
+        nodeLegendAction: "إجراء من العميل",
+        nodeLegendPage: "صفحة بالمتجر",
+        nodeLegendDecision: "نقطة تفريع وقرار",
+        nodeLegendSystem: "إجراء تقني تلقائي",
+        nodeLegendAlt: "مسار بديل أو معالجة",
+        nodeStatusIncluded: "مشمول بالمسار",
+        nodeStatusOptional: "اختياري",
+        nodeStatusExcluded: "مستبعد",
+        nodeClickHint: "انقر على أي محطة للاطلاع على تفاصيلها وربطها بالميزات.",
+        btnPrevToStage1: "← العودة لمعلومات النشاط",
+        btnNextToFeatures: "متابعة إلى كتالوج الميزات ←",
+
+        // Stage 3: Features
+        s3Heading: "كتالوج ميزات وإمكانيات المتجر",
+        s3Sub: "اختر درجة أولوية كل ميزة لتحديد نطاق المرحلة الأولى بدقة. تتحدث رحلة العميل والإحصائيات مباشرة مع كل تغيير.",
+        searchPlace: "ابحث في الميزات بالاسم أو الوصف (عربي أو إنجليزي)...",
+        filterAllCats: "كافة الأقسام (12 قسم)",
+        filterJourneyOnly: "ميزات تؤثر على رحلة العميل فقط",
+        statusRequired: "مطلوب (Required)",
+        statusOptional: "اختياري (Optional)",
+        statusNotNeeded: "غير مطلوب (Excluded)",
+        statusUndecided: "لم يحدد (Undecided)",
+        priorityRequired: "مطلوب",
+        priorityOptional: "اختياري",
+        priorityNotNeeded: "غير مطلوب",
+        priorityUndecided: "لم يحدد",
+        expandAll: "توسيع الكل",
+        collapseAll: "طي الكل",
+        resetCategory: "إعادة ضبط القسم",
+        customReqHeading: "متطلبات وأفكار إضافية خاصة بنشاطك",
+        customReqSub: "أضف أي متطلب أو ميزة خاصة لم تذكر في الكتالوج أعلاه.",
+        customNamePlace: "اسم الميزة أو الفكرة المطلوبة...",
+        customDescPlace: "اشرح الفكرة بأسلوبك والسبب التجاري من طلبها...",
+        customPriority: "الأولوية",
+        customAddBtn: "+ إضافة المتطلب المخصص",
+        noCustomYet: "لا توجد متطلبات مخصصة مضافة حتى الآن.",
+        btnPrevToJourney: "← العودة لشجرة رحلة العميل",
+        btnNextToReview: "متابعة إلى المراجعة وتأكيد النطاق ←",
+
+        // Stage 4: Review
+        s4Heading: "مراجعة وتأكيد نطاق متطلبات المتجر (المرحلة الأولى)",
+        s4Sub: "راجع ملخص اختياراتك، وتأكد من توازن المتطلبات وتوافق الاعتماديات قبل الحفظ النهائي أو الإرسال.",
+        clientSummaryCard: "ملخص العميل والمشروع",
+        statsSummaryCard: "إحصائيات الميزات المختارة",
+        depWarningsTitle: "تنبيهات وملاحظات على الاعتماديات المتبادلة",
+        noDepWarnings: "جميع الميزات المختارة متوافقة تماماً ولا توجد تعارضات أو اعتماديات مفقودة.",
+        journeyReviewTitle: "المحطات النشطة في رحلة العميل بعد اختياراتك",
+        confirmationCheckboxText: "أؤكد أن هذه الاختيارات تعبّر عن متطلباتي المبدئية للمرحلة الأولى، وأن النطاق النهائي والتكلفة والمدة سيتم تأكيدها بشكل منفصل.",
+        btnSubmitFinal: "حفظ الاختيارات وإرسال المتطلبات عبر البريد",
+        btnRetrySubmit: "إعادة محاولة الإرسال",
+        missingAccessKeyMsg: "تنبيه للمطور: يرجى وضع مفتاح Web3Forms Access Key في ملف الكود (WEB3FORMS_ACCESS_KEY) لإرسال البيانات إلى بريدك الإلكتروني.",
+        btnExportDraftOnly: "حفظ مسودة محلية وتصدير JSON",
+        submittingNotice: "جاري إرسال المتطلبات والتحقق من الاستجابة...",
+        submitSuccessMsg: "تم إرسال متطلبات المشروع بنجاح! شكرًا لوقتك، وسيتم مراجعة الاختيارات وإعداد نطاق العمل والمدة والتكلفة المقترحة.",
+        submitFailMsg: "لم نتمكن من إرسال المتطلبات حالياً. اختياراتك محفوظة على هذا الجهاز، ويمكنك المحاولة مرة أخرى أو تصدير ملف JSON.",
+        requiredValidationWarning: "يرجى تعبئة الحقول الأساسية الإلزامية (اسم العميل، البريد، اسم البراند) والتأشير على مربع التأكيد للمتابعة."
+      },
+      en: {
+        appTitle: "E-Commerce Scope & Journey Builder",
+        appSubtitle: "Requirements Discovery, Customer Journey & Phase 1 Scope",
+        phaseBadge: "Phase 1 Scope",
+        draftMenuBtn: "Draft & Files",
+        exportJSON: "Export Project File (JSON)",
+        importJSON: "Import Project File (JSON)",
+        printPDF: "Print / Save as PDF",
+        resetProject: "Reset Project & Start Fresh",
+        savedLocally: "Saved locally",
+        saving: "Saving...",
+        privacyNotice: "Note: Data is automatically preserved in your current browser session. Upon review completion, you can submit directly or export as JSON.",
+        stage1Title: "1. Contact & Brand Info",
+        stage2Title: "2. Customer Journey Tree",
+        stage3Title: "3. Feature Catalog",
+        stage4Title: "4. Review & Confirmation",
+        
+        // Stage 1
+        s1HeroHeading: "Store Profile & Strategic Scope",
+        s1HeroSub: "Enter your brand details and target customer audience to align on the technical requirements for Phase 1.",
+        s1ScopeNotice: "Important Scope Note: This specification applies to your brand's dedicated online storefront in Phase 1, excluding multi-vendor marketplace functionality.",
+        contactHeading: "Contact Details",
+        contactSub: "Direct touchpoint details for receiving your official scope proposal.",
+        clientNameLabel: "Client / Owner Name *",
+        clientNamePlace: "e.g. John Doe",
+        clientEmailLabel: "Email Address *",
+        clientEmailPlace: "name@company.com",
+        brandNameLabel: "Business / Brand Name *",
+        brandNamePlace: "e.g. Urban Threads Apparel",
+        clientPhoneLabel: "Phone / WhatsApp (Optional)",
+        clientPhonePlace: "e.g. +20 101 234 5678",
+        businessSectionHeading: "Store Profile & Commercial Vision",
+        industryLabel: "Industry / Sector",
+        industryPlace: "e.g. Fashion, Electronics, Cosmetics, Furniture",
+        businessDescLabel: "Brief Business Overview",
+        businessDescPlace: "Short summary of your product offerings and customer promise...",
+        targetAudienceLabel: "Target Audience",
+        targetAudiencePlace: "e.g. Urban shoppers looking for premium cotton apparel and quick delivery",
+        mainGoalLabel: "Primary Goal for Phase 1",
+        mainGoalPlace: "e.g. Move from social media messaging orders to an automated branded store",
+        expectedProductsLabel: "Expected SKU Count at Launch",
+        expectedCategoriesLabel: "Expected Product Categories Count",
+        launchLangLabel: "Primary Storefront Launch Language",
+        launchLangAr: "Arabic Only",
+        launchLangEn: "English Only",
+        launchLangBoth: "Both Arabic & English (Recommended)",
+        notesLabel: "Additional Notes & Expectations",
+        notesPlace: "Any specific ideas, preferred target launch dates, or notes...",
+        btnNextToJourney: "Proceed to Customer Journey Flowchart →",
+        
+        // Stage 2: Journey
+        s2Heading: "Interactive Customer Journey Tree",
+        s2Sub: "A live, visual flowchart mapping customer interactions from initial store arrival to final order fulfillment, dynamically reacting to your selected features.",
+        zoomIn: "Zoom In",
+        zoomOut: "Zoom Out",
+        fitScreen: "Reset View",
+        filterAll: "All Stages",
+        nodeLegendAction: "Customer Action",
+        nodeLegendPage: "Storefront Page",
+        nodeLegendDecision: "Decision / Branch",
+        nodeLegendSystem: "Automated System Step",
+        nodeLegendAlt: "Alternative / Recovery",
+        nodeStatusIncluded: "Active in Journey",
+        nodeStatusOptional: "Optional Enhancement",
+        nodeStatusExcluded: "Excluded",
+        nodeClickHint: "Click any journey milestone to inspect details and connected feature modules.",
+        btnPrevToStage1: "← Back to Business Info",
+        btnNextToFeatures: "Proceed to Feature Catalog →",
+
+        // Stage 3: Features
+        s3Heading: "Complete E-Commerce Feature Catalog",
+        s3Sub: "Select priority tiers for each feature to sculpt your Phase 1 store scope. The customer journey flowchart and project metrics synchronize in real time.",
+        searchPlace: "Search features by keyword in Arabic or English...",
+        filterAllCats: "All Categories (12)",
+        filterJourneyOnly: "Affects Customer Journey Only",
+        statusRequired: "Required",
+        statusOptional: "Optional",
+        statusNotNeeded: "Not Needed",
+        statusUndecided: "Undecided",
+        priorityRequired: "Required",
+        priorityOptional: "Optional",
+        priorityNotNeeded: "Excluded",
+        priorityUndecided: "Undecided",
+        expandAll: "Expand All",
+        collapseAll: "Collapse All",
+        resetCategory: "Reset Category",
+        customReqHeading: "Custom Business Requirements",
+        customReqSub: "Add bespoke capabilities or workflows tailored specifically to your operation.",
+        customNamePlace: "Feature or requirement name...",
+        customDescPlace: "Explain the workflow and business justification...",
+        customPriority: "Priority",
+        customAddBtn: "+ Add Custom Requirement",
+        noCustomYet: "No custom requirements added yet.",
+        btnPrevToJourney: "← Back to Journey Tree",
+        btnNextToReview: "Proceed to Final Review →",
+
+        // Stage 4: Review
+        s4Heading: "Review & Confirmation of Phase 1 Scope",
+        s4Sub: "Examine the finalized requirements breakdown, verify dependency warnings, and submit or export your specifications.",
+        clientSummaryCard: "Client & Project Summary",
+        statsSummaryCard: "Selected Features Metrics",
+        depWarningsTitle: "Interdependency Notifications & Suggestions",
+        noDepWarnings: "All selected features are harmoniously aligned without missing prerequisites.",
+        journeyReviewTitle: "Active Customer Journey Milestones",
+        confirmationCheckboxText: "I confirm that these selections represent my initial Phase 1 specifications, and that final pricing, SLA, and timeline will be validated separately.",
+        btnSubmitFinal: "Save Selections & Submit Requirements by Email",
+        btnRetrySubmit: "Retry Submission",
+        missingAccessKeyMsg: "Developer Notice: Please configure your Web3Forms Access Key in the code (WEB3FORMS_ACCESS_KEY) to receive client submissions by email.",
+        btnExportDraftOnly: "Save Draft & Export JSON",
+        submittingNotice: "Transmitting requirements to project desk...",
+        submitSuccessMsg: "Project requirements submitted successfully! Thank you. We will review your selections and assemble the detailed scope, timeline, and estimation.",
+        submitFailMsg: "We could not transmit your submission right now. Your selections are safely preserved locally on this device, and you can retry or export as JSON.",
+        requiredValidationWarning: "Please fill in all required fields (Client Name, Email, Brand Name) and check the confirmation box to proceed."
+      }
+    };
+
+    function t(key) {
+      const lang = state.language || 'ar';
+      return (I18N[lang] && I18N[lang][key]) || (I18N['ar'] && I18N['ar'][key]) || key;
+    }
+
+    // -------------------------------------------------------------
+    // INITIALIZATION & STORAGE
+    // -------------------------------------------------------------
+    function initApp() {
+      FEATURES.forEach(f => {
+        state.selections[f.id] = f.defaultStatus || "undecided";
+      });
+
+      loadFromLocalStorage();
+      applyLanguageDirection();
+      renderStepper();
+      renderCurrentStage();
+      updateHeaderProgress();
+      refreshUI();
+      setupAutosaveListener();
+    }
+
+    function applyLanguageDirection() {
+      const isAr = state.language === "ar";
+      document.documentElement.lang = isAr ? "ar" : "en";
+      document.documentElement.dir = isAr ? "rtl" : "ltr";
+      
+      const langBtn = document.getElementById("lang-toggle-text");
+      if (langBtn) langBtn.textContent = isAr ? "English" : "العربية";
+
+      const appTitle = document.getElementById("header-app-title");
+      if (appTitle) appTitle.textContent = t("appTitle");
+      const appSubtitle = document.getElementById("header-subtitle");
+      if (appSubtitle) appSubtitle.textContent = t("appSubtitle");
+      const phaseBadge = document.getElementById("header-phase-badge");
+      if (phaseBadge) phaseBadge.textContent = t("phaseBadge");
+      const draftMenuLabel = document.getElementById("draft-menu-btn-label");
+      if (draftMenuLabel) draftMenuLabel.textContent = t("draftMenuBtn");
+      const menuExport = document.getElementById("menu-export-label");
+      if (menuExport) menuExport.textContent = t("exportJSON");
+      const menuImport = document.getElementById("menu-import-label");
+      if (menuImport) menuImport.textContent = t("importJSON");
+      const menuPrint = document.getElementById("menu-print-label");
+      if (menuPrint) menuPrint.textContent = t("printPDF");
+      const menuReset = document.getElementById("menu-reset-label");
+      if (menuReset) menuReset.textContent = t("resetProject");
+      const autosaveText = document.getElementById("autosave-text");
+      if (autosaveText) autosaveText.textContent = t("savedLocally");
+      const privacyNotice = document.getElementById("banner-privacy-notice");
+      if (privacyNotice) privacyNotice.textContent = t("privacyNotice");
+      const bannerBrand = document.getElementById("banner-brand-preview");
+      if (bannerBrand) bannerBrand.textContent = state.clientInfo.brandName || (isAr ? "لم يحدد بعد" : "Not specified yet");
+    }
+
+    function toggleLanguage() {
+      state.language = state.language === "ar" ? "en" : "ar";
+      applyLanguageDirection();
+      renderStepper();
+      renderCurrentStage();
+      updateHeaderProgress();
+      saveToLocalStorage();
+      refreshUI();
+    }
+
+    function saveToLocalStorage() {
+      try {
+        state.lastSavedTimestamp = new Date().toISOString();
+        const payload = {
+          version: APP_SCHEMA_VERSION,
+          savedAt: state.lastSavedTimestamp,
+          language: state.language,
+          currentStage: state.currentStage,
+          clientInfo: state.clientInfo,
+          selections: state.selections,
+          customRequirements: state.customRequirements,
+          confirmed: state.confirmed,
+          lastSubmissionTimestamp: state.lastSubmissionTimestamp,
+          lastSubmissionError: state.lastSubmissionError
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        showAutosaveBadge();
+        updateHeaderProgress();
+      } catch (err) {
+        console.warn("Storage write error:", err);
+      }
+    }
+
+    function loadFromLocalStorage() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const data = JSON.parse(raw);
+        if (data && data.version) {
+          if (data.language) state.language = data.language;
+          if (data.currentStage) state.currentStage = data.currentStage;
+          if (data.clientInfo) state.clientInfo = Object.assign(state.clientInfo, data.clientInfo);
+          if (data.selections) state.selections = Object.assign(state.selections, data.selections);
+          if (Array.isArray(data.customRequirements)) state.customRequirements = data.customRequirements;
+          if (typeof data.confirmed === "boolean") state.confirmed = data.confirmed;
+          if (data.lastSubmissionTimestamp) state.lastSubmissionTimestamp = data.lastSubmissionTimestamp;
+          if (data.lastSubmissionError) state.lastSubmissionError = data.lastSubmissionError;
+        }
+      } catch (err) {
+        console.warn("Storage read error:", err);
+      }
+    }
+
+    function showAutosaveBadge() {
+      const badge = document.getElementById("autosave-indicator");
+      if (!badge) return;
+      badge.classList.remove("hidden", "opacity-50");
+      setTimeout(() => {
+        badge.classList.add("opacity-50");
+      }, 1500);
+    }
+
+    function updateHeaderProgress() {
+      const progressText = document.getElementById("header-progress-text");
+      if (!progressText) return;
+      const stats = getCatalogStats();
+      const decidedCount = stats.required + stats.optional + stats.not_needed;
+      const total = FEATURES.length;
+      progressText.textContent = `${decidedCount}/${total} ${state.language === 'ar' ? 'مكتمل' : 'configured'}`;
+    }
+
+    function setupAutosaveListener() {
+      window.addEventListener("beforeunload", () => {
+        saveToLocalStorage();
+      });
+    }
+
+    function refreshUI() {
+      if (window.lucide && typeof window.lucide.createIcons === "function") {
+        window.lucide.createIcons();
+      }
+      if (window.HSStaticMethods && typeof window.HSStaticMethods.autoInit === "function") {
+        window.HSStaticMethods.autoInit();
+      }
+    }
+
+    // -------------------------------------------------------------
+    // NAVIGATION & STEPPER (Consistent Height, Clean Padding)
+    // -------------------------------------------------------------
+    function setStage(stageNumber) {
+      if (stageNumber < 1 || stageNumber > 4) return;
+      state.currentStage = stageNumber;
+      saveToLocalStorage();
+      renderStepper();
+      renderCurrentStage();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderStepper() {
+      const container = document.getElementById("stage-stepper-container");
+      if (!container) return;
+
+      const isAr = state.language === "ar";
+      const stages = [
+        { num: 1, title: isAr ? "بيانات النشاط" : "Store Profile", sub: isAr ? "الرؤية والتواصل" : "Touchpoints & Scope" },
+        { num: 2, title: isAr ? "رحلة العميل" : "Customer Journey", sub: isAr ? "المسارات التفاعلية" : "Interactive Flow" },
+        { num: 3, title: isAr ? "كتالوج الميزات" : "Feature Catalog", sub: isAr ? "الأولويات والتفاصيل" : "151 Features" },
+        { num: 4, title: isAr ? "المراجعة والاعتماد" : "Review & Scope", sub: isAr ? "التأكيد والإرسال" : "Sign-off & Submit" }
+      ];
+
+      container.innerHTML = stages.map((st, idx) => {
+        const isActive = state.currentStage === st.num;
+        const isPassed = state.currentStage > st.num;
+
+        let badgeClasses = "bg-slate-100 text-slate-700 border-slate-300";
+        let titleClasses = "text-slate-600 font-medium";
+        let subClasses = "text-slate-400";
+        let cardBg = "hover:bg-slate-50 border-transparent";
+        
+        if (isActive) {
+          badgeClasses = "bg-blue-600 text-white border-blue-600 shadow-sm";
+          titleClasses = "text-blue-600 font-bold";
+          subClasses = "text-blue-500 font-medium";
+          cardBg = "bg-blue-50/60 border-blue-200";
+        } else if (isPassed) {
+          badgeClasses = "bg-emerald-600 text-white border-emerald-600";
+          titleClasses = "text-slate-900 font-semibold";
+          subClasses = "text-slate-500";
+        }
+
+        return `
+          <button type="button" onclick="setStage(${st.num})" class="flex items-center gap-x-3 py-2 px-3 rounded-lg border text-start transition min-w-[190px] shrink-0 ${cardBg}">
+            <span class="size-8 flex justify-center items-center shrink-0 rounded-full border text-xs font-bold ${badgeClasses}">
+              ${isPassed ? '<i data-lucide="check" class="size-4"></i>' : st.num}
+            </span>
+            <div class="min-w-0">
+              <span class="block text-sm leading-tight truncate ${titleClasses}">
+                ${st.title}
+              </span>
+              <span class="block text-xs truncate ${subClasses}">
+                ${st.sub}
+              </span>
+            </div>
+            ${idx < stages.length - 1 ? '<div class="hidden lg:block ms-auto w-5 h-px bg-slate-200"></div>' : ''}
+          </button>
+        `;
+      }).join('');
+
+      refreshUI();
+    }
+
+    function renderCurrentStage() {
+      const s1 = document.getElementById("stage1-container");
+      const s2 = document.getElementById("stage2-container");
+      const s3 = document.getElementById("stage3-container");
+      const s4 = document.getElementById("stage4-container");
+
+      if (s1) s1.classList.toggle("hidden", state.currentStage !== 1);
+      if (s2) s2.classList.toggle("hidden", state.currentStage !== 2);
+      if (s3) s3.classList.toggle("hidden", state.currentStage !== 3);
+      if (s4) s4.classList.toggle("hidden", state.currentStage !== 4);
+
+      if (state.currentStage === 1) renderStage1();
+      else if (state.currentStage === 2) renderStage2();
+      else if (state.currentStage === 3) renderStage3();
+      else if (state.currentStage === 4) renderStage4();
+
+      refreshUI();
+    }
+
+    // -------------------------------------------------------------
+    // STAGE 1: BUSINESS & CONTACT INFORMATION
+    // -------------------------------------------------------------
+    function renderStage1() {
+      const container = document.getElementById("stage1-container");
+      if (!container) return;
+
+      const info = state.clientInfo;
+      const isAr = state.language === "ar";
+
+      container.innerHTML = `
+        <!-- Section Header (Typography Scale: 24px semibold heading, 14-15px body) -->
+        <div class="border-b border-slate-200 pb-5">
+          <div class="flex items-center gap-x-2 mb-2 text-slate-500 text-xs font-semibold uppercase tracking-wider">
+            <span class="py-0.5 px-2 rounded bg-slate-100 text-slate-700">01</span>
+            <span>/</span>
+            <span>${isAr ? "بيانات النشاط والمشروع" : "Project Profile & Touchpoints"}</span>
+          </div>
+          <h2 class="text-2xl sm:text-[26px] font-semibold text-slate-900 leading-snug tracking-tight">
+            ${t("s1HeroHeading")}
+          </h2>
+          <p class="text-slate-600 text-sm sm:text-[15px] mt-1.5 max-w-3xl leading-relaxed">
+            ${t("s1HeroSub")}
+          </p>
+          <div class="mt-3 inline-flex items-center gap-x-2 py-2 px-3 rounded-lg bg-amber-50 text-amber-900 text-xs border border-amber-200">
+            <i data-lucide="alert-circle" class="size-4 text-amber-600 shrink-0"></i>
+            <span>${t("s1ScopeNotice")}</span>
+          </div>
+        </div>
+
+        <!-- Form Cards Grid (Card Padding: 20-24px, Column Gap: 24px) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- Contact Details (5 cols) -->
+          <div class="lg:col-span-5 bg-white border border-slate-200 rounded-xl p-5 sm:p-6 shadow-card space-y-5">
+            <div class="border-b border-slate-100 pb-3.5">
+              <h3 class="font-semibold text-base text-slate-900 flex items-center gap-x-2">
+                <i data-lucide="user-check" class="size-4 text-blue-600"></i>
+                <span>${t("contactHeading")}</span>
+              </h3>
+              <p class="text-xs text-slate-500 mt-1">${t("contactSub")}</p>
+            </div>
+
+            <!-- Related Form Fields (16px gap, 6-8px label gap, 40px input height) -->
+            <div class="space-y-4">
+              <!-- Client Name -->
+              <div>
+                <label class="block text-xs sm:text-[13px] font-medium text-slate-700 mb-1.5">${t("clientNameLabel")}</label>
+                <div class="relative">
+                  <input type="text" value="${escapeHtml(info.clientName)}" oninput="updateClientField('clientName', this.value)" placeholder="${t("clientNamePlace")}" class="h-10 px-3.5 rtl:ps-10 ltr:ps-10 block w-full border border-slate-200 rounded-lg text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none">
+                  <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3.5 text-slate-400">
+                    <i data-lucide="user" class="size-4"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Client Email -->
+              <div>
+                <label class="block text-xs sm:text-[13px] font-medium text-slate-700 mb-1.5">${t("clientEmailLabel")}</label>
+                <div class="relative">
+                  <input type="email" value="${escapeHtml(info.clientEmail)}" oninput="updateClientField('clientEmail', this.value)" placeholder="${t("clientEmailPlace")}" class="h-10 px-3.5 rtl:ps-10 ltr:ps-10 block w-full border border-slate-200 rounded-lg text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none font-mono">
+                  <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3.5 text-slate-400">
+                    <i data-lucide="mail" class="size-4"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Brand Name -->
+              <div>
+                <label class="block text-xs sm:text-[13px] font-medium text-slate-700 mb-1.5">${t("brandNameLabel")}</label>
+                <div class="relative">
+                  <input type="text" value="${escapeHtml(info.brandName)}" oninput="updateClientField('brandName', this.value)" placeholder="${t("brandNamePlace")}" class="h-10 px-3.5 rtl:ps-10 ltr:ps-10 block w-full border border-slate-200 rounded-lg text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none">
+                  <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3.5 text-slate-400">
+                    <i data-lucide="store" class="size-4"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Phone -->
+              <div>
+                <label class="block text-xs sm:text-[13px] font-medium text-slate-700 mb-1.5">${t("clientPhoneLabel")}</label>
+                <div class="relative">
+                  <input type="tel" value="${escapeHtml(info.clientPhone)}" oninput="updateClientField('clientPhone', this.value)" placeholder="${t("clientPhonePlace")}" class="h-10 px-3.5 rtl:ps-10 ltr:ps-10 block w-full border border-slate-200 rounded-lg text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none font-mono">
+                  <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3.5 text-slate-400">
+                    <i data-lucide="phone" class="size-4"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Business Profile & Radio Cards (7 cols) -->
+          <div class="lg:col-span-7 bg-white border border-slate-200 rounded-xl p-5 sm:p-6 shadow-card space-y-5">
+            <div class="border-b border-slate-100 pb-3.5">
+              <h3 class="font-semibold text-base text-slate-900 flex items-center gap-x-2">
+                <i data-lucide="sliders" class="size-4 text-blue-600"></i>
+                <span>${t("businessSectionHeading")}</span>
+              </h3>
+              <p class="text-xs text-slate-500 mt-1">${isAr ? "تحديد طبيعة البضائع والجمهور واللغة المستهدفة لضبط معمارية المتجر." : "Define merchandise category, audience, and scope parameters for architectural setup."}</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Industry -->
+              <div>
+                <label class="block text-xs sm:text-[13px] font-medium text-slate-700 mb-1.5">${t("industryLabel")}</label>
+                <input type="text" value="${escapeHtml(info.industry)}" oninput="updateClientField('industry', this.value)" placeholder="${t("industryPlace")}" class="h-10 px-3.5 block w-full border border-slate-200 rounded-lg text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none">
+              </div>
+
+              <!-- Target Audience -->
+              <div>
+                <label class="block text-xs sm:text-[13px] font-medium text-slate-700 mb-1.5">${t("targetAudienceLabel")}</label>
+                <input type="text" value="${escapeHtml(info.targetAudience)}" oninput="updateClientField('targetAudience', this.value)" placeholder="${t("targetAudiencePlace")}" class="h-10 px-3.5 block w-full border border-slate-200 rounded-lg text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none">
+              </div>
+
+              <!-- Business Overview -->
+              <div class="sm:col-span-2">
+                <label class="block text-xs sm:text-[13px] font-medium text-slate-700 mb-1.5">${t("businessDescLabel")}</label>
+                <textarea rows="2" oninput="updateClientField('businessDesc', this.value)" placeholder="${t("businessDescPlace")}" class="py-2.5 px-3.5 block w-full border border-slate-200 rounded-lg text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none leading-relaxed">${escapeHtml(info.businessDesc)}</textarea>
+              </div>
+
+              <!-- Main Goal -->
+              <div class="sm:col-span-2">
+                <label class="block text-xs sm:text-[13px] font-medium text-slate-700 mb-1.5">${t("mainGoalLabel")}</label>
+                <input type="text" value="${escapeHtml(info.mainGoal)}" oninput="updateClientField('mainGoal', this.value)" placeholder="${t("mainGoalPlace")}" class="h-10 px-3.5 block w-full border border-slate-200 rounded-lg text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none">
+              </div>
+
+              <!-- Radio Cards: Expected SKU Count -->
+              <div class="sm:col-span-2">
+                <label class="block text-xs sm:text-[13px] font-medium text-slate-700 mb-2">${t("expectedProductsLabel")}</label>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                  ${[
+                    { value: "1-20", title: "1 - 20", descAr: "كتالوج مركز", descEn: "Curated (1-20)" },
+                    { value: "20-100", title: "20 - 100", descAr: "متوسط (شائع)", descEn: "Standard (20-100)" },
+                    { value: "100-500", title: "100 - 500", descAr: "تشكيلة واسعة", descEn: "Extensive (100-500)" },
+                    { value: "500+", title: "500+", descAr: "مخزون ضخم", descEn: "Enterprise (500+)" }
+                  ].map(tier => {
+                    const isSelected = info.expectedProducts === tier.value;
+                    return `
+                      <label class="flex p-3 w-full bg-white border rounded-lg cursor-pointer transition ${isSelected ? 'border-blue-600 bg-blue-50/50 ring-1 ring-blue-600' : 'border-slate-200 hover:bg-slate-50'}">
+                        <input type="radio" name="radio-sku-tier" value="${tier.value}" ${isSelected ? 'checked' : ''} onchange="updateClientField('expectedProducts', '${tier.value}'); renderStage1();" class="shrink-0 mt-0.5 border-slate-300 rounded-full text-blue-600 focus:ring-blue-500">
+                        <span class="ms-2.5 min-w-0">
+                          <span class="block text-xs font-bold text-slate-900 font-mono">${tier.title}</span>
+                          <span class="block text-[11px] text-slate-500 truncate">${isAr ? tier.descAr : tier.descEn}</span>
+                        </span>
+                      </label>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+
+              <!-- Radio Cards: Launch Language -->
+              <div class="sm:col-span-2">
+                <label class="block text-xs sm:text-[13px] font-medium text-slate-700 mb-2">${t("launchLangLabel")}</label>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  ${[
+                    { value: "both", titleAr: "كلا اللغتين (عربي وإنجليزي)", titleEn: "Bilingual (Ar & En)", badge: isAr ? "موصى به" : "Recommended" },
+                    { value: "ar", titleAr: "العربية فقط", titleEn: "Arabic Only", badge: null },
+                    { value: "en", titleAr: "الإنجليزية فقط", titleEn: "English Only", badge: null }
+                  ].map(langOption => {
+                    const isSelected = info.preferredLanguage === langOption.value;
+                    return `
+                      <label class="flex p-3 w-full bg-white border rounded-lg cursor-pointer transition ${isSelected ? 'border-blue-600 bg-blue-50/50 ring-1 ring-blue-600' : 'border-slate-200 hover:bg-slate-50'}">
+                        <input type="radio" name="radio-lang-tier" value="${langOption.value}" ${isSelected ? 'checked' : ''} onchange="updateClientField('preferredLanguage', '${langOption.value}'); renderStage1();" class="shrink-0 mt-0.5 border-slate-300 rounded-full text-blue-600 focus:ring-blue-500">
+                        <span class="ms-2.5 min-w-0">
+                          <span class="block text-xs font-bold text-slate-900">${isAr ? langOption.titleAr : langOption.titleEn}</span>
+                          ${langOption.badge ? `<span class="inline-block mt-0.5 text-[11px] font-semibold text-blue-700 bg-blue-100 px-1.5 py-0.2 rounded">${langOption.badge}</span>` : '<span class="block text-[11px] text-slate-400">Standard</span>'}
+                        </span>
+                      </label>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+
+              <!-- Notes -->
+              <div class="sm:col-span-2">
+                <label class="block text-xs sm:text-[13px] font-medium text-slate-700 mb-1.5">${t("notesLabel")}</label>
+                <textarea rows="2" oninput="updateClientField('additionalNotes', this.value)" placeholder="${t("notesPlace")}" class="py-2.5 px-3.5 block w-full border border-slate-200 rounded-lg text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none leading-relaxed">${escapeHtml(info.additionalNotes)}</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Navigation Bar (Consistent 40px Button Height) -->
+        <div class="flex items-center justify-end pt-5 border-t border-slate-200">
+          <button type="button" onclick="setStage(2)" class="h-10 px-5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <span>${t("btnNextToJourney")}</span>
+            <i data-lucide="arrow-left" class="size-4 rtl:rotate-0 ltr:rotate-180"></i>
+          </button>
+        </div>
+      `;
+
+      refreshUI();
+    }
+
+    function updateClientField(field, val) {
+      state.clientInfo[field] = val;
+      const preview = document.getElementById("banner-brand-preview");
+      if (preview) {
+        preview.textContent = state.clientInfo.brandName || (state.language === "ar" ? "لم يحدد بعد" : "Not specified yet");
+      }
+      saveToLocalStorage();
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // -------------------------------------------------------------
+    // STAGE 2: CUSTOMER JOURNEY TREE
+    // -------------------------------------------------------------
+    function renderStage2() {
+      const container = document.getElementById("stage2-container");
+      if (!container) return;
+
+      const isAr = state.language === "ar";
+      const nodes = getEvaluatedJourneyNodes();
+      const activeCount = nodes.filter(n => !n.isExcluded).length;
+
+      container.innerHTML = `
+        <!-- Section Header -->
+        <div class="border-b border-slate-200 pb-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-x-2 mb-2 text-slate-500 text-xs font-semibold uppercase tracking-wider">
+                <span class="py-0.5 px-2 rounded bg-slate-100 text-slate-700">02</span>
+                <span>/</span>
+                <span>${isAr ? "معمارية رحلة العميل" : "Customer Journey & Architecture"}</span>
+              </div>
+              <h2 class="text-2xl sm:text-[26px] font-semibold text-slate-900 leading-snug tracking-tight">
+                ${t("s2Heading")}
+              </h2>
+              <p class="text-slate-600 text-sm sm:text-[15px] mt-1.5 max-w-3xl leading-relaxed">
+                ${t("s2Sub")}
+              </p>
+            </div>
+
+            <!-- Flowchart Controls Toolbar (Consistent 36px Height) -->
+            <div class="flex items-center gap-x-2 shrink-0 self-start sm:self-center">
+              <div class="inline-flex rounded-lg shadow-sm">
+                <button type="button" onclick="zoomJourney(0.1)" class="h-9 px-3 inline-flex justify-center items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-xs font-medium border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50" title="${t("zoomIn")}">
+                  <i data-lucide="zoom-in" class="size-4"></i>
+                </button>
+                <button type="button" onclick="zoomJourney(-0.1)" class="h-9 px-3 inline-flex justify-center items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-xs font-medium border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50" title="${t("zoomOut")}">
+                  <i data-lucide="zoom-out" class="size-4"></i>
+                </button>
+                <button type="button" onclick="resetZoomJourney()" class="h-9 px-3.5 inline-flex justify-center items-center gap-x-2 -ms-px first:rounded-s-lg first:ms-0 last:rounded-e-lg text-xs font-medium border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50">
+                  ${t("fitScreen")}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Legend Bar (Consistent Padding & Badges) -->
+        <div class="bg-white border border-slate-200 rounded-xl px-5 py-3.5 flex flex-wrap items-center justify-between gap-4 text-xs shadow-card">
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <span class="font-bold text-slate-800 flex items-center gap-x-1.5">
+              <i data-lucide="layers" class="size-4 text-slate-500"></i>
+              <span>${isAr ? "دلالات المحطات:" : "Node Types:"}</span>
+            </span>
+            <span class="inline-flex items-center gap-x-1.5 text-slate-600">
+              <span class="size-2 rounded-full bg-blue-600"></span>
+              ${t("nodeLegendAction")}
+            </span>
+            <span class="inline-flex items-center gap-x-1.5 text-slate-600">
+              <span class="size-2 rounded-full bg-teal-600"></span>
+              ${t("nodeLegendPage")}
+            </span>
+            <span class="inline-flex items-center gap-x-1.5 text-slate-600">
+              <span class="size-2 rounded-full bg-amber-500"></span>
+              ${t("nodeLegendDecision")}
+            </span>
+            <span class="inline-flex items-center gap-x-1.5 text-slate-600">
+              <span class="size-2 rounded-full bg-indigo-600"></span>
+              ${t("nodeLegendSystem")}
+            </span>
+            <span class="inline-flex items-center gap-x-1.5 text-slate-600">
+              <span class="size-2 rounded-full bg-rose-500"></span>
+              ${t("nodeLegendAlt")}
+            </span>
+          </div>
+
+          <div>
+            <span class="py-1 px-3 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 border border-slate-200">
+              ${activeCount} / ${nodes.length} ${isAr ? "محطة نشطة بالمسار" : "active milestones"}
+            </span>
+          </div>
+        </div>
+
+        <!-- Flowchart Canvas Container -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 sm:p-7 overflow-x-auto min-h-[560px] flowchart-wrapper relative">
+          <div id="journey-flow-canvas" class="flowchart-canvas space-y-7 min-w-[760px] pb-6 transition-transform origin-top" style="transform: scale(${state.journeyZoom});">
+            ${renderFlowchartStages(nodes)}
+          </div>
+        </div>
+
+        <!-- Action Navigation Bar (Consistent 40px Height) -->
+        <div class="flex items-center justify-between pt-5 border-t border-slate-200">
+          <button type="button" onclick="setStage(1)" class="h-10 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50">
+            <i data-lucide="arrow-right" class="size-4 rtl:rotate-0 ltr:rotate-180"></i>
+            <span>${t("btnPrevToStage1")}</span>
+          </button>
+          <button type="button" onclick="setStage(3)" class="h-10 px-5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow-sm">
+            <span>${t("btnNextToFeatures")}</span>
+            <i data-lucide="arrow-left" class="size-4 rtl:rotate-0 ltr:rotate-180"></i>
+          </button>
+        </div>
+      `;
+
+      refreshUI();
+    }
+
+    function zoomJourney(delta) {
+      state.journeyZoom = Math.min(Math.max(0.6, state.journeyZoom + delta), 1.4);
+      const canvas = document.getElementById("journey-flow-canvas");
+      if (canvas) canvas.style.transform = `scale(${state.journeyZoom})`;
+    }
+
+    function resetZoomJourney() {
+      state.journeyZoom = 1;
+      const canvas = document.getElementById("journey-flow-canvas");
+      if (canvas) canvas.style.transform = "scale(1)";
+    }
+
+    function getEvaluatedJourneyNodes() {
+      return JOURNEY_NODES.map(node => {
+        let isIncluded = true;
+        let isOptional = false;
+        let isExcluded = false;
+
+        if (node.featureId) {
+          const status = state.selections[node.featureId] || "undecided";
+          if (status === "not_needed") {
+            isExcluded = true;
+            isIncluded = false;
+          } else if (status === "optional") {
+            isOptional = true;
+            isIncluded = true;
+          } else if (status === "required") {
+            isIncluded = true;
+          }
+        }
+
+        if (node.conditionType === "dynamic_auth") {
+          const guest = state.selections["feat_checkout_guest"] !== "not_needed";
+          const accounts = state.selections["feat_auth_login"] !== "not_needed";
+          if (!guest && !accounts) isExcluded = true;
+        }
+
+        return Object.assign({}, node, {
+          isIncluded,
+          isOptional,
+          isExcluded
+        });
+      });
+    }
+
+    function renderFlowchartStages(nodes) {
+      const isAr = state.language === "ar";
+      
+      const stages = [
+        { code: "A", titleAr: "المرحلة أ: زيارة المتجر والترحيب", titleEn: "Stage A: Visiting the Store" },
+        { code: "B", titleAr: "المرحلة ب: استكشاف الكتالوج والمنتجات", titleEn: "Stage B: Discovering Products" },
+        { code: "C", titleAr: "المرحلة ج: اختيار تفاصيل المنتج والمقاس", titleEn: "Stage C: Selecting a Product" },
+        { code: "D", titleAr: "المرحلة د: مراجعة سلة المشتريات", titleEn: "Stage D: Shopping Cart" },
+        { code: "E", titleAr: "المرحلة هـ: تحديد طريقة الشراء (زائر أم حساب)", titleEn: "Stage E: Account vs. Guest Checkout" },
+        { code: "F", titleAr: "المرحلة و: بيانات التواصل وعنوان التوصيل", titleEn: "Stage F: Order & Shipping Information" },
+        { code: "G", titleAr: "المرحلة ز: اختيار وسيلة الدفع", titleEn: "Stage G: Payment Processing" },
+        { code: "H", titleAr: "المرحلة ح: تأكيد الطلب وتوليد الفاتورة", titleEn: "Stage H: Order Review & Confirmation" },
+        { code: "I", titleAr: "المرحلة ط: ما بعد الشراء والمتابعة", titleEn: "Stage I: Post-Purchase & Tracking" }
+      ];
+
+      return stages.map((st, idx) => {
+        const stageNodes = nodes.filter(n => n.stage === st.code);
+        if (stageNodes.length === 0) return "";
+
+        return `
+          <div class="relative bg-white border border-slate-200 rounded-xl p-5 shadow-card">
+            <!-- Stage Header -->
+            <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+              <div class="flex items-center gap-x-2.5">
+                <span class="size-7 rounded-lg bg-slate-900 text-white flex items-center justify-center text-xs font-mono font-bold">
+                  ${st.code}
+                </span>
+                <h3 class="font-semibold text-base text-slate-900">${isAr ? st.titleAr : st.titleEn}</h3>
+              </div>
+              <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-full border border-slate-200">
+                ${stageNodes.filter(n => !n.isExcluded).length} ${isAr ? "محطة نشطة" : "active steps"}
+              </span>
+            </div>
+
+            <!-- Nodes Grid (Gap: 16px) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              ${stageNodes.map(node => renderNodeCard(node)).join('')}
+            </div>
+
+            ${idx < stages.length - 1 ? `
+              <!-- Stage Connector -->
+              <div class="absolute -bottom-5 left-1/2 -translate-x-1/2 z-10 size-7 rounded-full bg-white border border-slate-300 shadow-sm flex items-center justify-center text-slate-400">
+                <i data-lucide="arrow-down" class="size-4"></i>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderNodeCard(node) {
+      const isAr = state.language === "ar";
+      const title = isAr ? node.titleAr : node.titleEn;
+      const desc = isAr ? node.descAr : node.descEn;
+
+      let typeBg = "text-slate-700 bg-slate-100 border-slate-200";
+      let badgeLabel = isAr ? "إجراء عميل" : "Action";
+      if (node.type === "page") {
+        typeBg = "text-teal-800 bg-teal-50 border-teal-200";
+        badgeLabel = isAr ? "صفحة متجر" : "Page";
+      } else if (node.type === "decision") {
+        typeBg = "text-amber-800 bg-amber-50 border-amber-200";
+        badgeLabel = isAr ? "نقطة تفريع" : "Decision";
+      } else if (node.type === "system") {
+        typeBg = "text-indigo-800 bg-indigo-50 border-indigo-200";
+        badgeLabel = isAr ? "إجراء آلي" : "System";
+      } else if (node.type === "alternative") {
+        typeBg = "text-rose-800 bg-rose-50 border-rose-200";
+        badgeLabel = isAr ? "مسار بديل" : "Alternative";
+      }
+
+      let statusBadge = `
+        <span class="inline-flex items-center gap-x-1 py-0.5 px-2 rounded-full text-xs font-semibold bg-teal-50 text-teal-700 border border-teal-200">
+          <i data-lucide="check" class="size-3"></i>
+          ${t("nodeStatusIncluded")}
+        </span>
+      `;
+      let opacityClass = "opacity-100 bg-white border-slate-200 hover:border-slate-400 hover:shadow-card-hover";
+
+      if (node.isExcluded) {
+        statusBadge = `
+          <span class="inline-flex items-center gap-x-1 py-0.5 px-2 rounded-full text-xs font-medium bg-slate-100 text-slate-500 border border-slate-200 line-through">
+            ${t("nodeStatusExcluded")}
+          </span>
+        `;
+        opacityClass = "opacity-40 bg-slate-50 border-dashed border-slate-300";
+      } else if (node.isOptional) {
+        statusBadge = `
+          <span class="inline-flex items-center gap-x-1 py-0.5 px-2 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+            ${t("nodeStatusOptional")}
+          </span>
+        `;
+      }
+
+      return `
+        <div onclick="openNodeModal('${node.id}')" class="border rounded-xl p-4 shadow-sm cursor-pointer transition flex flex-col justify-between gap-y-3 ${opacityClass}">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between gap-x-2">
+              <span class="py-0.5 px-2 rounded text-xs font-mono border ${typeBg}">
+                ${badgeLabel}
+              </span>
+              ${statusBadge}
+            </div>
+            <h4 class="font-semibold text-sm sm:text-[15px] text-slate-900 leading-snug flex items-center gap-x-1.5 pt-0.5">
+              <i data-lucide="${node.icon || 'circle'}" class="size-4 text-slate-700 shrink-0"></i>
+              <span>${escapeHtml(title)}</span>
+            </h4>
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              ${escapeHtml(desc)}
+            </p>
+          </div>
+          <div class="border-t border-slate-100 pt-2 flex items-center justify-between text-xs text-slate-400">
+            <span>${node.stageNameAr || ''}</span>
+            <span class="text-blue-600 font-medium flex items-center gap-x-0.5 hover:text-blue-800">
+              ${isAr ? "التفاصيل" : "Details"}
+              <i data-lucide="chevron-left" class="size-3.5 rtl:rotate-0 ltr:rotate-180"></i>
+            </span>
+          </div>
+        </div>
+      `;
+    }
+
+    function openNodeModal(nodeId) {
+      const node = JOURNEY_NODES.find(n => n.id === nodeId);
+      if (!node) return;
+
+      const isAr = state.language === "ar";
+      const title = isAr ? node.titleAr : node.titleEn;
+      const desc = isAr ? node.descAr : node.descEn;
+
+      let linkedFeature = null;
+      if (node.featureId) {
+        linkedFeature = FEATURES.find(f => f.id === node.featureId);
+      }
+
+      const modal = document.getElementById("node-detail-modal");
+      const content = document.getElementById("node-modal-content");
+      if (!modal || !content) return;
+
+      const currentFeatureStatus = linkedFeature ? (state.selections[linkedFeature.id] || "undecided") : null;
+
+      content.innerHTML = `
+        <div class="flex items-center gap-x-3 border-b border-slate-200 pb-3.5">
+          <div class="size-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-200">
+            <i data-lucide="${node.icon || 'git-commit'}" class="size-5"></i>
+          </div>
+          <div>
+            <span class="text-xs font-mono text-slate-400 uppercase tracking-wider">${isAr ? "محطة رحلة العميل" : "Journey Milestone"} [Stage ${node.stage}]</span>
+            <h3 class="font-semibold text-base sm:text-lg text-slate-900">${escapeHtml(title)}</h3>
+          </div>
+        </div>
+
+        <div class="space-y-4 text-sm leading-relaxed text-slate-600">
+          <div>
+            <h4 class="font-medium text-slate-800 mb-1.5 text-xs sm:text-[13px]">${isAr ? "وصف التجربة للعميل:" : "Customer Experience:"}</h4>
+            <p class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 text-slate-700 leading-relaxed text-xs sm:text-sm">
+              ${escapeHtml(desc)}
+            </p>
+          </div>
+
+          ${linkedFeature ? `
+            <div class="border-t border-slate-100 pt-3">
+              <h4 class="font-medium text-slate-800 mb-2 text-xs sm:text-[13px]">${isAr ? "الميزة المرتبطة بالكتالوج:" : "Linked Catalog Feature:"}</h4>
+              <div class="p-3.5 bg-slate-50 rounded-lg border border-slate-200 space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <span class="font-mono text-xs text-slate-400 block">${linkedFeature.id}</span>
+                    <span class="font-semibold text-sm text-slate-900">${escapeHtml(isAr ? linkedFeature.nameAr : linkedFeature.nameEn)}</span>
+                  </div>
+                </div>
+
+                <!-- Priority Segmented Switcher in Modal -->
+                <div class="pt-2 border-t border-slate-200 flex items-center justify-between gap-x-2">
+                  <span class="text-slate-500 font-medium text-xs">${isAr ? "أولوية الميزة حالياً:" : "Current Priority:"}</span>
+                  <div class="inline-flex rounded-lg border border-slate-200 bg-slate-100 p-0.5 text-xs shadow-xs">
+                    <button type="button" onclick="setFeatureStatus('${linkedFeature.id}', 'required'); openNodeModal('${nodeId}');" class="h-7 px-2.5 rounded-md font-semibold transition ${currentFeatureStatus === 'required' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-700 hover:text-slate-900'}">
+                      ${t("priorityRequired")}
+                    </button>
+                    <button type="button" onclick="setFeatureStatus('${linkedFeature.id}', 'optional'); openNodeModal('${nodeId}');" class="h-7 px-2.5 rounded-md font-semibold transition ${currentFeatureStatus === 'optional' ? 'bg-amber-100 text-amber-900 border border-amber-300 shadow-sm' : 'text-slate-700 hover:text-slate-900'}">
+                      ${t("priorityOptional")}
+                    </button>
+                    <button type="button" onclick="setFeatureStatus('${linkedFeature.id}', 'not_needed'); openNodeModal('${nodeId}');" class="h-7 px-2.5 rounded-md font-semibold transition ${currentFeatureStatus === 'not_needed' ? 'bg-slate-300 text-slate-800 line-through' : 'text-slate-700 hover:text-slate-900'}">
+                      ${t("priorityNotNeeded")}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      modal.classList.remove("hidden");
+      refreshUI();
+    }
+
+    function closeNodeModal() {
+      const modal = document.getElementById("node-detail-modal");
+      if (modal) modal.classList.add("hidden");
+      if (state.currentStage === 2) renderStage2();
+    }
+
+    function capitalize(str) {
+      if (!str) return "";
+      if (str === "not_needed") return "NotNeeded";
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    // -------------------------------------------------------------
+    // STAGE 3: COMPLETE FEATURE CATALOG
+    // -------------------------------------------------------------
+    let catalogFilter = {
+      search: "",
+      categoryId: 0,
+      status: "all",
+      journeyOnly: false,
+      expandedCats: { 1: true, 2: true, 3: true, 4: true, 5: true, 6: true, 7: true, 8: true, 9: true, 10: true, 11: true, 12: true }
+    };
+
+    function renderStage3() {
+      const container = document.getElementById("stage3-container");
+      if (!container) return;
+
+      const isAr = state.language === "ar";
+      const totalFeats = FEATURES.length;
+      const stats = getCatalogStats();
+
+      container.innerHTML = `
+        <!-- Section Header -->
+        <div class="border-b border-slate-200 pb-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-x-2 mb-2 text-slate-500 text-xs font-semibold uppercase tracking-wider">
+                <span class="py-0.5 px-2 rounded bg-slate-100 text-slate-700">03</span>
+                <span>/</span>
+                <span>${isAr ? "كتالوج الميزات وتحديد الأولويات" : "Feature Catalog & Priority Matrix"}</span>
+              </div>
+              <h2 class="text-2xl sm:text-[26px] font-semibold text-slate-900 leading-snug tracking-tight">
+                ${t("s3Heading")}
+              </h2>
+              <p class="text-slate-600 text-sm sm:text-[15px] mt-1.5 max-w-3xl leading-relaxed">
+                ${t("s3Sub")}
+              </p>
+            </div>
+
+            <!-- Global Action Controls (36px Height) -->
+            <div class="flex items-center gap-x-2 shrink-0 self-start sm:self-center">
+              <button type="button" onclick="toggleAllCategories(true)" class="h-9 px-3.5 inline-flex items-center text-xs font-medium rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50">
+                ${t("expandAll")}
+              </button>
+              <button type="button" onclick="toggleAllCategories(false)" class="h-9 px-3.5 inline-flex items-center text-xs font-medium rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50">
+                ${t("collapseAll")}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric Cards Grid (Consistent 16-18px card headings, clean 22-24px numbers) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div onclick="filterByStatusPill('required')" class="bg-white border rounded-xl p-4 sm:p-5 shadow-card cursor-pointer transition ${catalogFilter.status === 'required' ? 'border-blue-600 ring-1 ring-blue-600 bg-blue-50/30' : 'border-slate-200 hover:border-slate-300'}">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-semibold text-slate-700 uppercase tracking-wide">${t("statusRequired")}</span>
+              <span class="py-0.5 px-2 rounded text-xs font-mono font-bold bg-blue-600 text-white">
+                ${Math.round((stats.required / totalFeats) * 100)}%
+              </span>
+            </div>
+            <div class="text-2xl font-bold text-slate-900">${stats.required}</div>
+          </div>
+
+          <div onclick="filterByStatusPill('optional')" class="bg-white border rounded-xl p-4 sm:p-5 shadow-card cursor-pointer transition ${catalogFilter.status === 'optional' ? 'border-amber-500 ring-1 ring-amber-500 bg-amber-50/30' : 'border-slate-200 hover:border-slate-300'}">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-semibold text-amber-700 uppercase tracking-wide">${t("statusOptional")}</span>
+              <span class="py-0.5 px-2 rounded text-xs font-mono font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                ${Math.round((stats.optional / totalFeats) * 100)}%
+              </span>
+            </div>
+            <div class="text-2xl font-bold text-slate-900">${stats.optional}</div>
+          </div>
+
+          <div onclick="filterByStatusPill('not_needed')" class="bg-white border rounded-xl p-4 sm:p-5 shadow-card cursor-pointer transition ${catalogFilter.status === 'not_needed' ? 'border-slate-400 ring-1 ring-slate-400 bg-slate-50' : 'border-slate-200 hover:border-slate-300'}">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wide">${t("statusNotNeeded")}</span>
+              <span class="py-0.5 px-2 rounded text-xs font-mono font-bold bg-slate-100 text-slate-600 border border-slate-200">
+                ${Math.round((stats.not_needed / totalFeats) * 100)}%
+              </span>
+            </div>
+            <div class="text-2xl font-bold text-slate-400">${stats.not_needed}</div>
+          </div>
+
+          <div onclick="filterByStatusPill('undecided')" class="bg-white border rounded-xl p-4 sm:p-5 shadow-card cursor-pointer transition ${catalogFilter.status === 'undecided' ? 'border-blue-400 ring-1 ring-blue-400 bg-blue-50/30' : 'border-slate-200 hover:border-slate-300'}">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-semibold text-slate-700 uppercase tracking-wide">${t("statusUndecided")}</span>
+              <span class="py-0.5 px-2 rounded text-xs font-mono font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                ${Math.round((stats.undecided / totalFeats) * 100)}%
+              </span>
+            </div>
+            <div class="text-2xl font-bold text-slate-900">${stats.undecided}</div>
+          </div>
+        </div>
+
+        <!-- Filter & Search Toolbar (Consistent 40px Height) -->
+        <div class="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-card space-y-3.5">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 text-xs">
+            <!-- Search Input -->
+            <div class="md:col-span-5 relative">
+              <input type="text" value="${escapeHtml(catalogFilter.search)}" oninput="updateCatalogSearch(this.value)" placeholder="${t("searchPlace")}" class="h-10 px-3.5 rtl:ps-10 ltr:ps-10 block w-full border border-slate-200 rounded-lg text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none">
+              <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3.5 text-slate-400">
+                <i data-lucide="search" class="size-4"></i>
+              </div>
+              ${catalogFilter.search ? `
+                <button type="button" onclick="updateCatalogSearch('');" class="absolute inset-y-0 end-0 flex items-center pe-3 text-slate-400 hover:text-slate-600">
+                  <i data-lucide="x" class="size-4"></i>
+                </button>
+              ` : ''}
+            </div>
+
+            <!-- Category Select -->
+            <div class="md:col-span-4">
+              <select onchange="updateCatalogCatFilter(this.value)" class="h-10 px-3.5 block w-full border border-slate-200 rounded-lg text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none font-medium">
+                <option value="0" ${catalogFilter.categoryId === 0 ? 'selected' : ''}>${t("filterAllCats")}</option>
+                ${CATEGORIES.map(c => `
+                  <option value="${c.id}" ${catalogFilter.categoryId === c.id ? 'selected' : ''}>
+                    ${c.id}. ${escapeHtml(isAr ? c.nameAr : c.nameEn)}
+                  </option>
+                `).join('')}
+              </select>
+            </div>
+
+            <!-- Journey Only Checkbox -->
+            <div class="md:col-span-3 flex items-center justify-start md:justify-end">
+              <label class="flex items-center text-xs sm:text-[13px] font-medium text-slate-700 cursor-pointer">
+                <input type="checkbox" onchange="toggleJourneyFilter(this.checked)" ${catalogFilter.journeyOnly ? 'checked' : ''} class="size-4 border-slate-300 rounded text-blue-600 focus:ring-blue-500">
+                <span class="ms-2">${t("filterJourneyOnly")}</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Quick Category Horizontal Pills Bar -->
+          <div class="flex items-center gap-x-1.5 overflow-x-auto pb-1 pt-1 scrollbar-none text-xs">
+            <button type="button" onclick="updateCatalogCatFilter(0)" class="h-8 px-3 rounded-lg font-semibold shrink-0 transition ${catalogFilter.categoryId === 0 ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
+              ${isAr ? "الكل" : "All"}
+            </button>
+            ${CATEGORIES.filter(c => c.id !== 12).map(c => {
+              const isSelected = catalogFilter.categoryId === c.id;
+              const catReqCount = FEATURES.filter(f => f.cat === c.id && state.selections[f.id] === "required").length;
+              return `
+                <button type="button" onclick="updateCatalogCatFilter(${c.id})" class="h-8 px-2.5 rounded-lg shrink-0 font-medium transition flex items-center gap-x-1.5 ${isSelected ? 'bg-blue-600 text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
+                  <span>${c.id}. ${escapeHtml(isAr ? c.nameAr : c.nameEn)}</span>
+                  <span class="text-xs font-mono py-0.2 px-1.5 rounded ${isSelected ? 'bg-blue-700 text-blue-100' : 'bg-slate-200 text-slate-600'}">${catReqCount}</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        <!-- Categories Accordion List (Card gap: 16px) -->
+        <div class="space-y-4">
+          ${renderCategoriesList()}
+        </div>
+
+        <!-- Custom Requirements Builder (Category 12) -->
+        <div class="bg-white border border-slate-200 rounded-xl p-5 sm:p-6 shadow-card space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3.5">
+            <div class="flex items-center gap-x-2.5">
+              <div class="size-8 rounded-lg bg-blue-600 text-white flex items-center justify-center">
+                <i data-lucide="sparkles" class="size-4"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-base text-slate-900">${t("customReqHeading")}</h3>
+                <p class="text-xs text-slate-500">${t("customReqSub")}</p>
+              </div>
+            </div>
+            <span class="py-0.5 px-2.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700">
+              ${state.customRequirements.length} ${isAr ? "متطلبات مضافة" : "added"}
+            </span>
+          </div>
+
+          <div class="p-4 sm:p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-3.5">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              <div class="sm:col-span-2">
+                <label class="block text-xs sm:text-[13px] font-medium text-slate-700 mb-1.5">${isAr ? "اسم الميزة أو الفكرة المطلوبة *" : "Requirement Title *"}</label>
+                <input type="text" id="custom-name-input" placeholder="${t("customNamePlace")}" class="h-10 px-3.5 block w-full border border-slate-200 rounded-lg text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none bg-white font-medium">
+              </div>
+              <div>
+                <label class="block text-xs sm:text-[13px] font-medium text-slate-700 mb-1.5">${t("customPriority")}</label>
+                <select id="custom-priority-select" class="h-10 px-3.5 block w-full border border-slate-200 rounded-lg text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none bg-white font-semibold">
+                  <option value="required">${t("priorityRequired")}</option>
+                  <option value="optional">${t("priorityOptional")}</option>
+                  <option value="not_needed">${t("priorityNotNeeded")}</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs sm:text-[13px] font-medium text-slate-700 mb-1.5">${isAr ? "الشرح والسبب التجاري" : "Description & Business Justification"}</label>
+              <textarea id="custom-desc-input" rows="2" placeholder="${t("customDescPlace")}" class="py-2 px-3.5 block w-full border border-slate-200 rounded-lg text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none bg-white leading-relaxed"></textarea>
+            </div>
+            <div class="flex justify-end">
+              <button type="button" onclick="addCustomRequirement()" class="h-9 px-4 inline-flex items-center text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow-sm">
+                ${t("customAddBtn")}
+              </button>
+            </div>
+          </div>
+
+          <!-- List of Added Custom Requirements -->
+          <div class="space-y-2.5" id="custom-requirements-list">
+            ${renderCustomRequirementsList()}
+          </div>
+        </div>
+
+        <!-- Action Navigation Bar (Consistent 40px Height) -->
+        <div class="flex items-center justify-between pt-5 border-t border-slate-200">
+          <button type="button" onclick="setStage(2)" class="h-10 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50">
+            <i data-lucide="arrow-right" class="size-4 rtl:rotate-0 ltr:rotate-180"></i>
+            <span>${t("btnPrevToJourney")}</span>
+          </button>
+          <button type="button" onclick="setStage(4)" class="h-10 px-5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow-sm">
+            <span>${t("btnNextToReview")}</span>
+            <i data-lucide="arrow-left" class="size-4 rtl:rotate-0 ltr:rotate-180"></i>
+          </button>
+        </div>
+      `;
+
+      refreshUI();
+    }
+
+    function getCatalogStats() {
+      const stats = { required: 0, optional: 0, not_needed: 0, undecided: 0 };
+      FEATURES.forEach(f => {
+        const s = state.selections[f.id] || "undecided";
+        if (stats[s] !== undefined) stats[s]++;
+      });
+      return stats;
+    }
+
+    function filterByStatusPill(statusKey) {
+      if (catalogFilter.status === statusKey) {
+        catalogFilter.status = "all";
+      } else {
+        catalogFilter.status = statusKey;
+      }
+      renderStage3();
+    }
+
+    function updateCatalogSearch(val) {
+      catalogFilter.search = val.trim().toLowerCase();
+      renderStage3();
+    }
+
+    function updateCatalogCatFilter(val) {
+      catalogFilter.categoryId = parseInt(val, 10);
+      renderStage3();
+    }
+
+    function toggleJourneyFilter(checked) {
+      catalogFilter.journeyOnly = checked;
+      renderStage3();
+    }
+
+    function toggleAllCategories(expand) {
+      CATEGORIES.forEach(c => {
+        catalogFilter.expandedCats[c.id] = expand;
+      });
+      renderStage3();
+    }
+
+    function toggleCategoryAccordion(catId) {
+      catalogFilter.expandedCats[catId] = !catalogFilter.expandedCats[catId];
+      renderStage3();
+    }
+
+    function renderCategoriesList() {
+      const isAr = state.language === "ar";
+      let filteredCategories = CATEGORIES.filter(c => c.id !== 12);
+
+      if (catalogFilter.categoryId !== 0) {
+        filteredCategories = filteredCategories.filter(c => c.id === catalogFilter.categoryId);
+      }
+
+      return filteredCategories.map(cat => {
+        let catFeatures = FEATURES.filter(f => f.cat === cat.id);
+
+        if (catalogFilter.journeyOnly) {
+          catFeatures = catFeatures.filter(f => f.affectsJourney);
+        }
+
+        if (catalogFilter.status !== "all") {
+          catFeatures = catFeatures.filter(f => (state.selections[f.id] || "undecided") === catalogFilter.status);
+        }
+
+        if (catalogFilter.search) {
+          catFeatures = catFeatures.filter(f => {
+            const query = catalogFilter.search;
+            return (f.nameAr && f.nameAr.toLowerCase().includes(query)) ||
+                   (f.nameEn && f.nameEn.toLowerCase().includes(query)) ||
+                   (f.descAr && f.descAr.toLowerCase().includes(query)) ||
+                   (f.descEn && f.descEn.toLowerCase().includes(query)) ||
+                   (f.id && f.id.toLowerCase().includes(query));
+          });
+        }
+
+        if (catFeatures.length === 0 && (catalogFilter.search || catalogFilter.status !== "all")) {
+          return "";
+        }
+
+        const isExpanded = catalogFilter.expandedCats[cat.id] !== false;
+        const catSelectedCount = catFeatures.filter(f => state.selections[f.id] === "required").length;
+
+        return `
+          <div class="bg-white border border-slate-200 rounded-xl shadow-card overflow-hidden">
+            <!-- Accordion Header -->
+            <div class="px-5 py-3.5 bg-slate-50/70 flex items-center justify-between cursor-pointer select-none hover:bg-slate-100 transition" onclick="toggleCategoryAccordion(${cat.id})">
+              <div class="flex items-center gap-x-3">
+                <span class="size-7 rounded-lg bg-white border border-slate-200 text-slate-900 flex items-center justify-center font-mono text-xs font-bold shadow-xs">
+                  ${cat.id}
+                </span>
+                <div>
+                  <h3 class="font-semibold text-base text-slate-900 leading-tight">
+                    ${escapeHtml(isAr ? cat.nameAr : cat.nameEn)}
+                  </h3>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    ${escapeHtml(isAr ? cat.descAr : cat.descEn)}
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-x-3">
+                <span class="py-0.5 px-2.5 rounded-full text-xs font-mono font-medium text-slate-700 bg-white border border-slate-200 shadow-xs">
+                  ${catSelectedCount} / ${catFeatures.length} ${isAr ? "مطلوب" : "required"}
+                </span>
+                <i data-lucide="${isExpanded ? 'chevron-up' : 'chevron-down'}" class="size-4 text-slate-400"></i>
+              </div>
+            </div>
+
+            <!-- Features Grid (Internal padding: 20px, Gap: 16px) -->
+            ${isExpanded ? `
+              <div class="p-5 grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-slate-100 bg-white">
+                ${catFeatures.map(f => renderFeatureCard(f)).join('')}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderFeatureCard(f) {
+      const isAr = state.language === "ar";
+      const name = isAr ? f.nameAr : f.nameEn;
+      const desc = isAr ? f.descAr : (f.descEn || f.descAr);
+      const currentStatus = state.selections[f.id] || "undecided";
+
+      let statusBorder = "border-slate-200 bg-white";
+      if (currentStatus === "required") statusBorder = "border-blue-600 bg-blue-50/25";
+      else if (currentStatus === "optional") statusBorder = "border-amber-400 bg-amber-50/25";
+      else if (currentStatus === "not_needed") statusBorder = "border-slate-200 bg-slate-50 opacity-60";
+
+      return `
+        <div class="rounded-xl border p-4 shadow-sm ${statusBorder} flex flex-col justify-between gap-y-3.5 transition hover:shadow-card-hover">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between gap-x-2">
+              <span class="text-xs font-mono font-medium text-slate-400 uppercase tracking-wider">${f.id}</span>
+              ${f.affectsJourney ? `
+                <span class="py-0.5 px-2 rounded-full text-xs font-mono bg-blue-50 text-blue-700 border border-blue-200 flex items-center gap-x-1">
+                  <i data-lucide="git-branch" class="size-3 text-blue-600"></i>
+                  ${isAr ? "يؤثر على المسار" : "Affects Journey"}
+                </span>
+              ` : ''}
+            </div>
+            <h4 class="font-semibold text-sm sm:text-[15px] text-slate-900 leading-snug">
+              ${escapeHtml(name)}
+            </h4>
+            <p class="text-xs sm:text-[13px] text-slate-500 leading-relaxed">
+              ${escapeHtml(desc)}
+            </p>
+          </div>
+
+          <!-- Segmented Priority Control (Consistent Button Height 28px) -->
+          <div class="border-t border-slate-100 pt-3 flex items-center justify-between gap-x-2 text-xs">
+            <span class="text-slate-400 font-mono text-xs uppercase font-medium">${isAr ? "الأولوية" : "Priority"}</span>
+            <div class="inline-flex rounded-lg border border-slate-200 bg-slate-100 p-0.5 text-xs shadow-xs">
+              <button type="button" onclick="setFeatureStatus('${f.id}', 'required')" class="h-7 px-2.5 rounded-md font-semibold transition ${currentStatus === 'required' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-700 hover:text-slate-900'}">
+                ${t("priorityRequired")}
+              </button>
+              <button type="button" onclick="setFeatureStatus('${f.id}', 'optional')" class="h-7 px-2.5 rounded-md font-semibold transition ${currentStatus === 'optional' ? 'bg-amber-100 text-amber-900 border border-amber-300 shadow-sm' : 'text-slate-700 hover:text-slate-900'}">
+                ${t("priorityOptional")}
+              </button>
+              <button type="button" onclick="setFeatureStatus('${f.id}', 'not_needed')" class="h-7 px-2.5 rounded-md font-semibold transition ${currentStatus === 'not_needed' ? 'bg-slate-300 text-slate-800 line-through' : 'text-slate-700 hover:text-slate-900'}">
+                ${t("priorityNotNeeded")}
+              </button>
+              <button type="button" onclick="setFeatureStatus('${f.id}', 'undecided')" class="h-7 px-2 rounded-md font-bold transition ${currentStatus === 'undecided' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-400 hover:text-slate-700'}" title="${t("statusUndecided")}">
+                ?
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function setFeatureStatus(featureId, status) {
+      state.selections[featureId] = status;
+      saveToLocalStorage();
+      
+      if (status === "required") {
+        checkFeatureDependencies(featureId);
+      }
+
+      renderStage3();
+    }
+
+    function checkFeatureDependencies(featureId) {
+      const feat = FEATURES.find(f => f.id === featureId);
+      if (!feat || !Array.isArray(feat.deps) || feat.deps.length === 0) return;
+
+      const isAr = state.language === "ar";
+      const missingDeps = feat.deps.filter(depId => {
+        return state.selections[depId] !== "required";
+      });
+
+      if (missingDeps.length > 0) {
+        const depNames = missingDeps.map(depId => {
+          const d = FEATURES.find(f => f.id === depId);
+          return d ? (isAr ? d.nameAr : d.nameEn) : depId;
+        });
+
+        const modal = document.getElementById("dependency-modal");
+        const content = document.getElementById("dep-modal-content");
+        const autoEnableBtn = document.getElementById("dep-auto-enable-btn");
+
+        if (modal && content) {
+          content.innerHTML = `
+            <div class="space-y-3">
+              <div class="p-3 bg-amber-50 rounded-lg border border-amber-200 text-amber-900 text-xs">
+                <p class="font-bold mb-1.5">${isAr ? 'الميزة (' + (isAr ? feat.nameAr : feat.nameEn) + ') تتطلب تفعيل المكونات التالية:' : 'This feature requires the following core components:'}</p>
+                <ul class="list-disc list-inside space-y-1 font-medium text-xs text-amber-800">
+                  ${depNames.map(name => `<li>${escapeHtml(name)}</li>`).join('')}
+                </ul>
+              </div>
+              <p class="text-slate-500 text-xs leading-relaxed">${isAr ? 'ينصح بتعيين هذه الميزات كمطلوبة لضمان استقرار وسلاسة تدفق العمليات داخل المتجر.' : 'We recommend enabling these dependencies to prevent workflow interruptions.'}</p>
+            </div>
+          `;
+
+          if (autoEnableBtn) {
+            autoEnableBtn.onclick = function() {
+              missingDeps.forEach(depId => {
+                state.selections[depId] = "required";
+              });
+              saveToLocalStorage();
+              closeDependencyModal();
+              renderStage3();
+              showToast(isAr ? "تم تفعيل الميزات الداعمة المطلوبة" : "Required dependencies activated", "success");
+            };
+          }
+
+          modal.classList.remove("hidden");
+          refreshUI();
+        }
+      }
+    }
+
+    function closeDependencyModal() {
+      const modal = document.getElementById("dependency-modal");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    function addCustomRequirement() {
+      const nameInput = document.getElementById("custom-name-input");
+      const descInput = document.getElementById("custom-desc-input");
+      const prioritySelect = document.getElementById("custom-priority-select");
+
+      if (!nameInput || !nameInput.value.trim()) {
+        showToast(state.language === "ar" ? "يرجى كتابة اسم المتطلب المخصص" : "Please provide requirement title", "warning");
+        return;
+      }
+
+      const newReq = {
+        id: "custom_" + Date.now(),
+        name: nameInput.value.trim(),
+        desc: descInput ? descInput.value.trim() : "",
+        priority: prioritySelect ? prioritySelect.value : "required"
+      };
+
+      state.customRequirements.push(newReq);
+      saveToLocalStorage();
+
+      nameInput.value = "";
+      if (descInput) descInput.value = "";
+
+      renderStage3();
+      showToast(state.language === "ar" ? "تمت إضافة المتطلب المخصص" : "Custom requirement added", "success");
+    }
+
+    function removeCustomRequirement(reqId) {
+      state.customRequirements = state.customRequirements.filter(r => r.id !== reqId);
+      saveToLocalStorage();
+      renderStage3();
+    }
+
+    function renderCustomRequirementsList() {
+      if (state.customRequirements.length === 0) {
+        return `<p class="text-xs text-slate-400 py-2">${state.language === 'ar' ? 'لم تقم بإضافة متطلبات مخصصة بعد.' : 'No custom requirements added yet.'}</p>`;
+      }
+
+      const isAr = state.language === "ar";
+      return state.customRequirements.map(r => `
+        <div class="p-3 bg-white rounded-lg border border-slate-200 flex items-center justify-between gap-x-3 text-xs shadow-xs">
+          <div>
+            <div class="font-bold text-slate-900 flex items-center gap-x-2">
+              <span>${escapeHtml(r.name)}</span>
+              <span class="py-0.5 px-2 rounded-full text-xs font-mono bg-slate-100 text-slate-700 border border-slate-200 font-semibold">${t("priority" + capitalize(r.priority))}</span>
+            </div>
+            ${r.desc ? `<p class="text-xs text-slate-500 mt-0.5 leading-relaxed">${escapeHtml(r.desc)}</p>` : ''}
+          </div>
+          <button type="button" onclick="removeCustomRequirement('${r.id}')" class="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition" title="${isAr ? "حذف" : "Remove"}">
+            <i data-lucide="trash-2" class="size-4"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    // -------------------------------------------------------------
+    // STAGE 4: REVIEW, CONFIRMATION & WEB3FORMS SUBMISSION
+    // -------------------------------------------------------------
+    function renderStage4() {
+      const container = document.getElementById("stage4-container");
+      if (!container) return;
+
+      const isAr = state.language === "ar";
+      const info = state.clientInfo;
+      const stats = getCatalogStats();
+      const unresolvedDeps = findUnresolvedDependencies();
+      const activeJourneyCount = getEvaluatedJourneyNodes().filter(n => !n.isExcluded).length;
+
+      container.innerHTML = `
+        <!-- Section Header -->
+        <div class="border-b border-slate-200 pb-5">
+          <div class="flex items-center gap-x-2 mb-2 text-slate-500 text-xs font-semibold uppercase tracking-wider">
+            <span class="py-0.5 px-2 rounded bg-slate-100 text-slate-700">04</span>
+            <span>/</span>
+            <span>${isAr ? "مراجعة نطاق المشروع والاعتماد" : "Scope Summary & Technical Sign-off"}</span>
+          </div>
+          <h2 class="text-2xl sm:text-[26px] font-semibold text-slate-900 leading-snug tracking-tight">
+            ${t("s4Heading")}
+          </h2>
+          <p class="text-slate-600 text-sm sm:text-[15px] mt-1.5 max-w-3xl leading-relaxed">
+            ${t("s4Sub")}
+          </p>
+        </div>
+
+        <!-- Submission Status Banner -->
+        <div id="submission-status-banner">
+          ${renderSubmissionAlert()}
+        </div>
+
+        <!-- Review Grid (Column gap: 24px) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- Column 1: Client & Stats Overview (5 cols) -->
+          <div class="lg:col-span-5 space-y-6">
+            
+            <!-- Contact Summary Card -->
+            <div class="bg-white border border-slate-200 rounded-xl p-5 sm:p-6 shadow-card space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-semibold text-base text-slate-900 flex items-center gap-x-2">
+                  <i data-lucide="user" class="size-4 text-blue-600"></i>
+                  <span>${t("clientSummaryCard")}</span>
+                </h3>
+                <button type="button" onclick="setStage(1)" class="text-xs font-semibold text-blue-600 hover:text-blue-800 underline underline-offset-2">
+                  ${isAr ? "تعديل" : "Edit"}
+                </button>
+              </div>
+
+              <div class="space-y-2.5 text-xs sm:text-[13px]">
+                <div class="flex justify-between py-1.5 border-b border-slate-50">
+                  <span class="text-slate-500">${t("clientNameLabel")}</span>
+                  <span class="font-bold text-slate-900">${escapeHtml(info.clientName) || '<span class="text-rose-600 font-semibold">' + (isAr ? "غير محدد *" : "Required *") + '</span>'}</span>
+                </div>
+                <div class="flex justify-between py-1.5 border-b border-slate-50">
+                  <span class="text-slate-500">${t("clientEmailLabel")}</span>
+                  <span class="font-bold text-slate-900 font-mono">${escapeHtml(info.clientEmail) || '<span class="text-rose-600 font-semibold font-sans">' + (isAr ? "غير محدد *" : "Required *") + '</span>'}</span>
+                </div>
+                <div class="flex justify-between py-1.5 border-b border-slate-50">
+                  <span class="text-slate-500">${t("brandNameLabel")}</span>
+                  <span class="font-bold text-slate-900">${escapeHtml(info.brandName) || '<span class="text-rose-600 font-semibold">' + (isAr ? "غير محدد *" : "Required *") + '</span>'}</span>
+                </div>
+                <div class="flex justify-between py-1.5 border-b border-slate-50">
+                  <span class="text-slate-500">${t("clientPhoneLabel")}</span>
+                  <span class="font-medium text-slate-800 font-mono">${escapeHtml(info.clientPhone) || '-'}</span>
+                </div>
+                <div class="flex justify-between py-1.5 border-b border-slate-50">
+                  <span class="text-slate-500">${t("industryLabel")}</span>
+                  <span class="font-medium text-slate-800">${escapeHtml(info.industry) || '-'}</span>
+                </div>
+                <div class="flex justify-between py-1.5">
+                  <span class="text-slate-500">${t("expectedProductsLabel")}</span>
+                  <span class="font-bold text-slate-800 font-mono">${escapeHtml(info.expectedProducts)}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Features Stats Card -->
+            <div class="bg-white border border-slate-200 rounded-xl p-5 sm:p-6 shadow-card space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-semibold text-base text-slate-900 flex items-center gap-x-2">
+                  <i data-lucide="pie-chart" class="size-4 text-blue-600"></i>
+                  <span>${t("statsSummaryCard")}</span>
+                </h3>
+                <button type="button" onclick="setStage(3)" class="text-xs font-semibold text-blue-600 hover:text-blue-800 underline underline-offset-2">
+                  ${isAr ? "تعديل" : "Edit"}
+                </button>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 text-xs sm:text-[13px]">
+                <div class="p-3.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-900">
+                  <span class="text-xs text-slate-500 block uppercase font-mono font-semibold">${t("statusRequired")}</span>
+                  <span class="text-xl font-bold mt-1 block">${stats.required}</span>
+                </div>
+                <div class="p-3.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900">
+                  <span class="text-xs text-amber-700 block uppercase font-mono font-semibold">${t("statusOptional")}</span>
+                  <span class="text-xl font-bold mt-1 block">${stats.optional}</span>
+                </div>
+                <div class="p-3.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-500">
+                  <span class="text-xs text-slate-400 block uppercase font-mono font-semibold">${t("statusNotNeeded")}</span>
+                  <span class="text-xl font-bold mt-1 block">${stats.not_needed}</span>
+                </div>
+                <div class="p-3.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-900">
+                  <span class="text-xs text-slate-500 block uppercase font-mono font-semibold">${t("statusUndecided")}</span>
+                  <span class="text-xl font-bold mt-1 block">${stats.undecided}</span>
+                </div>
+              </div>
+
+              <div class="pt-2 text-xs text-slate-500 flex items-center justify-between border-t border-slate-100">
+                <span>${isAr ? "المحطات النشطة برحلة العميل:" : "Active Journey Milestones:"}</span>
+                <span class="font-bold text-slate-900 font-mono">${activeJourneyCount} ${isAr ? "محطة" : "nodes"}</span>
+              </div>
+            </div>
+
+            <!-- Custom Requirements Preview -->
+            ${state.customRequirements.length > 0 ? `
+              <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-card space-y-3">
+                <h4 class="font-semibold text-base text-slate-900 flex items-center gap-x-1.5">
+                  <i data-lucide="plus-circle" class="size-4 text-blue-600"></i>
+                  <span>${t("customReqHeading")} (${state.customRequirements.length})</span>
+                </h4>
+                <div class="space-y-2 text-xs">
+                  ${state.customRequirements.map(r => `
+                    <div class="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                      <div class="font-bold text-slate-900">${escapeHtml(r.name)}</div>
+                      ${r.desc ? `<div class="text-xs text-slate-500 mt-0.5 leading-relaxed">${escapeHtml(r.desc)}</div>` : ''}
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+          </div>
+
+          <!-- Column 2: Dependencies Advisory & Required Features List (7 cols) -->
+          <div class="lg:col-span-7 space-y-6">
+            
+            <!-- Dependency Advisory Card -->
+            <div class="bg-white border border-slate-200 rounded-xl p-5 sm:p-6 shadow-card space-y-3.5">
+              <h3 class="font-semibold text-base text-slate-900 flex items-center gap-x-2">
+                <i data-lucide="git-branch" class="size-4 text-blue-600"></i>
+                <span>${t("depWarningsTitle")}</span>
+              </h3>
+
+              ${unresolvedDeps.length > 0 ? `
+                <div class="p-3.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 space-y-2">
+                  <p class="font-bold">${isAr ? "الملاحظات التالية تتطلب مراجعة التوافق الفني:" : "The following dependencies require review:"}</p>
+                  <ul class="list-disc list-inside space-y-1 text-xs text-amber-800 leading-relaxed font-medium">
+                    ${unresolvedDeps.map(w => `<li>${escapeHtml(w)}</li>`).join('')}
+                  </ul>
+                </div>
+              ` : `
+                <div class="p-3.5 rounded-lg bg-teal-50 border border-teal-200 text-xs text-teal-900 flex items-center gap-x-2">
+                  <i data-lucide="check-circle-2" class="size-4 text-teal-600 shrink-0"></i>
+                  <span class="font-semibold">${t("noDepWarnings")}</span>
+                </div>
+              `}
+            </div>
+
+            <!-- Features Summary by Category List -->
+            <div class="bg-white border border-slate-200 rounded-xl p-5 sm:p-6 shadow-card space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <span class="flex items-center gap-x-2 font-semibold text-base text-slate-900">
+                  <i data-lucide="check-square" class="size-4 text-blue-600"></i>
+                  <span>${isAr ? "الميزات المطلوبة بحسب القسم" : "Required Features by Category"}</span>
+                </span>
+                <span class="text-xs font-mono font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded">${stats.required} ${isAr ? "ميزة" : "items"}</span>
+              </div>
+
+              <div class="space-y-3 max-h-[420px] overflow-y-auto pe-1">
+                ${renderRequiredFeaturesByCategory()}
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Final Confirmation Box & Web3Forms Submit Action (Consistent 44px Button Height) -->
+        <div class="bg-white border border-slate-200 rounded-xl p-5 sm:p-7 shadow-card space-y-5">
+          <div class="space-y-2">
+            <label class="flex items-start gap-x-3 cursor-pointer select-none">
+              <input type="checkbox" id="client-confirm-checkbox" ${state.confirmed ? 'checked' : ''} onchange="toggleClientConfirmation(this.checked)" class="size-4 mt-1 border-slate-300 rounded text-blue-600 focus:ring-blue-500">
+              <span class="text-xs sm:text-sm font-semibold text-slate-900 leading-relaxed">
+                ${t("confirmationCheckboxText")}
+              </span>
+            </label>
+            <p class="text-xs text-slate-400 ps-7 rtl:pe-7 rtl:ps-0 leading-relaxed">
+              ${isAr ? "هذا الاعتماد يمثل اتفاقاً مبدئياً على المواصفات الفنية لإنشاء العرض الفني والمالي الرسمي للمشروع." : "This sign-off represents preliminary scope alignment for preparing the technical & commercial proposal."}
+            </p>
+          </div>
+
+          <div class="border-t border-slate-100 pt-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <button type="button" onclick="exportJSON()" class="w-full sm:w-auto h-11 px-5 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50">
+              <i data-lucide="download" class="size-4 text-slate-500"></i>
+              <span>${t("btnExportDraftOnly")}</span>
+            </button>
+
+            <button type="button" id="final-submit-btn" onclick="submitFinalRequirements()" ${state.submissionState === 'submitting' ? 'disabled' : ''} class="w-full sm:w-auto h-11 px-7 inline-flex items-center justify-center gap-x-2 text-sm font-bold rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none shadow-sm">
+              <i data-lucide="${state.submissionState === 'submitting' ? 'loader-2' : 'send'}" class="size-4 ${state.submissionState === 'submitting' ? 'animate-spin' : ''}"></i>
+              <span id="submit-btn-text">${state.submissionState === 'submitting' ? t("submittingNotice") : t("btnSubmitFinal")}</span>
+            </button>
+          </div>
+        </div>
+      `;
+
+      refreshUI();
+    }
+
+    function toggleClientConfirmation(checked) {
+      state.confirmed = checked;
+      saveToLocalStorage();
+    }
+
+    function renderRequiredFeaturesByCategory() {
+      const isAr = state.language === "ar";
+      return CATEGORIES.filter(c => c.id !== 12).map(cat => {
+        const catReqs = FEATURES.filter(f => f.cat === cat.id && state.selections[f.id] === "required");
+        if (catReqs.length === 0) return "";
+
+        return `
+          <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1.5 text-xs sm:text-[13px]">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span>${cat.id}. ${escapeHtml(isAr ? cat.nameAr : cat.nameEn)}</span>
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-200 text-slate-700 font-semibold">${catReqs.length}</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              ${catReqs.map(f => `
+                <span class="py-1 px-2.5 rounded-md bg-white border border-slate-200 text-slate-800 text-xs font-medium shadow-2xs">
+                  ${escapeHtml(isAr ? f.nameAr : f.nameEn)}
+                </span>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function findUnresolvedDependencies() {
+      const warnings = [];
+      const isAr = state.language === "ar";
+
+      FEATURES.forEach(f => {
+        if (state.selections[f.id] === "required" && Array.isArray(f.deps)) {
+          f.deps.forEach(depId => {
+            if (state.selections[depId] !== "required") {
+              const depFeat = FEATURES.find(x => x.id === depId);
+              const depName = depFeat ? (isAr ? depFeat.nameAr : depFeat.nameEn) : depId;
+              const featName = isAr ? f.nameAr : f.nameEn;
+              warnings.push(isAr ? 
+                `الميزة "${featName}" تتطلب تفعيل ميزة "${depName}".` : 
+                `"${featName}" requires "${depName}".`
+              );
+            }
+          });
+        }
+      });
+
+      const payCod = state.selections["feat_pay_cod"] === "required";
+      const payOnline = state.selections["feat_pay_gateway"] === "required";
+      const payWallets = state.selections["feat_pay_wallets"] === "required";
+      const payTransfer = state.selections["feat_pay_bank_transfer"] === "required";
+
+      if (!payCod && !payOnline && !payWallets && !payTransfer) {
+        warnings.push(isAr ? 
+          "لم يتم تحديد أي وسيلة دفع كمطلوبة في المرحلة الأولى (ينصح بتفعيل الدفع عند الاستلام كحد أدنى)." : 
+          "No payment method marked as required (Cash on Delivery recommended as minimum baseline)."
+        );
+      }
+
+      return warnings;
+    }
+
+    function renderSubmissionAlert() {
+      if (state.submissionState === "success") {
+        return `
+          <div class="p-4 rounded-xl bg-teal-50 border border-teal-200 text-teal-900 flex items-start gap-x-3 shadow-sm mb-6">
+            <i data-lucide="check-circle-2" class="size-5 text-teal-600 shrink-0 mt-0.5"></i>
+            <div class="space-y-1 text-xs sm:text-[13px]">
+              <h4 class="font-bold text-sm text-teal-950">${state.language === 'ar' ? 'تم الإرسال بنجاح!' : 'Requirements Submitted Successfully!'}</h4>
+              <p class="leading-relaxed text-teal-800">${t("submitSuccessMsg")}</p>
+              ${state.lastSubmissionTimestamp ? `<p class="text-xs text-teal-600 font-mono pt-1">Timestamp: ${state.lastSubmissionTimestamp}</p>` : ''}
+            </div>
+          </div>
+        `;
+      } else if (state.submissionState === "failure") {
+        return `
+          <div class="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 flex items-start gap-x-3 shadow-sm mb-6">
+            <i data-lucide="alert-octagon" class="size-5 text-rose-600 shrink-0 mt-0.5"></i>
+            <div class="space-y-1 text-xs sm:text-[13px]">
+              <h4 class="font-bold text-sm text-rose-950">${state.language === 'ar' ? 'تعذر الإرسال' : 'Submission Error'}</h4>
+              <p class="leading-relaxed text-rose-800">${t("submitFailMsg")}</p>
+            </div>
+          </div>
+        `;
+      }
+      return "";
+    }
+
+    // -------------------------------------------------------------
+    // WEB3FORMS SUBMISSION LOGIC
+    // -------------------------------------------------------------
+    async function submitFinalRequirements() {
+      const isAr = state.language === "ar";
+
+      const info = state.clientInfo;
+      if (!info.clientName || !info.clientName.trim() ||
+          !info.clientEmail || !info.clientEmail.trim() ||
+          !info.brandName || !info.brandName.trim()) {
+        showToast(t("requiredValidationWarning"), "warning");
+        setStage(1);
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(info.clientEmail.trim())) {
+        showToast(isAr ? "يرجى إدخال بريد إلكتروني صحيح" : "Please provide a valid email address", "warning");
+        setStage(1);
+        return;
+      }
+
+      if (!state.confirmed) {
+        showToast(isAr ? "يرجى التأشير على مربع تأكيد صحة الاختيارات قبل المتابعة" : "Please tick the confirmation checkbox before submitting", "warning");
+        return;
+      }
+
+      if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === "YOUR_ACCESS_KEY_HERE" || WEB3FORMS_ACCESS_KEY.trim() === "") {
+        console.warn("Web3Forms Access Key is not configured.");
+        state.lastSubmissionError = isAr ? 
+          "لم يتم ضبط مفتاح Web3Forms Access Key الفعلي في الكود (WEB3FORMS_ACCESS_KEY)." : 
+          "Web3Forms Access Key is not configured (WEB3FORMS_ACCESS_KEY).";
+        state.submissionState = "failure";
+        renderStage4();
+        showToast(t("missingAccessKeyMsg"), "error");
+        return;
+      }
+
+      if (state.submissionState === "submitting") return;
+
+      state.submissionState = "submitting";
+      state.lastSubmissionError = null;
+      renderStage4();
+
+      const stats = getCatalogStats();
+      const unresolvedDeps = findUnresolvedDependencies();
+      const evaluatedJourney = getEvaluatedJourneyNodes();
+      const activeJourney = evaluatedJourney.filter(n => !n.isExcluded);
+
+      const sanitizedBrand = (info.brandName || "SHOP").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 4) || "SHOP";
+      const projectRefId = "PRJ-" + sanitizedBrand + "-" + Date.now().toString(36).toUpperCase();
+      const submissionDate = new Date().toISOString();
+
+      const summaryLines = [];
+      summaryLines.push("============================================================");
+      summaryLines.push("E-COMMERCE STORE REQUIREMENTS SPECIFICATION (PHASE 1)");
+      summaryLines.push("مواصفات ومتطلبات متجر التجارة الإلكترونية - المرحلة الأولى");
+      summaryLines.push("============================================================\n");
+
+      summaryLines.push("[PROJECT METADATA & CLIENT TOUCHPOINTS]");
+      summaryLines.push("Project Reference ID : " + projectRefId);
+      summaryLines.push("Brand Name           : " + info.brandName);
+      summaryLines.push("Client Name          : " + info.clientName);
+      summaryLines.push("Client Email         : " + info.clientEmail);
+      summaryLines.push("Phone / WhatsApp     : " + (info.clientPhone || "Not provided"));
+      summaryLines.push("Industry / Sector    : " + (info.industry || "Not specified"));
+      summaryLines.push("Target Audience      : " + (info.targetAudience || "Not specified"));
+      summaryLines.push("Primary Goal         : " + (info.mainGoal || "Not specified"));
+      summaryLines.push("Expected Products    : " + info.expectedProducts);
+      summaryLines.push("Launch Language      : " + info.preferredLanguage);
+      summaryLines.push("Client Notes         : " + (info.additionalNotes || "None"));
+      summaryLines.push("Submission Timestamp : " + submissionDate + "\n");
+
+      summaryLines.push("------------------------------------------------------------");
+      summaryLines.push("[FEATURE SELECTIONS OVERVIEW]");
+      summaryLines.push("Total Features in Catalog : " + FEATURES.length);
+      summaryLines.push("- REQUIRED (مطلوب)         : " + stats.required);
+      summaryLines.push("- OPTIONAL (اختياري)       : " + stats.optional);
+      summaryLines.push("- NOT NEEDED (غير مطلوب)   : " + stats.not_needed);
+      summaryLines.push("- UNDECIDED (لم يحدد)      : " + stats.undecided + "\n");
+
+      summaryLines.push("------------------------------------------------------------");
+      summaryLines.push("[REQUIRED FEATURES BY CATEGORY - المرحلة الأولى]");
+      CATEGORIES.filter(c => c.id !== 12).forEach(c => {
+        const reqs = FEATURES.filter(f => f.cat === c.id && state.selections[f.id] === "required");
+        if (reqs.length > 0) {
+          summaryLines.push("\nCategory " + c.id + ": " + c.nameEn + " (" + c.nameAr + ") [" + reqs.length + " items]:");
+          reqs.forEach(r => {
+            summaryLines.push("  • [" + r.id + "] " + r.nameEn + " | " + r.nameAr);
+          });
+        }
+      });
+
+      const optionalFeatures = FEATURES.filter(f => state.selections[f.id] === "optional");
+      if (optionalFeatures.length > 0) {
+        summaryLines.push("\n------------------------------------------------------------");
+        summaryLines.push("[OPTIONAL ENHANCEMENTS - خيارات مطروحة] (" + optionalFeatures.length + " items):");
+        optionalFeatures.forEach(o => {
+          summaryLines.push("  • [" + o.id + "] " + o.nameEn + " | " + o.nameAr);
+        });
+      }
+
+      if (state.customRequirements.length > 0) {
+        summaryLines.push("\n------------------------------------------------------------");
+        summaryLines.push("[CUSTOM CLIENT REQUIREMENTS - متطلبات مخصصة] (" + state.customRequirements.length + " items):");
+        state.customRequirements.forEach((r, idx) => {
+          summaryLines.push("  " + (idx + 1) + ". " + r.name + " (Priority: " + r.priority + ")");
+          if (r.desc) summaryLines.push("     Details: " + r.desc);
+        });
+      }
+
+      summaryLines.push("\n------------------------------------------------------------");
+      summaryLines.push("[CUSTOMER JOURNEY CONFIGURATION - مسار العميل]");
+      summaryLines.push("Active Journey Nodes (" + activeJourney.length + " steps):");
+      activeJourney.forEach(n => {
+        summaryLines.push("  [" + n.stage + "] " + n.titleEn + " | " + n.titleAr + " (" + n.type + ")");
+      });
+
+      if (unresolvedDeps.length > 0) {
+        summaryLines.push("\n------------------------------------------------------------");
+        summaryLines.push("[DEPENDENCY NOTIFICATIONS & CONFLICTS]:");
+        unresolvedDeps.forEach(d => {
+          summaryLines.push("  ! " + d);
+        });
+      }
+
+      const readableSummary = summaryLines.join("\n");
+
+      const completeProjectData = {
+        schema_version: APP_SCHEMA_VERSION,
+        project_reference_id: projectRefId,
+        submission_timestamp: submissionDate,
+        client_touchpoints: {
+          client_name: info.clientName,
+          client_email: info.clientEmail,
+          client_phone: info.clientPhone || "",
+          brand_name: info.brandName
+        },
+        business_profile: {
+          industry: info.industry || "",
+          business_description: info.businessDesc || "",
+          target_audience: info.targetAudience || "",
+          main_goal: info.mainGoal || "",
+          expected_products: info.expectedProducts,
+          expected_categories: info.expectedCategories,
+          preferred_language: info.preferredLanguage,
+          additional_notes: info.additionalNotes || ""
+        },
+        metrics: stats,
+        feature_selections: state.selections,
+        custom_requirements: state.customRequirements,
+        unresolved_dependencies: unresolvedDeps,
+        confirmed_by_client: state.confirmed,
+        active_journey_nodes: activeJourney.map(n => ({
+          id: n.id,
+          stage: n.stage,
+          type: n.type,
+          titleEn: n.titleEn,
+          titleAr: n.titleAr,
+          featureId: n.featureId
+        }))
+      };
+
+      const web3FormsPayload = {
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: "New E-commerce Project Requirements — " + info.brandName + " [" + projectRefId + "]",
+        from_name: "E-Commerce Scope Builder",
+        name: info.clientName,
+        email: info.clientEmail,
+        replyto: info.clientEmail,
+        project_reference_id: projectRefId,
+        brand_name: info.brandName,
+        client_phone: info.clientPhone || "Not provided",
+        industry: info.industry || "Not provided",
+        target_audience: info.targetAudience || "Not provided",
+        main_goal: info.mainGoal || "Not provided",
+        expected_products: info.expectedProducts,
+        launch_language: info.preferredLanguage,
+        required_features_count: stats.required,
+        optional_features_count: stats.optional,
+        excluded_features_count: stats.not_needed,
+        custom_requirements_count: state.customRequirements.length,
+        message: readableSummary,
+        complete_project_json: JSON.stringify(completeProjectData, null, 2)
+      };
+
+      try {
+        const response = await fetch(WEB3FORMS_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(web3FormsPayload)
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (response.ok && (result.success === true || result.status === 200 || result.status === "success")) {
+          state.submissionState = "success";
+          state.lastSubmissionTimestamp = submissionDate;
+          state.lastSubmissionError = null;
+          saveToLocalStorage();
+          renderStage4();
+          showToast(t("submitSuccessMsg"), "success");
+        } else {
+          const errMsg = result.message || 
+            (Array.isArray(result.errors) ? result.errors.join(", ") : null) || 
+            (isAr ? "استجابت خدمة Web3Forms برسالة خطأ غير متوقعة." : "Web3Forms reported a submission error.");
+          throw new Error(errMsg);
+        }
+      } catch (err) {
+        console.warn("Web3Forms transmission error:", err);
+        state.submissionState = "failure";
+        state.lastSubmissionError = err.message || (isAr ? "تعذر الاتصال بخادم Web3Forms" : "Network error contacting Web3Forms API");
+        saveToLocalStorage();
+        renderStage4();
+        showToast(t("submitFailMsg"), "error");
+      }
+    }
+
+    // -------------------------------------------------------------
+    // EXPORT, IMPORT, RESET & TOAST UTILITIES
+    // -------------------------------------------------------------
+    function exportJSON() {
+      const payload = {
+        version: APP_SCHEMA_VERSION,
+        exportedAt: new Date().toISOString(),
+        language: state.language,
+        clientInfo: state.clientInfo,
+        selections: state.selections,
+        customRequirements: state.customRequirements,
+        confirmed: state.confirmed
+      };
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 2));
+      const downloadAnchor = document.createElement("a");
+      const filename = `ecommerce-scope-${(state.clientInfo.brandName || "project").replace(/\s+/g, "_")}-${new Date().toISOString().slice(0, 10)}.json`;
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", filename);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+
+      showToast(state.language === "ar" ? "تم تصدير ملف JSON بنجاح" : "JSON project file exported successfully", "success");
+    }
+
+    function importJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (!parsed || typeof parsed !== "object") throw new Error("Invalid format");
+
+          if (parsed.clientInfo) state.clientInfo = Object.assign(state.clientInfo, parsed.clientInfo);
+          if (parsed.selections) state.selections = Object.assign(state.selections, parsed.selections);
+          if (Array.isArray(parsed.customRequirements)) state.customRequirements = parsed.customRequirements;
+          if (typeof parsed.confirmed === "boolean") state.confirmed = parsed.confirmed;
+          if (parsed.language) state.language = parsed.language;
+
+          saveToLocalStorage();
+          applyLanguageDirection();
+          renderStepper();
+          renderCurrentStage();
+          updateHeaderProgress();
+
+          showToast(state.language === "ar" ? "تم استيراد بيانات المشروع بنجاح" : "Project restored successfully", "success");
+        } catch (err) {
+          showToast(state.language === "ar" ? "تعذر قراءة الملف: تأكد من صحة تنسيق JSON" : "Invalid JSON file structure", "error");
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = "";
+    }
+
+    function openResetModal() {
+      const modal = document.getElementById("reset-modal");
+      if (modal) modal.classList.remove("hidden");
+    }
+
+    function closeResetModal() {
+      const modal = document.getElementById("reset-modal");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    function confirmResetProject() {
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+
+    function toggleDraftMenu() {
+      const menu = document.getElementById("draft-menu-dropdown");
+      if (menu) menu.classList.toggle("hidden");
+    }
+
+    function closeDraftMenu() {
+      const menu = document.getElementById("draft-menu-dropdown");
+      if (menu) menu.classList.add("hidden");
+    }
+
+    window.addEventListener("click", function(e) {
+      const container = document.getElementById("draft-menu-container");
+      if (container && !container.contains(e.target)) {
+        closeDraftMenu();
+      }
+    });
+
+    // Toast Notification System (Consistent 16px Padding, 44px Item)
+    function showToast(message, type = "info") {
+      const container = document.getElementById("toast-container");
+      if (!container) return;
+
+      const toast = document.createElement("div");
+      
+      let icon = "info";
+      let borderColors = "border-slate-200 bg-white text-slate-800";
+      
+      if (type === "success") {
+        icon = "check-circle";
+        borderColors = "border-teal-200 bg-teal-50 text-teal-800";
+      } else if (type === "warning") {
+        icon = "alert-triangle";
+        borderColors = "border-amber-200 bg-amber-50 text-amber-800";
+      } else if (type === "error") {
+        icon = "alert-circle";
+        borderColors = "border-rose-200 bg-rose-50 text-rose-800";
+      }
+
+      toast.className = `p-3.5 rounded-xl border text-xs sm:text-[13px] shadow-dialog transition-all duration-300 transform translate-y-3 opacity-0 pointer-events-auto max-w-sm flex items-center gap-x-3 ${borderColors}`;
+      toast.innerHTML = `
+        <i data-lucide="${icon}" class="size-4 shrink-0 ${type === 'success' ? 'text-teal-600' : type === 'warning' ? 'text-amber-600' : type === 'error' ? 'text-rose-600' : 'text-blue-600'}"></i>
+        <span class="flex-1 font-medium leading-relaxed">${escapeHtml(message)}</span>
+        <button type="button" class="text-slate-400 hover:text-slate-600 p-1 rounded transition" onclick="this.parentElement.remove()">
+          <i data-lucide="x" class="size-3.5"></i>
+        </button>
+      `;
+
+      container.appendChild(toast);
+      refreshUI();
+
+      setTimeout(() => {
+        toast.classList.remove("translate-y-3", "opacity-0");
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.add("translate-y-3", "opacity-0");
+        setTimeout(() => toast.remove(), 300);
+      }, 4500);
+    }
+
+    // -------------------------------------------------------------
+    // START APPLICATION
+    // -------------------------------------------------------------
+    document.addEventListener("DOMContentLoaded", initApp);
+  </script>
+</body>
+</html>

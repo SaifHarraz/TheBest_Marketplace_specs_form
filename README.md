@@ -33,6 +33,16 @@
    ```
    ثم افتح المتصفح على: `http://localhost:8080`
 
+3. **إعادة بناء أو تجميع التطبيق (Build):**
+   - لتجميع التطبيق بعد تعديل البيانات في `features_data.js` أو `journey_data.js`:
+   ```bash
+   npm run build
+   ```
+   أو:
+   ```bash
+   node build.js
+   ```
+
 ---
 
 ### خطوات ضبط واستلام الطلبات عبر Web3Forms (Setup Web3Forms)
