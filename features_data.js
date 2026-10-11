@@ -10,7 +10,7 @@ const FEATURES_DATA = [
     descEn: "Bespoke UI/UX design crafted uniquely for your brand aesthetic, typography, and identity.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -22,7 +22,7 @@ const FEATURES_DATA = [
     descEn: "Seamless browsing and purchase experience optimized across all smartphone, tablet, and desktop screens.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -34,7 +34,7 @@ const FEATURES_DATA = [
     descEn: "Harmonious integration of brand logo, color palette, and professional fonts throughout the store.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_custom_design"]
   },
   {
@@ -46,7 +46,7 @@ const FEATURES_DATA = [
     descEn: "The primary storefront entrance showcasing brand highlights, featured products, and active campaigns.",
     type: "page",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -58,7 +58,7 @@ const FEATURES_DATA = [
     descEn: "Comprehensive product listing page enabling browsing, category filtering, and item sorting.",
     type: "page",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -70,7 +70,7 @@ const FEATURES_DATA = [
     descEn: "Dedicated product page featuring gallery images, variants, descriptions, price, stock, and Add to Cart.",
     type: "page",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -82,7 +82,7 @@ const FEATURES_DATA = [
     descEn: "Dedicated category pages allowing shoppers to explore specific collections effortlessly.",
     type: "page",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -94,7 +94,7 @@ const FEATURES_DATA = [
     descEn: "Brand storytelling page building trust and communicating your mission and values to visitors.",
     type: "page",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -106,7 +106,7 @@ const FEATURES_DATA = [
     descEn: "Contact touchpoints page with inquiry form, phone numbers, email, and address details.",
     type: "page",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -118,7 +118,7 @@ const FEATURES_DATA = [
     descEn: "Answers to common customer questions regarding orders, shipping, and returns to streamline support.",
     type: "page",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -130,7 +130,7 @@ const FEATURES_DATA = [
     descEn: "Legal policy disclosing visitor data collection, usage, and protection guidelines.",
     type: "page",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -142,7 +142,7 @@ const FEATURES_DATA = [
     descEn: "Terms governing store usage, purchase conditions, and user rights.",
     type: "page",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -154,7 +154,7 @@ const FEATURES_DATA = [
     descEn: "Clear documentation of estimated delivery windows, regional shipping rates, and fulfillment rules.",
     type: "page",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -166,7 +166,7 @@ const FEATURES_DATA = [
     descEn: "Rules governing returns, exchange windows, eligible conditions, and refund procedures.",
     type: "page",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -178,7 +178,7 @@ const FEATURES_DATA = [
     descEn: "Dedicated promotional landing pages engineered for specific advertising campaigns to maximize conversion.",
     type: "page",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -190,7 +190,7 @@ const FEATURES_DATA = [
     descEn: "Header announcement bar and interactive hero banners highlighting sales and free delivery thresholds.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_page_home"]
   },
   {
@@ -202,7 +202,7 @@ const FEATURES_DATA = [
     descEn: "Dynamic homepage section automatically highlighting recently added catalog products.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_page_home"]
   },
   {
@@ -214,7 +214,7 @@ const FEATURES_DATA = [
     descEn: "Hand-curated product spotlight block placed on the homepage by store managers.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_page_home"]
   },
   {
@@ -226,7 +226,7 @@ const FEATURES_DATA = [
     descEn: "Showcase highlighting trending or highest-selling items to create social proof.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_page_home"]
   },
   {
@@ -238,7 +238,7 @@ const FEATURES_DATA = [
     descEn: "Cross-sell and upsell recommendations shown on product pages to increase average order value.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_page_product_detail"]
   },
   {
@@ -250,7 +250,7 @@ const FEATURES_DATA = [
     descEn: "Instant toggle between Arabic (RTL) and English (LTR) across all storefront texts and interfaces.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -262,7 +262,7 @@ const FEATURES_DATA = [
     descEn: "Multi-language framework support for additional languages beyond Arabic and English.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "not_needed",
+    defaultStatus: "undecided",
     deps: ["feat_lang_bilingual"]
   },
   {
@@ -274,7 +274,7 @@ const FEATURES_DATA = [
     descEn: "User toggle to switch between dark and light aesthetic themes.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "not_needed",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -286,7 +286,7 @@ const FEATURES_DATA = [
     descEn: "Delightful transitions, hover micro-interactions, and smooth cart drawer sliding effects.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
 
@@ -300,7 +300,7 @@ const FEATURES_DATA = [
     descEn: "Rich fields for product titles, descriptive copy, specification tables, and material info.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_page_product_detail"]
   },
   {
@@ -312,7 +312,7 @@ const FEATURES_DATA = [
     descEn: "Upload and display multiple photography angles showcasing product quality and craftsmanship.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_page_product_detail"]
   },
   {
@@ -324,7 +324,7 @@ const FEATURES_DATA = [
     descEn: "Interactive lightbox gallery with magnifying zoom to inspect materials and micro-details.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_prod_multi_images"]
   },
   {
@@ -336,7 +336,7 @@ const FEATURES_DATA = [
     descEn: "Hierarchical category architecture organizing catalog navigation effectively.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_page_shop"]
   },
   {
@@ -348,7 +348,7 @@ const FEATURES_DATA = [
     descEn: "Variant selection chips (sizes, color swatches) that dynamically update images and availability.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_page_product_detail"]
   },
   {
@@ -360,7 +360,7 @@ const FEATURES_DATA = [
     descEn: "Configure distinctive pricing tiers based on variant selections (e.g. size/weight difference).",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_prod_variants"]
   },
   {
@@ -372,7 +372,7 @@ const FEATURES_DATA = [
     descEn: "Independent inventory tracking per variant to prevent overselling unavailable sizes.",
     type: "admin",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_prod_variants"]
   },
   {
@@ -384,7 +384,7 @@ const FEATURES_DATA = [
     descEn: "Strikethrough original price with bold sale tag and discount percentage display.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -396,7 +396,7 @@ const FEATURES_DATA = [
     descEn: "Visual badges indicating stock availability status (In Stock, Low Stock, Sold Out).",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_page_product_detail"]
   },
   {
@@ -408,7 +408,7 @@ const FEATURES_DATA = [
     descEn: "Visual overlay corner badges on product cards highlighting trending status.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_page_shop"]
   },
   {
@@ -420,7 +420,7 @@ const FEATURES_DATA = [
     descEn: "Instant search bar enabling shoppers to find items by name, SKU, or keywords.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_page_shop"]
   },
   {
@@ -432,7 +432,7 @@ const FEATURES_DATA = [
     descEn: "Faceted category sidebar filter narrowing down displayed catalog collections.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_page_shop"]
   },
   {
@@ -444,7 +444,7 @@ const FEATURES_DATA = [
     descEn: "Slider or input boxes allowing shoppers to filter products within specific price brackets.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_page_shop"]
   },
   {
@@ -456,7 +456,7 @@ const FEATURES_DATA = [
     descEn: "Filter catalog items matching customer preferred size chips or color palettes.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_prod_variants", "feat_page_shop"]
   },
   {
@@ -468,7 +468,7 @@ const FEATURES_DATA = [
     descEn: "Checkbox allowing shoppers to hide out-of-stock items and view ready-to-ship products.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_page_shop"]
   },
   {
@@ -480,7 +480,7 @@ const FEATURES_DATA = [
     descEn: "Dropdown menu sorting catalog by new arrivals, price ascending/descending, or popularity.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_page_shop"]
   },
   {
@@ -492,7 +492,7 @@ const FEATURES_DATA = [
     descEn: "Structured pagination or dynamic 'Load More' button maintaining optimal browsing performance.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_page_shop"]
   },
   {
@@ -504,7 +504,7 @@ const FEATURES_DATA = [
     descEn: "Enable customer notification requests when an out-of-stock item is replenished.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_prod_stock_indicator"]
   },
   {
@@ -516,7 +516,7 @@ const FEATURES_DATA = [
     descEn: "Bulk catalog data management via spreadsheet spreadsheets for rapid catalog updates.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
 
@@ -530,7 +530,7 @@ const FEATURES_DATA = [
     descEn: "Interactive Add to Cart action triggering an elegant sliding slide-out drawer confirmation.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_page_product_detail"]
   },
   {
@@ -542,7 +542,7 @@ const FEATURES_DATA = [
     descEn: "Quantity stepper controls recalculating totals on the fly without page refreshes.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_cart_add"]
   },
   {
@@ -554,7 +554,7 @@ const FEATURES_DATA = [
     descEn: "Easy one-click item removal with clean visual feedback.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_cart_add"]
   },
   {
@@ -566,7 +566,7 @@ const FEATURES_DATA = [
     descEn: "Transparent summary displaying product subtotal, active discounts, and estimated charges.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_cart_add"]
   },
   {
@@ -578,7 +578,7 @@ const FEATURES_DATA = [
     descEn: "Preserves shopping cart contents across browser sessions so shoppers can resume later.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_cart_add"]
   },
   {
@@ -590,7 +590,7 @@ const FEATURES_DATA = [
     descEn: "Frictionless checkout allowing customers to complete orders without compulsory account creation.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -602,7 +602,7 @@ const FEATURES_DATA = [
     descEn: "Expedited checkout pulling saved addresses and tracking order records under customer profile.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_auth_login"]
   },
   {
@@ -614,7 +614,7 @@ const FEATURES_DATA = [
     descEn: "Real-time verification of phone number formatting and required delivery address entries.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -626,7 +626,7 @@ const FEATURES_DATA = [
     descEn: "Clear form capturing full name, mobile phone number, and optional WhatsApp contact.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -638,7 +638,7 @@ const FEATURES_DATA = [
     descEn: "Structured dropdowns for governorates, districts, and exact street/building instructions.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -650,7 +650,7 @@ const FEATURES_DATA = [
     descEn: "Allowing shoppers to select their preferred fulfillment speed (Standard vs. Express).",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -662,7 +662,7 @@ const FEATURES_DATA = [
     descEn: "Detailed pre-confirmation review screen verifying products, delivery destination, and grand total.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -674,7 +674,7 @@ const FEATURES_DATA = [
     descEn: "Promo code input field instantly recalculating order total upon validating eligibility rules.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -686,7 +686,7 @@ const FEATURES_DATA = [
     descEn: "Automated threshold logic waiving delivery fees once cart subtotal exceeds designated amount.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -698,7 +698,7 @@ const FEATURES_DATA = [
     descEn: "Clear confirmation page showcasing unique order reference number, invoice overview, and fulfillment steps.",
     type: "page",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -710,7 +710,7 @@ const FEATURES_DATA = [
     descEn: "System capturing abandoned checkout sessions to trigger reminder workflows.",
     type: "integration",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_cart_persistent"]
   },
 
@@ -724,7 +724,7 @@ const FEATURES_DATA = [
     descEn: "Streamlined sign-up form capturing customer name, credentials, and contact details.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -736,7 +736,7 @@ const FEATURES_DATA = [
     descEn: "Secure authentication interface with persistent session options and sign-out controls.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_auth_register"]
   },
   {
@@ -748,7 +748,7 @@ const FEATURES_DATA = [
     descEn: "Automated password recovery link dispatched via email to securely reset credentials.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_auth_login"]
   },
   {
@@ -760,7 +760,7 @@ const FEATURES_DATA = [
     descEn: "Self-service customer portal for editing personal data, phone numbers, and security credentials.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_auth_login"]
   },
   {
@@ -772,7 +772,7 @@ const FEATURES_DATA = [
     descEn: "Multi-address management enabling shoppers to store Home and Office addresses for 1-click checkout.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_auth_login"]
   },
   {
@@ -784,7 +784,7 @@ const FEATURES_DATA = [
     descEn: "Comprehensive archive of past customer orders with timestamps, status, and pricing.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_auth_login"]
   },
   {
@@ -796,7 +796,7 @@ const FEATURES_DATA = [
     descEn: "Detailed breakdown view of any historical order with itemized receipt and address records.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_account_order_history"]
   },
   {
@@ -808,7 +808,7 @@ const FEATURES_DATA = [
     descEn: "Visual multi-stage timeline illustrating order fulfillment milestones from packing to doorstep.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -820,7 +820,7 @@ const FEATURES_DATA = [
     descEn: "Heart icon saving favorite items to a personal wishlist collection for future purchasing.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -832,7 +832,7 @@ const FEATURES_DATA = [
     descEn: "Post-purchase star rating and feedback system with admin moderation controls.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_page_product_detail"]
   },
   {
@@ -844,7 +844,7 @@ const FEATURES_DATA = [
     descEn: "Convenient reorder shortcut repopulating the cart with prior purchases for effortless repeat business.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_account_order_history"]
   },
   {
@@ -856,7 +856,7 @@ const FEATURES_DATA = [
     descEn: "User controls opting in or out of specific communication channels for order notices.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_auth_login"]
   },
 
@@ -870,7 +870,7 @@ const FEATURES_DATA = [
     descEn: "Payment in cash handed directly to the courier upon delivery; essential for regional trust.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -882,7 +882,7 @@ const FEATURES_DATA = [
     descEn: "Secure gateway integration supporting Visa, Mastercard, and Meeza debit/credit cards.",
     type: "integration",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -894,7 +894,7 @@ const FEATURES_DATA = [
     descEn: "Seamless checkout flow for bank cards with 3D Secure OTP verification.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_pay_gateway"]
   },
   {
@@ -906,7 +906,7 @@ const FEATURES_DATA = [
     descEn: "Integration for prominent local mobile phone wallets (Vodafone Cash, Orange, Etisalat, smart wallets).",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_pay_gateway"]
   },
   {
@@ -918,7 +918,7 @@ const FEATURES_DATA = [
     descEn: "Display bank account / InstaPay handles with proof receipt upload capability.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -930,7 +930,7 @@ const FEATURES_DATA = [
     descEn: "Automated webhook synchronization updating orders to 'Paid' instantly upon settlement.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_pay_gateway"]
   },
   {
@@ -942,7 +942,7 @@ const FEATURES_DATA = [
     descEn: "Graceful error recovery allowing customers to retry another payment method without losing cart items.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_pay_gateway"]
   },
   {
@@ -954,7 +954,7 @@ const FEATURES_DATA = [
     descEn: "Alternative payment selection pathway following transaction decline.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_pay_gateway"]
   },
   {
@@ -966,7 +966,7 @@ const FEATURES_DATA = [
     descEn: "Dashboard logging and tracking of customer refunds and reversed transactions.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -978,7 +978,7 @@ const FEATURES_DATA = [
     descEn: "Generating bank reference codes and printable digital receipts upon confirmed payment.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
 
@@ -992,7 +992,7 @@ const FEATURES_DATA = [
     descEn: "Standardized shipping rate applied across all regions regardless of package destination.",
     type: "admin",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1004,7 +1004,7 @@ const FEATURES_DATA = [
     descEn: "Differential shipping fees calculated accurately based on customer governorate and district.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1016,7 +1016,7 @@ const FEATURES_DATA = [
     descEn: "Organizing regions into operational clusters to streamline carrier dispatch.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_ship_location_pricing"]
   },
   {
@@ -1028,7 +1028,7 @@ const FEATURES_DATA = [
     descEn: "Incentive automatically zeroing out delivery charges when cart reaches threshold.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1040,7 +1040,7 @@ const FEATURES_DATA = [
     descEn: "Transparent delivery timeframe displayed during checkout to manage buyer expectations.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1052,7 +1052,7 @@ const FEATURES_DATA = [
     descEn: "Multiple fulfillment options presented to shopper (Store pickup vs. Home courier).",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1064,7 +1064,7 @@ const FEATURES_DATA = [
     descEn: "Automated airway bill (AWB) generation and dispatch transmission to courier partner APIs.",
     type: "integration",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1076,7 +1076,7 @@ const FEATURES_DATA = [
     descEn: "Real-time carrier tracking link injected into order status view for live package monitoring.",
     type: "integration",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_ship_courier_integration"]
   },
   {
@@ -1088,7 +1088,7 @@ const FEATURES_DATA = [
     descEn: "Automated alert dispatch when shipment enters 'Out for Delivery' status.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1100,7 +1100,7 @@ const FEATURES_DATA = [
     descEn: "Configurable geographic rules excluding unsupported postal codes or remote governorates.",
     type: "admin",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
 
@@ -1114,7 +1114,7 @@ const FEATURES_DATA = [
     descEn: "Encrypted admin gateway safeguarded by robust credential authentication.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1126,7 +1126,7 @@ const FEATURES_DATA = [
     descEn: "At-a-glance metrics widget showcasing daily sales, pending orders, and key operational alerts.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_admin_auth"]
   },
   {
@@ -1138,7 +1138,7 @@ const FEATURES_DATA = [
     descEn: "Intuitive admin control center to create, update, price, and organize merchandise items.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_admin_auth"]
   },
   {
@@ -1150,7 +1150,7 @@ const FEATURES_DATA = [
     descEn: "Manage hierarchical categories, banner thumbnails, and storefront navigation placement.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_admin_auth"]
   },
   {
@@ -1162,7 +1162,7 @@ const FEATURES_DATA = [
     descEn: "Matrix generator configuring colors, dimensions, and variant-specific attributes.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_admin_prod_mgmt"]
   },
   {
@@ -1174,7 +1174,7 @@ const FEATURES_DATA = [
     descEn: "Real-time stock deduction and inventory reconciliation across order lifecycles.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_admin_prod_mgmt"]
   },
   {
@@ -1186,7 +1186,7 @@ const FEATURES_DATA = [
     descEn: "Centralized order desk with multi-criteria filters by date, status, customer phone, or order ID.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_admin_auth"]
   },
   {
@@ -1198,7 +1198,7 @@ const FEATURES_DATA = [
     descEn: "Granular order inspection page with 1-click printable invoice and dispatch packing slip.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_admin_order_list"]
   },
   {
@@ -1210,7 +1210,7 @@ const FEATURES_DATA = [
     descEn: "Status progression dropdown triggering automated customer update notifications.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_admin_order_list"]
   },
   {
@@ -1222,7 +1222,7 @@ const FEATURES_DATA = [
     descEn: "Cancellation mechanism automatically releasing reserved items back to saleable stock.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_admin_order_list"]
   },
   {
@@ -1234,7 +1234,7 @@ const FEATURES_DATA = [
     descEn: "Returns processing workflow tracking item return inspection and customer reimbursement.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_admin_order_list"]
   },
   {
@@ -1246,7 +1246,7 @@ const FEATURES_DATA = [
     descEn: "Customer directory tracking lifetime spend, contact channels, and purchase frequency.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_admin_auth"]
   },
   {
@@ -1258,7 +1258,7 @@ const FEATURES_DATA = [
     descEn: "Coupon engine creating percentage or fixed discounts with date and usage cap rules.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_admin_auth"]
   },
   {
@@ -1270,7 +1270,7 @@ const FEATURES_DATA = [
     descEn: "Admin settings to modify shipping fees per governorate independently without code edits.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_admin_auth"]
   },
   {
@@ -1282,7 +1282,7 @@ const FEATURES_DATA = [
     descEn: "Media manager to swap hero slides, banner graphics, and target promo links.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_admin_auth"]
   },
   {
@@ -1294,7 +1294,7 @@ const FEATURES_DATA = [
     descEn: "WYSIWYG content editor to modify privacy policies, shipping rules, and About Us text.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_admin_auth"]
   },
   {
@@ -1306,7 +1306,7 @@ const FEATURES_DATA = [
     descEn: "Role-based access assigning distinct privileges for order fulfillment vs catalog editors.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_admin_auth"]
   },
   {
@@ -1318,7 +1318,7 @@ const FEATURES_DATA = [
     descEn: "Visual sales trend reports detailing daily/monthly revenue and average order values.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_admin_auth"]
   },
   {
@@ -1330,7 +1330,7 @@ const FEATURES_DATA = [
     descEn: "1-click data export of orders and ledger records for bookkeeping in Excel.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_admin_auth"]
   },
   {
@@ -1342,7 +1342,7 @@ const FEATURES_DATA = [
     descEn: "Dashboard notifications flagging products nearing inventory depletion for prompt replenishment.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_admin_inventory_mgmt"]
   },
 
@@ -1356,7 +1356,7 @@ const FEATURES_DATA = [
     descEn: "Targeted promo code generator engineered for influencer campaigns and seasonal events.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1368,7 +1368,7 @@ const FEATURES_DATA = [
     descEn: "Automated campaign scheduling activating and concluding sales on exact calendar dates.",
     type: "admin",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1380,7 +1380,7 @@ const FEATURES_DATA = [
     descEn: "Footer subscription box collecting customer email addresses for promo announcements.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1392,7 +1392,7 @@ const FEATURES_DATA = [
     descEn: "Automated branded emails delivering instant receipts and tracking milestones.",
     type: "integration",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1404,7 +1404,7 @@ const FEATURES_DATA = [
     descEn: "Automated subscriber sync with dedicated email marketing platforms for campaigns.",
     type: "integration",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_mkt_newsletter"]
   },
   {
@@ -1416,7 +1416,7 @@ const FEATURES_DATA = [
     descEn: "Direct SMS gateway alerts notifying customer upon order receipt and delivery dispatch.",
     type: "integration",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1428,7 +1428,7 @@ const FEATURES_DATA = [
     descEn: "Corner floating WhatsApp button opening 1-click customer support chat for buyer guidance.",
     type: "customer_facing",
     affectsJourney: true,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1440,7 +1440,7 @@ const FEATURES_DATA = [
     descEn: "Official WhatsApp Business API dispatch sending automated order receipts and updates.",
     type: "integration",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_mkt_whatsapp_click"]
   },
   {
@@ -1452,7 +1452,7 @@ const FEATURES_DATA = [
     descEn: "Branded social icons connecting store visitors to official social presence.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1464,7 +1464,7 @@ const FEATURES_DATA = [
     descEn: "Social share triggers letting shoppers share products with contacts.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_page_product_detail"]
   },
   {
@@ -1476,7 +1476,7 @@ const FEATURES_DATA = [
     descEn: "Tracking snippet integration tracking page views, cart adds, and completed purchases for ads.",
     type: "integration",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1488,7 +1488,7 @@ const FEATURES_DATA = [
     descEn: "Automated follow-up reminders prompting abandoned shoppers to finalize checkout.",
     type: "integration",
     affectsJourney: true,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: ["feat_cart_abandoned_recovery"]
   },
   {
@@ -1500,7 +1500,7 @@ const FEATURES_DATA = [
     descEn: "Points accumulation program incentivizing repeat customer purchases and brand retention.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "not_needed",
+    defaultStatus: "undecided",
     deps: ["feat_auth_login"]
   },
   {
@@ -1512,7 +1512,7 @@ const FEATURES_DATA = [
     descEn: "Refer-a-friend mechanism rewarding existing customers when referred peers purchase.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "not_needed",
+    defaultStatus: "undecided",
     deps: ["feat_auth_login"]
   },
   {
@@ -1524,7 +1524,7 @@ const FEATURES_DATA = [
     descEn: "Purchasable prepaid digital gift certificates redeemable against store orders.",
     type: "customer_facing",
     affectsJourney: false,
-    defaultStatus: "not_needed",
+    defaultStatus: "undecided",
     deps: []
   },
 
@@ -1538,7 +1538,7 @@ const FEATURES_DATA = [
     descEn: "Clean, human-readable URLs structured for optimal search engine crawling.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1550,7 +1550,7 @@ const FEATURES_DATA = [
     descEn: "Customizable meta tags for products and categories to boost Google click-through rates.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1562,7 +1562,7 @@ const FEATURES_DATA = [
     descEn: "Pre-configured Open Graph tags showing rich product previews when links are shared on chat and social apps.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1574,7 +1574,7 @@ const FEATURES_DATA = [
     descEn: "Dynamic sitemap index updated upon product changes for rapid search engine indexing.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1586,7 +1586,7 @@ const FEATURES_DATA = [
     descEn: "Proper robots.txt instructions protecting private URLs while indexing public catalogs.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1598,7 +1598,7 @@ const FEATURES_DATA = [
     descEn: "Rich snippets schema enabling Google to show product price, stock, and star ratings in search results.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1610,7 +1610,7 @@ const FEATURES_DATA = [
     descEn: "Automated compression and descriptive alt tags elevating images into Google Image search results.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1622,7 +1622,7 @@ const FEATURES_DATA = [
     descEn: "Complete GA4 setup monitoring visitor traffic, engagement, and navigational flows.",
     type: "integration",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1634,7 +1634,7 @@ const FEATURES_DATA = [
     descEn: "Enhanced e-commerce telemetry recording Add to Cart, Checkout Initiated, and Purchases for ROAS measurement.",
     type: "integration",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_analytics_website"]
   },
   {
@@ -1646,7 +1646,7 @@ const FEATURES_DATA = [
     descEn: "Attribution logging identifying which promotional channel generated paying customers.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   },
 
@@ -1660,7 +1660,7 @@ const FEATURES_DATA = [
     descEn: "Robust cryptographic hashing and session management safeguarding user credentials.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1672,7 +1672,7 @@ const FEATURES_DATA = [
     descEn: "Comprehensive server/client input sanitization shielding the store from XSS, SQLi, and injection attacks.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1684,7 +1684,7 @@ const FEATURES_DATA = [
     descEn: "Strict adherence to zero card-storage policy, delegating transactions exclusively to licensed gateways.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1696,7 +1696,7 @@ const FEATURES_DATA = [
     descEn: "Traffic throttling and rate limits preventing automated brute-force attempts and spam submissions.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1708,7 +1708,7 @@ const FEATURES_DATA = [
     descEn: "Multi-tier caching delivering sub-second page loads across catalog and category views.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1720,7 +1720,7 @@ const FEATURES_DATA = [
     descEn: "Content Delivery Network edge distribution serving optimized WebP images instantly to mobile devices.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1732,7 +1732,7 @@ const FEATURES_DATA = [
     descEn: "Regular scheduled snapshots preserving store database, order ledgers, and catalog media assets.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
 
@@ -1746,7 +1746,7 @@ const FEATURES_DATA = [
     descEn: "Domain registration and authoritative DNS routing configuring your official branded URL.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1758,7 +1758,7 @@ const FEATURES_DATA = [
     descEn: "High-availability cloud environment deployment engineered for traffic surges during sales campaigns.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1770,7 +1770,7 @@ const FEATURES_DATA = [
     descEn: "SSL encryption certificate securing browser transmissions and displaying the verified secure padlock.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: ["feat_dep_domain"]
   },
   {
@@ -1782,7 +1782,7 @@ const FEATURES_DATA = [
     descEn: "Rigorous QA testing across iOS, Android, Safari, and Chrome to guarantee glitch-free experiences.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1794,7 +1794,7 @@ const FEATURES_DATA = [
     descEn: "Simulated order placement verifying notifications, checkout calculations, and admin workflows prior to launch.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1806,7 +1806,7 @@ const FEATURES_DATA = [
     descEn: "Comprehensive video/live training session instructing store managers on day-to-day operations.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1818,7 +1818,7 @@ const FEATURES_DATA = [
     descEn: "Agreed post-launch warranty window fixing technical bugs and providing operational reassurance.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "required",
+    defaultStatus: "undecided",
     deps: []
   },
   {
@@ -1830,7 +1830,7 @@ const FEATURES_DATA = [
     descEn: "Extended SLA plan covering monthly security updates, backup auditing, and minor enhancements.",
     type: "infrastructure",
     affectsJourney: false,
-    defaultStatus: "optional",
+    defaultStatus: "undecided",
     deps: []
   }
 ];
