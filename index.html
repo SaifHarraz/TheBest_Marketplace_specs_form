@@ -336,7 +336,11 @@
     // -------------------------------------------------------------
     // CONFIGURATION
     // -------------------------------------------------------------
-    const FORMSPREE_ENDPOINT = "https://formspree.io/f/mkjobzjz";
+    // Web3Forms API Configuration
+    // Step 1: Create an access key for your email at https://web3forms.com
+    // Step 2: Replace "YOUR_ACCESS_KEY_HERE" with your generated access key
+    const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
+    const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
     const APP_SCHEMA_VERSION = "1.0.0";
     const STORAGE_KEY = "ecommerce_scope_builder_data_v1";
 
@@ -2983,6 +2987,7 @@
       // Submission status tracking
       submissionState: "ready", // 'ready', 'submitting', 'success', 'failure'
       lastSubmissionTimestamp: null,
+      lastSubmissionError: null,
       lastSavedTimestamp: null,
 
       // Journey Interactive View Controls
@@ -3099,7 +3104,9 @@
         noDepWarnings: "جميع الميزات المختارة متوافقة تماماً ولا توجد تعارضات أو اعتماديات مفقودة.",
         journeyReviewTitle: "المحطات النشطة في رحلة العميل بعد اختياراتك",
         confirmationCheckboxText: "أؤكد أن هذه الاختيارات تعبّر عن متطلباتي المبدئية للمرحلة الأولى، وأن النطاق النهائي والتكلفة والمدة سيتم تأكيدها بشكل منفصل.",
-        btnSubmitFinal: "حفظ الاختيارات وإرسال المتطلبات",
+        btnSubmitFinal: "حفظ الاختيارات وإرسال المتطلبات عبر البريد",
+        btnRetrySubmit: "إعادة محاولة الإرسال",
+        missingAccessKeyMsg: "تنبيه للمطور: يرجى وضع مفتاح Web3Forms Access Key في ملف الكود (WEB3FORMS_ACCESS_KEY) لإرسال البيانات إلى بريدك الإلكتروني.",
         btnExportDraftOnly: "حفظ مسودة محلية وتصدير JSON",
         submittingNotice: "جاري إرسال المتطلبات والتحقق من الاستجابة...",
         submitSuccessMsg: "تم إرسال متطلبات المشروع بنجاح. شكرًا لوقتك، وسيتم مراجعة الاختيارات وإعداد نطاق العمل والمدة والتكلفة المقترحة.",
@@ -3211,7 +3218,9 @@
         noDepWarnings: "All selected features are harmoniously aligned without missing prerequisites.",
         journeyReviewTitle: "Active Customer Journey Milestones",
         confirmationCheckboxText: "I confirm that these selections represent my initial Phase 1 specifications, and that final pricing, SLA, and timeline will be validated separately.",
-        btnSubmitFinal: "Save Selections & Submit Requirements",
+        btnSubmitFinal: "Save Selections & Submit Requirements by Email",
+        btnRetrySubmit: "Retry Submission",
+        missingAccessKeyMsg: "Developer Notice: Please configure your Web3Forms Access Key in the code (WEB3FORMS_ACCESS_KEY) to receive client submissions by email.",
         btnExportDraftOnly: "Save Draft & Export JSON",
         submittingNotice: "Transmitting requirements to project desk...",
         submitSuccessMsg: "Project requirements submitted successfully! Thank you. We will review your selections and assemble the detailed scope, timeline, and estimation.",
@@ -3306,7 +3315,8 @@
           selections: state.selections,
           customRequirements: state.customRequirements,
           confirmed: state.confirmed,
-          lastSubmissionTimestamp: state.lastSubmissionTimestamp
+          lastSubmissionTimestamp: state.lastSubmissionTimestamp,
+          lastSubmissionError: state.lastSubmissionError
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
         
@@ -3330,6 +3340,7 @@
           if (Array.isArray(data.customRequirements)) state.customRequirements = data.customRequirements;
           if (typeof data.confirmed === "boolean") state.confirmed = data.confirmed;
           if (data.lastSubmissionTimestamp) state.lastSubmissionTimestamp = data.lastSubmissionTimestamp;
+          if (data.lastSubmissionError) state.lastSubmissionError = data.lastSubmissionError;
         }
       } catch (err) {
         console.warn("Failed to load local storage draft:", err);
@@ -4367,7 +4378,7 @@
     }
 
     // -------------------------------------------------------------
-    // STAGE 4: REVIEW, CONFIRMATION & FORMSPREE SUBMISSION
+    // STAGE 4: REVIEW, CONFIRMATION & WEB3FORMS SUBMISSION
     // -------------------------------------------------------------
     function renderStage4() {
       const container = document.getElementById("stage4-container");
@@ -4541,7 +4552,7 @@
 
         </div>
 
-        <!-- Final Confirmation Box & Formspree Submit Action -->
+        <!-- Final Confirmation Box & Web3Forms Submit Action -->
         <div class="bg-white rounded-2xl border-2 border-brand-500/30 p-6 sm:p-8 shadow-md space-y-6">
           <div class="space-y-4">
             <label class="flex items-start gap-3 cursor-pointer select-none">
@@ -4664,12 +4675,13 @@
     }
 
     // -------------------------------------------------------------
-    // FORMSPREE SUBMISSION LOGIC
+    // -------------------------------------------------------------
+    // WEB3FORMS SUBMISSION LOGIC
     // -------------------------------------------------------------
     async function submitFinalRequirements() {
       const isAr = state.language === "ar";
 
-      // 1. Validation
+      // 1. Client Validation
       const info = state.clientInfo;
       if (!info.clientName || !info.clientName.trim() ||
           !info.clientEmail || !info.clientEmail.trim() ||
@@ -4681,7 +4693,7 @@
 
       // Email format validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(info.clientEmail)) {
+      if (!emailRegex.test(info.clientEmail.trim())) {
         showToast(isAr ? "يرجى إدخال بريد إلكتروني صحيح" : "Please provide a valid email address", "warning");
         setStage(1);
         return;
@@ -4693,92 +4705,203 @@
         return;
       }
 
-      // 2. Prepare Payload
+      // Check for placeholder Access Key
+      if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === "YOUR_ACCESS_KEY_HERE" || WEB3FORMS_ACCESS_KEY.trim() === "") {
+        console.warn("Web3Forms Access Key is not configured in WEB3FORMS_ACCESS_KEY constant.");
+        state.lastSubmissionError = isAr ? 
+          "لم يتم ضبط مفتاح Web3Forms Access Key الفعلي في الكود (WEB3FORMS_ACCESS_KEY). يرجى وضع المفتاح من web3forms.com." : 
+          "Web3Forms Access Key is not configured (WEB3FORMS_ACCESS_KEY). Please insert your key from web3forms.com.";
+        state.submissionState = "failure";
+        renderStage4();
+        showToast(t("missingAccessKeyMsg"), "error");
+        return;
+      }
+
+      // 2. Prevent duplicate concurrent requests
+      if (state.submissionState === "submitting") {
+        return;
+      }
+
       state.submissionState = "submitting";
+      state.lastSubmissionError = null;
       renderStage4();
 
       const stats = getCatalogStats();
       const unresolvedDeps = findUnresolvedDependencies();
+      const evaluatedJourney = getEvaluatedJourneyNodes();
+      const activeJourney = evaluatedJourney.filter(n => !n.isExcluded);
 
-      // Compile Human-Readable Summary text for Formspree email templates
-      let readableSummary = `=== متطلبات مشروع متجر إلكتروني - المرحلة الأولى ===\n`;
-      readableSummary += `العميل: ${info.clientName}\n`;
-      readableSummary += `البريد: ${info.clientEmail}\n`;
-      readableSummary += `الهاتف: ${info.clientPhone || 'غير مدخل'}\n`;
-      readableSummary += `البراند: ${info.brandName}\n`;
-      readableSummary += `مجال العمل: ${info.industry || 'غير مدخل'}\n\n`;
-      readableSummary += `إحصائيات الميزات:\n`;
-      readableSummary += `- مطلوب: ${stats.required}\n`;
-      readableSummary += `- اختياري: ${stats.optional}\n`;
-      readableSummary += `- غير مطلوب: ${stats.not_needed}\n`;
-      readableSummary += `- لم يحدد: ${stats.undecided}\n\n`;
-      
-      readableSummary += `الميزات المطلوبة بحسب التصنيف:\n`;
-      CATEGORIES.forEach(c => {
+      // Generate structured project reference ID
+      const sanitizedBrand = (info.brandName || "SHOP").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 4) || "SHOP";
+      const projectRefId = "PRJ-" + sanitizedBrand + "-" + Date.now().toString(36).toUpperCase();
+      const submissionDate = new Date().toISOString();
+
+      // Compile Human-Readable Summary grouped by category & priority
+      const summaryLines = [];
+      summaryLines.push("============================================================");
+      summaryLines.push("E-COMMERCE STORE REQUIREMENTS SPECIFICATION (PHASE 1)");
+      summaryLines.push("مواصفات ومتطلبات متجر التجارة الإلكترونية - المرحلة الأولى");
+      summaryLines.push("============================================================\n");
+
+      summaryLines.push("[PROJECT METADATA & CLIENT TOUCHPOINTS]");
+      summaryLines.push("Project Reference ID : " + projectRefId);
+      summaryLines.push("Brand Name           : " + info.brandName);
+      summaryLines.push("Client Name          : " + info.clientName);
+      summaryLines.push("Client Email         : " + info.clientEmail);
+      summaryLines.push("Phone / WhatsApp     : " + (info.clientPhone || "Not provided"));
+      summaryLines.push("Industry / Sector    : " + (info.industry || "Not specified"));
+      summaryLines.push("Target Audience      : " + (info.targetAudience || "Not specified"));
+      summaryLines.push("Primary Goal         : " + (info.mainGoal || "Not specified"));
+      summaryLines.push("Expected Products    : " + info.expectedProducts);
+      summaryLines.push("Launch Language      : " + info.preferredLanguage);
+      summaryLines.push("Client Notes         : " + (info.additionalNotes || "None"));
+      summaryLines.push("Submission Timestamp : " + submissionDate + "\n");
+
+      summaryLines.push("------------------------------------------------------------");
+      summaryLines.push("[FEATURE SELECTIONS OVERVIEW]");
+      summaryLines.push("Total Features in Catalog : " + FEATURES.length);
+      summaryLines.push("- REQUIRED (مطلوب)         : " + stats.required);
+      summaryLines.push("- OPTIONAL (اختياري)       : " + stats.optional);
+      summaryLines.push("- NOT NEEDED (غير مطلوب)   : " + stats.not_needed);
+      summaryLines.push("- UNDECIDED (لم يحدد)      : " + stats.undecided + "\n");
+
+      summaryLines.push("------------------------------------------------------------");
+      summaryLines.push("[REQUIRED FEATURES BY CATEGORY - المرحلة الأولى]");
+      CATEGORIES.filter(c => c.id !== 12).forEach(c => {
         const reqs = FEATURES.filter(f => f.cat === c.id && state.selections[f.id] === "required");
         if (reqs.length > 0) {
-          readableSummary += `[${c.nameAr}]: ${reqs.map(r => r.nameAr).join('، ')}\n`;
+          summaryLines.push("\nCategory " + c.id + ": " + c.nameEn + " (" + c.nameAr + ") [" + reqs.length + " items]:");
+          reqs.forEach(r => {
+            summaryLines.push("  • [" + r.id + "] " + r.nameEn + " | " + r.nameAr);
+          });
         }
       });
 
-      if (state.customRequirements.length > 0) {
-        readableSummary += `\nالمتطلبات المخصصة:\n`;
-        state.customRequirements.forEach((r, idx) => {
-          readableSummary += `${idx + 1}. ${r.name}: ${r.desc || ''} (أولوية: ${r.priority})\n`;
+      const optionalFeatures = FEATURES.filter(f => state.selections[f.id] === "optional");
+      if (optionalFeatures.length > 0) {
+        summaryLines.push("\n------------------------------------------------------------");
+        summaryLines.push("[OPTIONAL ENHANCEMENTS - خيارات مطروحة] (" + optionalFeatures.length + " items):");
+        optionalFeatures.forEach(o => {
+          summaryLines.push("  • [" + o.id + "] " + o.nameEn + " | " + o.nameAr);
         });
       }
 
-      const payload = {
-        _subject: `متطلبات متجر ${info.brandName} - ${info.clientName}`,
-        client_name: info.clientName,
-        client_email: info.clientEmail,
-        client_phone: info.clientPhone || "",
-        brand_name: info.brandName,
-        industry: info.industry || "",
-        business_description: info.businessDesc || "",
-        target_audience: info.targetAudience || "",
-        main_goal: info.mainGoal || "",
-        expected_products: info.expectedProducts,
-        preferred_language: info.preferredLanguage,
-        additional_notes: info.additionalNotes || "",
-        submission_timestamp: new Date().toISOString(),
+      if (state.customRequirements.length > 0) {
+        summaryLines.push("\n------------------------------------------------------------");
+        summaryLines.push("[CUSTOM CLIENT REQUIREMENTS - متطلبات مخصصة] (" + state.customRequirements.length + " items):");
+        state.customRequirements.forEach((r, idx) => {
+          summaryLines.push("  " + (idx + 1) + ". " + r.name + " (Priority: " + r.priority + ")");
+          if (r.desc) summaryLines.push("     Details: " + r.desc);
+        });
+      }
+
+      summaryLines.push("\n------------------------------------------------------------");
+      summaryLines.push("[CUSTOMER JOURNEY CONFIGURATION - مسار العميل المتفق عليه]");
+      summaryLines.push("Active Journey Nodes (" + activeJourney.length + " steps):");
+      activeJourney.forEach(n => {
+        summaryLines.push("  [" + n.stage + "] " + n.titleEn + " | " + n.titleAr + " (" + n.type + ")");
+      });
+
+      if (unresolvedDeps.length > 0) {
+        summaryLines.push("\n------------------------------------------------------------");
+        summaryLines.push("[DEPENDENCY NOTIFICATIONS & CONFLICTS]:");
+        unresolvedDeps.forEach(d => {
+          summaryLines.push("  ! " + d);
+        });
+      }
+
+      const readableSummary = summaryLines.join("\n");
+
+      // Complete JSON Representation for raw import
+      const completeProjectData = {
         schema_version: APP_SCHEMA_VERSION,
-        confirmed_by_client: state.confirmed,
-        statistics: stats,
-        unresolved_dependencies: unresolvedDeps,
-        human_readable_summary: readableSummary,
+        project_reference_id: projectRefId,
+        submission_timestamp: submissionDate,
+        client_touchpoints: {
+          client_name: info.clientName,
+          client_email: info.clientEmail,
+          client_phone: info.clientPhone || "",
+          brand_name: info.brandName
+        },
+        business_profile: {
+          industry: info.industry || "",
+          business_description: info.businessDesc || "",
+          target_audience: info.targetAudience || "",
+          main_goal: info.mainGoal || "",
+          expected_products: info.expectedProducts,
+          expected_categories: info.expectedCategories,
+          preferred_language: info.preferredLanguage,
+          additional_notes: info.additionalNotes || ""
+        },
+        metrics: stats,
         feature_selections: state.selections,
-        custom_requirements: state.customRequirements
+        custom_requirements: state.customRequirements,
+        unresolved_dependencies: unresolvedDeps,
+        confirmed_by_client: state.confirmed,
+        active_journey_nodes: activeJourney.map(n => ({
+          id: n.id,
+          stage: n.stage,
+          type: n.type,
+          titleEn: n.titleEn,
+          titleAr: n.titleAr,
+          featureId: n.featureId
+        }))
+      };
+
+      // Construct Web3Forms compliant JSON payload
+      const web3FormsPayload = {
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: "New E-commerce Project Requirements — " + info.brandName + " [" + projectRefId + "]",
+        from_name: "E-Commerce Scope Builder",
+        name: info.clientName,
+        email: info.clientEmail,
+        replyto: info.clientEmail,
+        project_reference_id: projectRefId,
+        brand_name: info.brandName,
+        client_phone: info.clientPhone || "Not provided",
+        industry: info.industry || "Not provided",
+        target_audience: info.targetAudience || "Not provided",
+        main_goal: info.mainGoal || "Not provided",
+        expected_products: info.expectedProducts,
+        launch_language: info.preferredLanguage,
+        required_features_count: stats.required,
+        optional_features_count: stats.optional,
+        excluded_features_count: stats.not_needed,
+        custom_requirements_count: state.customRequirements.length,
+        message: readableSummary,
+        complete_project_json: JSON.stringify(completeProjectData, null, 2)
       };
 
       try {
-        const response = await fetch(FORMSPREE_ENDPOINT, {
+        const response = await fetch(WEB3FORMS_ENDPOINT, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json"
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(web3FormsPayload)
         });
 
         const result = await response.json().catch(() => ({}));
 
-        if (!response.ok) {
-          throw new Error(
-            result.errors?.map(err => err.message).join(", ") ||
-            "Submission failed. Please try again."
-          );
+        if (response.ok && (result.success === true || result.status === 200 || result.status === "success")) {
+          // Confirm success only upon explicit confirmation from Web3Forms
+          state.submissionState = "success";
+          state.lastSubmissionTimestamp = submissionDate;
+          state.lastSubmissionError = null;
+          saveToLocalStorage();
+          renderStage4();
+          showToast(t("submitSuccessMsg"), "success");
+        } else {
+          const errMsg = result.message || 
+            (Array.isArray(result.errors) ? result.errors.join(", ") : null) || 
+            (isAr ? "استجابت خدمة Web3Forms برسالة خطأ غير متوقعة." : "Web3Forms reported a submission error.");
+          throw new Error(errMsg);
         }
-
-        // Success
-        state.submissionState = "success";
-        state.lastSubmissionTimestamp = new Date().toISOString();
-        saveToLocalStorage();
-        renderStage4();
-        showToast(t("submitSuccessMsg"), "success");
       } catch (err) {
-        console.warn("Formspree submission error:", err);
+        console.warn("Web3Forms transmission error:", err);
         state.submissionState = "failure";
+        state.lastSubmissionError = err.message || (isAr ? "تعذر الاتصال بخادم Web3Forms" : "Network error contacting Web3Forms API");
         saveToLocalStorage();
         renderStage4();
         showToast(t("submitFailMsg"), "error");
