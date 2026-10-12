@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استمارة متطلبات متجر TheBest — نظام الخطة والربط</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind Theme Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <div class="w-12 h-12 bg-gradient-to-tr from-indigo-700 to-indigo-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold text-slate-900 tracking-tight">منصة TheBest للمتاجر الإلكترونية</h1>
+                    <p class="text-xs text-slate-500 font-medium">معالج تجميع المتطلبات وتصدير تقرير المشروع</p>
+                </div>
+            </div>
+            
+            <!-- Quick Info Badge & Step Counter -->
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="hidden sm:flex items-center space-x-2 space-x-reverse bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold">
+                    <i class="fa-solid fa-check-double text-indigo-600"></i>
+                    <span>المحددة: <span id="header-selected-count" class="font-extrabold text-indigo-600">0</span></span>
+                </div>
+                <div class="bg-indigo-600/10 text-indigo-700 px-3.5 py-2 rounded-2xl text-xs font-bold border border-indigo-200">
+                    الخطوة <span id="current-step-badge">1</span> من <span id="total-steps-badge">7</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow space-y-8">
+        
+        <!-- Progress Bar & Interactive Wizard Nav -->
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-5">
+            <div class="flex justify-between items-center">
+                <div>
+                    <span id="step-title-indicator" class="text-base font-bold text-slate-900">الخطوة 1: العميل والبيانات الأساسية</span>
+                    <p id="step-subtitle-indicator" class="text-xs text-slate-500 mt-0.5">تفاصيل العميل والتواصل والنطاق المخصص</p>
+                </div>
+                <span id="progress-percentage" class="text-xs font-extrabold text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-xl border border-indigo-100">14%</span>
+            </div>
+            
+            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden p-0.5">
+                <div id="progress-bar-fill" class="bg-gradient-to-r from-indigo-500 to-indigo-700 h-full rounded-full transition-all duration-300 shadow-sm" style="width: 14%;"></div>
+            </div>
+
+            <!-- Step Circles Bar -->
+            <div class="grid grid-cols-7 gap-1 sm:gap-2 text-center pt-2">
+                <button type="button" class="step-indicator-item flex flex-col items-center group focus:outline-none" onclick="goToStep(1)">
+                    <div id="indicator-1" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-600 text-white font-bold flex items-center justify-center text-xs shadow-md shadow-indigo-200 transition">1</div>
+                    <span class="text-[10px] sm:text-[11px] font-semibold text-slate-700 mt-1.5 hidden md:block">العميل</span>
+                </button>
+                <button type="button" class="step-indicator-item flex flex-col items-center group focus:outline-none" onclick="goToStep(2)">
+                    <div id="indicator-2" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 text-slate-500 font-bold flex items-center justify-center text-xs transition">2</div>
+                    <span class="text-[10px] sm:text-[11px] font-semibold text-slate-500 mt-1.5 hidden md:block">الخادم VPS</span>
+                </button>
+                <button type="button" class="step-indicator-item flex flex-col items-center group focus:outline-none" onclick="goToStep(3)">
+                    <div id="indicator-3" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 text-slate-500 font-bold flex items-center justify-center text-xs transition">3</div>
+                    <span class="text-[10px] sm:text-[11px] font-semibold text-slate-500 mt-1.5 hidden md:block">المتجر الأساسي</span>
+                </button>
+                <button type="button" class="step-indicator-item flex flex-col items-center group focus:outline-none" onclick="goToStep(4)">
+                    <div id="indicator-4" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 text-slate-500 font-bold flex items-center justify-center text-xs transition">4</div>
+                    <span class="text-[10px] sm:text-[11px] font-semibold text-slate-500 mt-1.5 hidden md:block">العمليات والتفاعل</span>
+                </button>
+                <button type="button" class="step-indicator-item flex flex-col items-center group focus:outline-none" onclick="goToStep(5)">
+                    <div id="indicator-5" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 text-slate-500 font-bold flex items-center justify-center text-xs transition">5</div>
+                    <span class="text-[10px] sm:text-[11px] font-semibold text-slate-500 mt-1.5 hidden md:block">الإدارة والتحليلات</span>
+                </button>
+                <button type="button" class="step-indicator-item flex flex-col items-center group focus:outline-none" onclick="goToStep(6)">
+                    <div id="indicator-6" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 text-slate-500 font-bold flex items-center justify-center text-xs transition">6</div>
+                    <span class="text-[10px] sm:text-[11px] font-semibold text-slate-500 mt-1.5 hidden md:block">التقنية والأمان</span>
+                </button>
+                <button type="button" class="step-indicator-item flex flex-col items-center group focus:outline-none" onclick="goToStep(7)">
+                    <div id="indicator-7" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 text-slate-500 font-bold flex items-center justify-center text-xs transition">7</div>
+                    <span class="text-[10px] sm:text-[11px] font-semibold text-slate-500 mt-1.5 hidden md:block">المراجعة والإرسال</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Global Search Filter Bar -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="relative w-full sm:w-96">
+                <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
+                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                </span>
+                <input type="text" id="global-search-input" onkeyup="filterFeatures()" placeholder="ابحث عن ميزة مخصصة (مثال: WhatsApp, SSL, Stripe)..." class="w-full pr-9 pl-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition">
+            </div>
+            <div class="flex items-center space-x-2 space-x-reverse w-full sm:w-auto justify-end">
+                <button type="button" onclick="selectAllInCurrentStep(true)" class="text-xs font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 px-3 py-2 rounded-xl border border-indigo-200/60 transition">
+                    <i class="fa-solid fa-check-square ml-1"></i> تحديد كل ميزات الخطوة
+                </button>
+                <button type="button" onclick="selectAllInCurrentStep(false)" class="text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-xl transition">
+                    <i class="fa-solid fa-square-minus ml-1"></i> إلغاء الميزات
+                </button>
+            </div>
+        </div>
+
+        <form id="requirements-form" class="space-y-8">
+            
+            <!-- Web3Forms Hidden Required Fields -->
+            <input type="hidden" name="apikey" value="4b12636d-dae7-4f07-b6c0-6eed2a57153c">
+            <input type="hidden" name="subject" id="email_subject" value="تقرير متطلبات جديد - متجر TheBest E-Commerce">
+            <input type="hidden" name="from_name" value="منصة متطلبات TheBest E-Commerce">
+            
+            <!-- Formatted Message Payload to ensure high quality Web3Forms Email Receive Structure -->
+            <textarea id="email_formatted_message" name="message" class="hidden"></textarea>
+            <!-- Structured Features JSON string input -->
+            <input type="hidden" id="json_features_payload" name="features_json" value="">
+
+            <!-- STEP 1: Client & Domain Details -->
+            <div class="form-step bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200 space-y-6" data-step="1">
+                <div class="border-b border-slate-100 pb-4 flex items-center space-x-3 space-x-reverse">
+                    <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-address-card"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-extrabold text-slate-900">الخطوة الأولى: تفاصيل العميل والمشروع</h3>
+                        <p class="text-xs text-slate-500">بيانات التواصل الأساسية والنطاق المخصص (Custom Domain)</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Client Name -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">اسم العميل <span class="text-rose-500">*</span></label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                            <input type="text" id="client_name" name="client_name" required placeholder="أدخل الاسم الكامل" class="w-full pr-10 pl-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition">
+                        </div>
+                    </div>
+
+                    <!-- Business / Project Name -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">اسم النشاط أو المشروع <span class="text-rose-500">*</span></label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-store"></i>
+                            </span>
+                            <input type="text" id="project_name" name="project_name" required placeholder="مثال: متجر النخبة العربي" class="w-full pr-10 pl-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition">
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">البريد الإلكتروني <span class="text-rose-500">*</span></label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-envelope"></i>
+                            </span>
+                            <input type="email" id="client_email" name="client_email" required placeholder="client@domain.com" class="w-full pr-10 pl-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition text-left" dir="ltr">
+                        </div>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">رقم الهاتف / الواتساب <span class="text-rose-500">*</span></label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-phone"></i>
+                            </span>
+                            <input type="tel" id="client_phone" name="client_phone" required placeholder="+966 5X XXX XXXX" class="w-full pr-10 pl-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition text-left" dir="ltr">
+                        </div>
+                    </div>
+
+                    <!-- Targeted Launch Date -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">تاريخ الإطلاق المستهدف</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-calendar-day"></i>
+                            </span>
+                            <input type="date" id="target_launch_date" name="target_launch_date" class="w-full pr-10 pl-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition">
+                        </div>
+                    </div>
+
+                    <!-- Custom Domain -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">النطاق المخصص (Custom Domain) <span class="text-rose-500">*</span></label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-globe"></i>
+                            </span>
+                            <input type="text" id="custom_domain" name="custom_domain" required placeholder="mybrand.com" class="w-full pr-10 pl-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition text-left" dir="ltr">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Domain Technical Specs Block -->
+                <div class="bg-indigo-50/50 p-5 rounded-2xl border border-indigo-100 space-y-4">
+                    <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-wider flex items-center">
+                        <i class="fa-solid fa-network-wired ml-2 text-indigo-600"></i> إعدادات مسجل النطاق و DNS (Domain Details)
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1.5">شركة تسجيل النطاق (Registrar)</label>
+                            <input type="text" id="domain_registrar" name="domain_registrar" placeholder="e.g. GoDaddy, Namecheap, Cloudflare" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1.5">حالة ربط DNS حالياً</label>
+                            <select id="dns_status" name="dns_status" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition">
+                                <option value="جاهز ومربوط على Cloudflare">جاهز ومربوط على Cloudflare</option>
+                                <option value="مسجل ومحتاج إعداد DNS">مسجل ومحتاج إعداد DNS</option>
+                                <option value="لم يتم الشراء بعد (يتطلب مساعدة)">لم يتم الشراء بعد (يتطلب مساعدة)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 2: VPS Server Details -->
+            <div class="form-step bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200 space-y-6 hidden" data-step="2">
+                <div class="border-b border-slate-100 pb-4 flex items-center space-x-3 space-x-reverse">
+                    <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-server"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-extrabold text-slate-900">الخطوة الثانية: تفاصيل خادم الاستضافة (VPS Details)</h3>
+                        <p class="text-xs text-slate-500">مواصفات وتجهيزات البنية التحتية الافتراضية للمتجر</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Hosting Provider -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">مزود الاستضافة (Hosting Provider)</label>
+                        <select id="vps_provider" name="vps_provider" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition">
+                            <option value="Hetzner">Hetzner Cloud</option>
+                            <option value="DigitalOcean">DigitalOcean</option>
+                            <option value="AWS">Amazon Web Services (AWS)</option>
+                            <option value="Linode">Akamai / Linode</option>
+                            <option value="Contabo">Contabo</option>
+                            <option value="آخر">مزود آخر (أذكر بالتفاصيل)</option>
+                        </select>
+                    </div>
+
+                    <!-- OS -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">نظام التشغيل (OS)</label>
+                        <select id="vps_os" name="vps_os" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition">
+                            <option value="Ubuntu 22.04 LTS">Ubuntu 22.04 LTS</option>
+                            <option value="Ubuntu 24.04 LTS">Ubuntu 24.04 LTS</option>
+                            <option value="Debian 12">Debian 12</option>
+                            <option value="CentOS / AlmaLinux">AlmaLinux / Rocky Linux</option>
+                        </select>
+                    </div>
+
+                    <!-- Server Specs -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">مواصفات الخادم (RAM / CPU)</label>
+                        <input type="text" id="vps_specs" name="vps_specs" placeholder="مثال: 8 GB RAM / 4 vCPU / 160 GB NVMe" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition">
+                    </div>
+
+                    <!-- IP Address -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">عنوان IP الخادم</label>
+                        <input type="text" id="vps_ip" name="vps_ip" placeholder="e.g. 159.65.120.45" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition text-left" dir="ltr">
+                    </div>
+
+                    <!-- SSH Port -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">منفذ SSH (SSH Port)</label>
+                        <input type="text" id="vps_ssh_port" name="vps_ssh_port" placeholder="22" value="22" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition text-left" dir="ltr">
+                    </div>
+
+                    <!-- Database / Redis Stack Requirement -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">قواعد البيانات المرافقة</label>
+                        <select id="vps_db_stack" name="vps_db_stack" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition">
+                            <option value="PostgreSQL + Redis (مستحسن)">PostgreSQL + Redis Cache</option>
+                            <option value="MySQL / MariaDB + Redis">MySQL / MariaDB + Redis</option>
+                            <option value="Managed Cloud DB">Managed Database Cluster</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 3: Core Store Features (Sections 1 - 7) -->
+            <div class="form-step bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200 space-y-8 hidden" data-step="3">
+                <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-cart-flatbed"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-extrabold text-slate-900">الخطوة الثالثة: واجهة المتجر وتجربة الشراء الأساسية</h3>
+                            <p class="text-xs text-slate-500">الأقسام من 1 إلى 7 (الرئيسية، الكتالوج، المنتجات، السلة، الدفع، الحسابات)</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="step-3-container" class="space-y-6">
+                    <!-- Dynamically Loaded via JavaScript -->
+                </div>
+            </div>
+
+            <!-- STEP 4: Engagement & Operations (Sections 8 - 13) -->
+            <div class="form-step bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200 space-y-8 hidden" data-step="4">
+                <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-truck-ramp-box"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-extrabold text-slate-900">الخطوة الرابعة: العمليات والشحن والمدفوعات والدعم</h3>
+                            <p class="text-xs text-slate-500">الأقسام من 8 إلى 13 (البحث، الخصومات، الشحن، المدفوعات، الدعم، الصفحات)</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="step-4-container" class="space-y-6">
+                    <!-- Dynamically Loaded via JavaScript -->
+                </div>
+            </div>
+
+            <!-- STEP 5: Admin & Management Systems (Sections 14 - 17) -->
+            <div class="form-step bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200 space-y-8 hidden" data-step="5">
+                <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-extrabold text-slate-900">الخطوة الخامسة: لوحة الإدارة والمخزون والإشعارات</h3>
+                            <p class="text-xs text-slate-500">الأقسام من 14 إلى 17 (لوحة التحكم، المخزون، التقارير والتحليلات)</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="step-5-container" class="space-y-6">
+                    <!-- Dynamically Loaded via JavaScript -->
+                </div>
+            </div>
+
+            <!-- STEP 6: Technical, Security & Growth (Sections 18 - 22) -->
+            <div class="form-step bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200 space-y-8 hidden" data-step="6">
+                <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-extrabold text-slate-900">الخطوة السادسة: تجربة المستخدم، الأمان، التسويق والنشر</h3>
+                            <p class="text-xs text-slate-500">الأقسام من 18 إلى 22 (UX، الأمان، النشر، التسويق وSEO، الأمور القانونية)</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="step-6-container" class="space-y-6">
+                    <!-- Dynamically Loaded via JavaScript -->
+                </div>
+            </div>
+
+            <!-- STEP 7: Final Review, Export & Web3Forms Submit -->
+            <div class="form-step bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200 space-y-8 hidden" data-step="7">
+                <div class="border-b border-slate-100 pb-4 flex items-center space-x-3 space-x-reverse">
+                    <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-extrabold text-slate-900">الخطوة السابعة: مراجعة التقرير وتصدير البيانات</h3>
+                        <p class="text-xs text-slate-500">قم بمراجعة ملخص المشروع، تنزيل النسخة المنسقة، وإرسال البيانات</p>
+                    </div>
+                </div>
+
+                <!-- Live Client & Server Metadata Overview Card -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 bg-slate-50 p-6 rounded-2xl border border-slate-200 text-xs">
+                    <div>
+                        <span class="text-slate-400 font-semibold block">اسم العميل:</span>
+                        <strong id="review-name" class="text-slate-900 text-sm font-bold block mt-0.5">-</strong>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 font-semibold block">اسم المشروع:</span>
+                        <strong id="review-project" class="text-slate-900 text-sm font-bold block mt-0.5">-</strong>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 font-semibold block">البريد الإلكتروني:</span>
+                        <strong id="review-email" class="text-slate-900 text-sm font-bold block mt-0.5" dir="ltr">-</strong>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 font-semibold block">النطاق المخصص:</span>
+                        <strong id="review-domain" class="text-slate-900 text-sm font-bold block mt-0.5" dir="ltr">-</strong>
+                    </div>
+                </div>
+
+                <!-- Export & Download Toolkit Box -->
+                <div class="bg-gradient-to-r from-slate-900 to-indigo-950 rounded-3xl p-6 text-white space-y-4 shadow-xl">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div>
+                            <h4 class="text-base font-bold flex items-center">
+                                <i class="fa-solid fa-download text-emerald-400 ml-2"></i> أدوات التصدير والتحميل المباشر
+                            </h4>
+                            <p class="text-xs text-slate-300 mt-1">يمكنك تحميل تفاصيل المتطلبات بالكامل لتقديمها للفريق البرمجي أو حفظها لديك.</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl text-xs font-bold border border-white/10">
+                            الميزات المحددة: <span id="review-total-selected" class="text-emerald-400 font-black">0</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                        <button type="button" onclick="downloadJSON()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3 px-4 rounded-2xl text-xs flex items-center justify-center space-x-2 space-x-reverse transition">
+                            <i class="fa-solid fa-file-code text-amber-400"></i>
+                            <span>تحميل كملف JSON</span>
+                        </button>
+                        <button type="button" onclick="downloadTXT()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3 px-4 rounded-2xl text-xs flex items-center justify-center space-x-2 space-x-reverse transition">
+                            <i class="fa-solid fa-file-lines text-sky-400"></i>
+                            <span>تحميل كتقرير TXT</span>
+                        </button>
+                        <button type="button" onclick="copyReportToClipboard()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3 px-4 rounded-2xl text-xs flex items-center justify-center space-x-2 space-x-reverse transition">
+                            <i class="fa-solid fa-copy text-emerald-400"></i>
+                            <span>نسخ التقرير للحافظة</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Report Text Preview Accordion Box -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-slate-700">معاينة النص الهيكلي للتقرير (Formatted Email Output):</label>
+                    <textarea id="report-preview-text" readonly rows="8" class="w-full p-4 bg-slate-900 text-slate-200 rounded-2xl text-xs font-mono border border-slate-800 leading-relaxed focus:outline-none resize-y" dir="ltr"></textarea>
+                </div>
+
+                <!-- Notes for Development -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-2">توجيهات أو ملاحظات خاصة بفريق التطوير</label>
+                    <textarea id="client_notes" name="client_notes" rows="3" placeholder="أضف أي ملاحظات برمجية أو تكاملات خاصة هنا..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition resize-none"></textarea>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-200 flex items-center justify-between gap-4">
+                <button type="button" id="prev-btn" onclick="changeStep(-1)" class="hidden bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-6 py-3.5 rounded-2xl transition text-sm flex items-center space-x-2 space-x-reverse">
+                    <i class="fa-solid fa-arrow-right ml-2"></i>
+                    <span>الخطوة السابقة</span>
+                </button>
+                
+                <div class="text-xs text-slate-400 font-semibold hidden sm:block">
+                    انتقل عبر الخطوات لتحديد الخصائص والمواصفات
+                </div>
+
+                <button type="button" id="next-btn" onclick="handleNextStep()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3.5 rounded-2xl shadow-lg shadow-indigo-200 transition text-sm flex items-center space-x-2 space-x-reverse">
+                    <span>التالي</span>
+                    <i class="fa-solid fa-arrow-left mr-2"></i>
+                </button>
+
+                <button type="submit" id="submit-btn" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3.5 rounded-2xl shadow-lg shadow-emerald-200 transition text-sm flex items-center space-x-2 space-x-reverse">
+                    <i class="fa-solid fa-paper-plane ml-2"></i>
+                    <span>إرسال المتطلبات إلى Web3Forms</span>
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <div id="success-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl border border-slate-100 text-center space-y-5 animate-in fade-in zoom-in duration-200">
+            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl shadow-inner">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 class="text-2xl font-extrabold text-slate-900">تم الإرسال بنجاح!</h3>
+            <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                شكراً لك. تم إرسال التقرير الهيكلي لمتطلبات متجر TheBest بنجاح عبر Web3Forms.
+            </p>
+            <div class="pt-2">
+                <button type="button" onclick="closeSuccessModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-2xl transition text-sm">
+                    إغلاق العرض
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 TheBest E-Commerce Engine. نظام إدارة وثائق المتطلبات وحلول خوادم VPS.</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 7;
+
+        const stepTitles = {
+            1: { title: "الخطوة 1: بيانات العميل والمشروع", subtitle: "بيانات التواصل والنطاق المخصص (Custom Domain)" },
+            2: { title: "الخطوة 2: خادم الاستضافة (VPS)", subtitle: "تحديد مواصفات الخادم والنظام وقواعد البيانات" },
+            3: { title: "الخطوة 3: واجهة المتجر وتجربة الشراء", subtitle: "الأقسام من 1 إلى 7 (الرئيسية حتى الحسابات)" },
+            4: { title: "الخطوة 4: العمليات والشحن والدعم", subtitle: "الأقسام من 8 إلى 13 (البحث حتى الصفحات)" },
+            5: { title: "الخطوة 5: لوحة الإدارة والتقارير", subtitle: "الأقسام من 14 إلى 17 (اللوحة حتى الإشعارات)" },
+            6: { title: "الخطوة 6: الأمان والتسويق والنشر", subtitle: "الأقسام من 18 إلى 22 (UX، الأمان، SEO والقانونية)" },
+            7: { title: "الخطوة 7: مراجعة وتصدير البيانات", subtitle: "تحميل التقارير وإرسال البيانات البرمجية" }
+        };
+
+        // Complete 22 Checklist Categories
+        const checklistData = [
+            {
+                id: 1,
+                title: "1. الصفحة الرئيسية (Home Page)",
+                icon: "fa-house",
+                stepGroup: 3,
+                items: [
+                    "Homepage layout and design",
+                    "Promotional banners and sliders",
+                    "Featured products",
+                    "New arrivals",
+                    "Best-selling products",
+                    "Discounted products",
+                    "Product categories section",
+                    "Brand introduction",
+                    "Customer reviews and testimonials",
+                    "Newsletter subscription",
+                    "Social media links"
+                ]
+            },
+            {
+                id: 2,
+                title: "2. كتالوج المنتجات / صفحة المتجر (Product Catalog)",
+                icon: "fa-store",
+                stepGroup: 3,
+                items: [
+                    "Product listing and grid layout",
+                    "Product categories and subcategories",
+                    "Product search",
+                    "Product filtering",
+                    "Product sorting",
+                    "Pagination or load more",
+                    "Product quick view",
+                    "Wishlist",
+                    "Product availability indicators"
+                ]
+            },
+            {
+                id: 3,
+                title: "3. صفحة تفاصيل المنتج (Product Details Page)",
+                icon: "fa-box-open",
+                stepGroup: 3,
+                items: [
+                    "Product image gallery",
+                    "Product information and descriptions",
+                    "Product sizes, colors, and variants",
+                    "Variant-specific pricing and availability",
+                    "Stock availability",
+                    "Discounted pricing",
+                    "Size guide",
+                    "Quantity selection",
+                    "Add to cart",
+                    "Buy now",
+                    "Product reviews and ratings",
+                    "Related products",
+                    "Recently viewed products",
+                    "Product sharing"
+                ]
+            },
+            {
+                id: 4,
+                title: "4. سلة التسوق (Shopping Cart)",
+                icon: "fa-cart-shopping",
+                stepGroup: 3,
+                items: [
+                    "Add and remove products",
+                    "Update product quantities",
+                    "Edit product variants",
+                    "Cart price summary",
+                    "Discount coupon application",
+                    "Shipping cost estimation",
+                    "Save cart between visits",
+                    "Continue shopping",
+                    "Proceed to checkout"
+                ]
+            },
+            {
+                id: 5,
+                title: "5. إتمام الطلب والدفع (Checkout)",
+                icon: "fa-credit-card",
+                stepGroup: 3,
+                items: [
+                    "Guest checkout",
+                    "Customer account checkout",
+                    "Customer contact information",
+                    "Shipping address form",
+                    "Shipping method selection",
+                    "Payment method selection",
+                    "Online payment integration",
+                    "Cash on delivery",
+                    "Order summary",
+                    "Coupon and discount application",
+                    "Order confirmation"
+                ]
+            },
+            {
+                id: 6,
+                title: "6. تأكيد الطلب وتتبع الشحنات (Order Confirmation & Tracking)",
+                icon: "fa-truck-fast",
+                stepGroup: 3,
+                items: [
+                    "Order confirmation page",
+                    "Order confirmation email or notification",
+                    "Order status tracking",
+                    "Shipment tracking integration",
+                    "Order cancellation requests",
+                    "Return and exchange requests"
+                ]
+            },
+            {
+                id: 7,
+                title: "7. حساب العميل (Customer Account)",
+                icon: "fa-user-gear",
+                stepGroup: 3,
+                items: [
+                    "Customer registration",
+                    "Login and logout",
+                    "Password reset",
+                    "Customer profile management",
+                    "Saved addresses",
+                    "Order history",
+                    "Order details",
+                    "Wishlist management",
+                    "Return and exchange history",
+                    "Account deletion"
+                ]
+            },
+            {
+                id: 8,
+                title: "8. البحث واكتشاف المنتجات (Search & Discovery)",
+                icon: "fa-magnifying-glass",
+                stepGroup: 4,
+                items: [
+                    "Global product search",
+                    "Search suggestions and autocomplete",
+                    "Advanced product filtering",
+                    "Product sorting",
+                    "Recently viewed products",
+                    "Personalized product recommendations"
+                ]
+            },
+            {
+                id: 9,
+                title: "9. الخصومات والعروض الترويجية (Discounts & Promotions)",
+                icon: "fa-tags",
+                stepGroup: 4,
+                items: [
+                    "Discount codes and coupons",
+                    "Product-level discounts",
+                    "Storewide promotions",
+                    "Scheduled promotions",
+                    "Automatic discounts",
+                    "Free shipping promotions",
+                    "Sale badges and price displays"
+                ]
+            },
+            {
+                id: 10,
+                title: "10. الشحن والتوصيل (Shipping & Delivery)",
+                icon: "fa-truck",
+                stepGroup: 4,
+                items: [
+                    "Shipping zones and regions",
+                    "Shipping fee configuration",
+                    "Delivery method configuration",
+                    "Estimated delivery times",
+                    "Shipping provider integration",
+                    "Shipment tracking",
+                    "Delivery status management"
+                ]
+            },
+            {
+                id: 11,
+                title: "11. إدارة المدفوعات (Payment Management)",
+                icon: "fa-wallet",
+                stepGroup: 4,
+                items: [
+                    "Online payment gateway integration",
+                    "Cash on delivery management",
+                    "Payment status tracking",
+                    "Payment failure handling",
+                    "Refund management",
+                    "Transaction records"
+                ]
+            },
+            {
+                id: 12,
+                title: "12. الاتصال ودعم العملاء (Contact & Support)",
+                icon: "fa-headset",
+                stepGroup: 4,
+                items: [
+                    "Contact page",
+                    "Contact form",
+                    "WhatsApp integration",
+                    "Frequently asked questions (FAQ)",
+                    "Customer support links",
+                    "Live chat",
+                    "Customer complaints and inquiries"
+                ]
+            },
+            {
+                id: 13,
+                title: "13. صفحات المعلومات (Information Pages)",
+                icon: "fa-circle-info",
+                stepGroup: 4,
+                items: [
+                    "About Us page",
+                    "Privacy policy",
+                    "Terms and conditions",
+                    "Shipping policy",
+                    "Returns and exchange policy",
+                    "Size guide page",
+                    "FAQ page"
+                ]
+            },
+            {
+                id: 14,
+                title: "14. لوحة التحكم للإدارة (Admin Dashboard)",
+                icon: "fa-gauge-high",
+                stepGroup: 5,
+                items: [
+                    "Admin authentication and access control",
+                    "Dashboard overview and statistics",
+                    "Product management",
+                    "Category management",
+                    "Product variants and stock management",
+                    "Order management",
+                    "Customer management",
+                    "Discount and coupon management",
+                    "Payment management",
+                    "Shipping configuration",
+                    "Reviews management",
+                    "Homepage content management",
+                    "Banner and promotion management",
+                    "Return and exchange management",
+                    "Website settings management",
+                    "Admin activity logs"
+                ]
+            },
+            {
+                id: 15,
+                title: "15. إدارة المخزون (Inventory Management)",
+                icon: "fa-boxes-stacked",
+                stepGroup: 5,
+                items: [
+                    "Stock tracking",
+                    "Stock updates by product variant",
+                    "Low-stock alerts",
+                    "Out-of-stock handling",
+                    "Inventory adjustment records"
+                ]
+            },
+            {
+                id: 16,
+                title: "16. التحليلات والتقارير (Analytics & Reporting)",
+                icon: "fa-chart-pie",
+                stepGroup: 5,
+                items: [
+                    "Sales reports",
+                    "Order reports",
+                    "Product performance reports",
+                    "Inventory reports",
+                    "Customer reports",
+                    "Revenue and payment reports",
+                    "Website traffic analytics",
+                    "Conversion tracking"
+                ]
+            },
+            {
+                id: 17,
+                title: "17. الإشعارات والاتصالات (Notifications & Communication)",
+                icon: "fa-bell",
+                stepGroup: 5,
+                items: [
+                    "Order confirmation notifications",
+                    "Order status notifications",
+                    "Payment notifications",
+                    "Shipping and delivery notifications",
+                    "Password reset emails",
+                    "Promotional emails",
+                    "Low-stock notifications for admins"
+                ]
+            },
+            {
+                id: 18,
+                title: "18. التصميم وتجربة المستخدم (Design & UX)",
+                icon: "fa-wand-magic-sparkles",
+                stepGroup: 6,
+                items: [
+                    "Responsive design for mobile, tablet, and desktop",
+                    "Mobile-friendly navigation",
+                    "Loading states and skeletons",
+                    "Empty states and error messages",
+                    "Accessible interface",
+                    "Arabic and English language support",
+                    "Right-to-left (RTL) layout support",
+                    "Dark mode"
+                ]
+            },
+            {
+                id: 19,
+                title: "19. الأمان والموثوقية (Security & Reliability)",
+                icon: "fa-shield-halved",
+                stepGroup: 6,
+                items: [
+                    "Secure authentication",
+                    "Role-based access control",
+                    "Input validation and data protection",
+                    "Secure payment processing",
+                    "Spam and abuse protection",
+                    "Backup and recovery strategy",
+                    "Error logging and monitoring",
+                    "Performance optimization",
+                    "SEO-friendly URLs and metadata"
+                ]
+            },
+            {
+                id: 20,
+                title: "20. النشر والإعداد الفني (Deployment & Technical Setup)",
+                icon: "fa-cloud-arrow-up",
+                stepGroup: 6,
+                items: [
+                    "Domain configuration",
+                    "Hosting and deployment",
+                    "HTTPS/SSL configuration",
+                    "Database setup",
+                    "Image storage and optimization",
+                    "Production environment configuration",
+                    "Automated deployment workflow",
+                    "Website uptime monitoring",
+                    "Database backup configuration"
+                ]
+            },
+            {
+                id: 21,
+                title: "21. التسويق وتحسين محركات البحث (Marketing & SEO)",
+                icon: "fa-bullhorn",
+                stepGroup: 6,
+                items: [
+                    "Search engine optimization (SEO)",
+                    "Social media sharing previews",
+                    "Sitemap and robots.txt",
+                    "Google Analytics integration",
+                    "Google Search Console integration",
+                    "Meta Pixel integration",
+                    "Abandoned cart recovery",
+                    "Customer referral system",
+                    "Loyalty points and rewards"
+                ]
+            },
+            {
+                id: 22,
+                title: "22. العمليات القانونية والتجارية (Legal & Business)",
+                icon: "fa-scale-balanced",
+                stepGroup: 6,
+                items: [
+                    "Order invoice generation",
+                    "Tax and fee configuration",
+                    "Returns and refund policies",
+                    "Customer consent and privacy controls",
+                    "Terms acceptance during checkout"
+                ]
+            }
+        ];
+
+        function renderChecklistSteps() {
+            const containers = {
+                3: document.getElementById('step-3-container'),
+                4: document.getElementById('step-4-container'),
+                5: document.getElementById('step-5-container'),
+                6: document.getElementById('step-6-container')
+            };
+
+            let stepHtml = { 3: '', 4: '', 5: '', 6: '' };
+
+            checklistData.forEach(cat => {
+                let catHtml = `
+                    <div class="category-block bg-slate-50/70 rounded-3xl p-5 sm:p-6 border border-slate-200/80 space-y-4" data-cat-id="${cat.id}">
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+                            <div class="flex items-center space-x-3 space-x-reverse">
+                                <div class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-sm">
+                                    <i class="fa-solid ${cat.icon}"></i>
+                                </div>
+                                <h4 class="text-sm sm:text-base font-bold text-slate-900">${cat.title}</h4>
+                            </div>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <span id="badge_cat_${cat.id}" class="text-[10px] font-extrabold bg-slate-200 text-slate-700 px-2 py-1 rounded-lg">0/${cat.items.length}</span>
+                                <button type="button" onclick="toggleCategory(${cat.id})" class="text-xs font-semibold text-indigo-600 bg-white border border-indigo-200 hover:bg-indigo-50 px-2.5 py-1 rounded-lg transition">
+                                    تحديد القسم
+                                </button>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                `;
+
+                cat.items.forEach((item, index) => {
+                    const checkboxId = `cat_${cat.id}_item_${index}`;
+                    catHtml += `
+                        <label for="${checkboxId}" class="feature-label flex items-start space-x-3 space-x-reverse p-3 rounded-2xl bg-white hover:bg-indigo-50/50 border border-slate-200 cursor-pointer transition group">
+                            <input type="checkbox" id="${checkboxId}" name="feature_${cat.id}_${index}" value="${cat.title} -> ${item}" onchange="onCheckboxChange(${cat.id})" class="mt-0.5 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer">
+                            <span class="feature-text text-xs sm:text-sm font-medium text-slate-700 group-hover:text-indigo-900 leading-snug">${item}</span>
+                        </label>
+                    `;
+                });
+
+                catHtml += `</div></div>`;
+                stepHtml[cat.stepGroup] += catHtml;
+            });
+
+            for (let stepKey in containers) {
+                if (containers[stepKey]) {
+                    containers[stepKey].innerHTML = stepHtml[stepKey];
+                }
+            }
+        }
+
+        function updateWizardUI() {
+            document.querySelectorAll('.form-step').forEach(stepEl => {
+                if (parseInt(stepEl.getAttribute('data-step')) === currentStep) {
+                    stepEl.classList.remove('hidden');
+                } else {
+                    stepEl.classList.add('hidden');
+                }
+            });
+
+            const pct = (currentStep / totalSteps) * 100;
+            document.getElementById('progress-bar-fill').style.width = pct + '%';
+            document.getElementById('progress-percentage').innerText = Math.round(pct) + '%';
+            document.getElementById('current-step-badge').innerText = currentStep;
+            
+            document.getElementById('step-title-indicator').innerText = stepTitles[currentStep].title;
+            document.getElementById('step-subtitle-indicator').innerText = stepTitles[currentStep].subtitle;
+
+            for (let i = 1; i <= totalSteps; i++) {
+                const indicator = document.getElementById(`indicator-${i}`);
+                if (i < currentStep) {
+                    indicator.className = "w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-600 text-white font-bold flex items-center justify-center text-xs transition";
+                    indicator.innerHTML = '<i class="fa-solid fa-check"></i>';
+                } else if (i === currentStep) {
+                    indicator.className = "w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-600 text-white font-bold flex items-center justify-center text-xs shadow-md shadow-indigo-200 transition";
+                    indicator.innerText = i;
+                } else {
+                    indicator.className = "w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 text-slate-500 font-bold flex items-center justify-center text-xs transition";
+                    indicator.innerText = i;
+                }
+            }
+
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+
+            if (currentStep === 1) prevBtn.classList.add('hidden');
+            else prevBtn.classList.remove('hidden');
+
+            if (currentStep === totalSteps) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+                prepareReviewAndFormattedReport();
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function changeStep(direction) {
+            if (direction === 1 && currentStep === 1) {
+                const name = document.getElementById('client_name').value.trim();
+                const project = document.getElementById('project_name').value.trim();
+                const email = document.getElementById('client_email').value.trim();
+                const phone = document.getElementById('client_phone').value.trim();
+                const domain = document.getElementById('custom_domain').value.trim();
+
+                if (!name || !project || !email || !phone || !domain) {
+                    alert('يرجى تعبئة الحقول الأساسية المطلوبة في الخطوة الأولى.');
+                    return;
+                }
+            }
+
+            currentStep += direction;
+            if (currentStep < 1) currentStep = 1;
+            if (currentStep > totalSteps) currentStep = totalSteps;
+            updateWizardUI();
+        }
+
+        function goToStep(stepNum) {
+            if (stepNum > 1 && currentStep === 1) {
+                const name = document.getElementById('client_name').value.trim();
+                if (!name) {
+                    alert('يرجى تعبئة الاسم الأساسي في الخطوة الأولى أولاً.');
+                    return;
+                }
+            }
+            currentStep = stepNum;
+            updateWizardUI();
+        }
+
+        function handleNextStep() {
+            changeStep(1);
+        }
+
+        function onCheckboxChange(catId) {
+            const checkboxes = document.querySelectorAll(`input[id^="cat_${catId}_item_"]`);
+            const checked = document.querySelectorAll(`input[id^="cat_${catId}_item_"]:checked`);
+            const badge = document.getElementById(`badge_cat_${catId}`);
+            if (badge) {
+                badge.innerText = `${checked.length}/${checkboxes.length}`;
+                if (checked.length > 0) {
+                    badge.className = "text-[10px] font-extrabold bg-indigo-600 text-white px-2 py-1 rounded-lg";
+                } else {
+                    badge.className = "text-[10px] font-extrabold bg-slate-200 text-slate-700 px-2 py-1 rounded-lg";
+                }
+            }
+            updateTotalHeaderCount();
+        }
+
+        function toggleCategory(catId) {
+            const checkboxes = document.querySelectorAll(`input[id^="cat_${catId}_item_"]`);
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            checkboxes.forEach(cb => cb.checked = !allChecked);
+            onCheckboxChange(catId);
+        }
+
+        function selectAllInCurrentStep(select) {
+            const stepContainer = document.querySelector(`.form-step[data-step="${currentStep}"]`);
+            if (stepContainer) {
+                const checkboxes = stepContainer.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(cb => cb.checked = select);
+                checklistData.forEach(c => onCheckboxChange(c.id));
+            }
+        }
+
+        function updateTotalHeaderCount() {
+            const count = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            document.getElementById('header-selected-count').innerText = count;
+        }
+
+        function filterFeatures() {
+            const query = document.getElementById('global-search-input').value.toLowerCase().trim();
+            const labels = document.querySelectorAll('.feature-label');
+
+            labels.forEach(label => {
+                const text = label.querySelector('.feature-text').innerText.toLowerCase();
+                if (text.includes(query)) {
+                    label.classList.remove('hidden');
+                } else {
+                    label.classList.add('hidden');
+                }
+            });
+        }
+
+        function buildFullDataPayload() {
+            const clientName = document.getElementById('client_name').value || '';
+            const projectName = document.getElementById('project_name').value || '';
+            const email = document.getElementById('client_email').value || '';
+            const phone = document.getElementById('client_phone').value || '';
+            const launchDate = document.getElementById('target_launch_date').value || 'غير محدد';
+            const domain = document.getElementById('custom_domain').value || '';
+            const registrar = document.getElementById('domain_registrar').value || 'غير محدد';
+            const dnsStatus = document.getElementById('dns_status').value || '';
+
+            const provider = document.getElementById('vps_provider').value || '';
+            const os = document.getElementById('vps_os').value || '';
+            const specs = document.getElementById('vps_specs').value || 'غير محدد';
+            const ip = document.getElementById('vps_ip').value || 'غير محدد';
+            const sshPort = document.getElementById('vps_ssh_port').value || '22';
+            const dbStack = document.getElementById('vps_db_stack').value || '';
+            const notes = document.getElementById('client_notes').value || 'لا يوجد';
+
+            // Group selected features by category
+            let selectedByCategory = {};
+            checklistData.forEach(cat => {
+                const checkedItems = [];
+                cat.items.forEach((item, index) => {
+                    const cb = document.getElementById(`cat_${cat.id}_item_${index}`);
+                    if (cb && cb.checked) {
+                        checkedItems.push(item);
+                    }
+                });
+                if (checkedItems.length > 0) {
+                    selectedByCategory[cat.title] = checkedItems;
+                }
+            });
+
+            return {
+                timestamp: new Date().toISOString(),
+                client: {
+                    name: clientName,
+                    projectName: projectName,
+                    email: email,
+                    phone: phone,
+                    targetLaunchDate: launchDate,
+                    domain: domain,
+                    domainRegistrar: registrar,
+                    dnsStatus: dnsStatus
+                },
+                vps: {
+                    provider: provider,
+                    os: os,
+                    specs: specs,
+                    ip: ip,
+                    sshPort: sshPort,
+                    databaseStack: dbStack
+                },
+                selectedFeatures: selectedByCategory,
+                notes: notes
+            };
+        }
+
+        function buildFormattedTextReport(payload) {
+            let txt = `==================================================\n`;
+            txt += `      تقرير متطلبات مشروع متجر TheBest E-Commerce      \n`;
+            txt += `==================================================\n\n`;
+
+            txt += `[1] بيانات العميل والمشروع:\n`;
+            txt += `- اسم العميل: ${payload.client.name}\n`;
+            txt += `- اسم المشروع: ${payload.client.projectName}\n`;
+            txt += `- البريد الإلكتروني: ${payload.client.email}\n`;
+            txt += `- رقم الجوال: ${payload.client.phone}\n`;
+            txt += `- موعد الإطلاق المستهدف: ${payload.client.targetLaunchDate}\n`;
+            txt += `- النطاق المخصص (Domain): ${payload.client.domain}\n`;
+            txt += `- مسجل النطاق (Registrar): ${payload.client.domainRegistrar}\n`;
+            txt += `- حالة DNS: ${payload.client.dnsStatus}\n\n`;
+
+            txt += `[2] مواصفات خادم الاستضافة (VPS Infrastructure):\n`;
+            txt += `- المزود: ${payload.vps.provider}\n`;
+            txt += `- نظام التشغيل: ${payload.vps.os}\n`;
+            txt += `- مواصفات الخادم: ${payload.vps.specs}\n`;
+            txt += `- IP Address: ${payload.vps.ip}\n`;
+            txt += `- SSH Port: ${payload.vps.sshPort}\n`;
+            txt += `- قواعد البيانات: ${payload.vps.databaseStack}\n\n`;
+
+            txt += `[3] قائمة الخصائص والمميزات المحددة حسب الأقسام:\n`;
+            txt += `--------------------------------------------------\n`;
+
+            const catKeys = Object.keys(payload.selectedFeatures);
+            if (catKeys.length === 0) {
+                txt += `(لم يتم تحديد أي مميزات فرعية)\n`;
+            } else {
+                catKeys.forEach(catTitle => {
+                    txt += `\n■ ${catTitle}:\n`;
+                    payload.selectedFeatures[catTitle].forEach(item => {
+                        txt += `   • ${item}\n`;
+                    });
+                });
+            }
+
+            txt += `\n--------------------------------------------------\n`;
+            txt += `[4] ملاحظات العميل والفريق:\n${payload.notes}\n`;
+            txt += `==================================================\n`;
+
+            return txt;
+        }
+
+        function prepareReviewAndFormattedReport() {
+            const payload = buildFullDataPayload();
+            
+            document.getElementById('review-name').innerText = payload.client.name || '-';
+            document.getElementById('review-project').innerText = payload.client.projectName || '-';
+            document.getElementById('review-email').innerText = payload.client.email || '-';
+            document.getElementById('review-domain').innerText = payload.client.domain || '-';
+
+            let totalItemsCount = 0;
+            Object.values(payload.selectedFeatures).forEach(arr => totalItemsCount += arr.length);
+            document.getElementById('review-total-selected').innerText = totalItemsCount;
+
+            const textReport = buildFormattedTextReport(payload);
+            document.getElementById('report-preview-text').value = textReport;
+            
+            // Set Form Hidden Payloads for Web3Forms
+            document.getElementById('email_formatted_message').value = textReport;
+            document.getElementById('json_features_payload').value = JSON.stringify(payload, null, 2);
+            document.getElementById('email_subject').value = `طلب متطلبات جديد: ${payload.client.projectName} (${payload.client.name})`;
+        }
+
+        function downloadJSON() {
+            const payload = buildFullDataPayload();
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `TheBest_Requirements_${payload.client.projectName || 'Store'}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadTXT() {
+            const payload = buildFullDataPayload();
+            const textReport = buildFormattedTextReport(payload);
+            const blob = new Blob([textReport], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `TheBest_Requirements_${payload.client.projectName || 'Store'}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function copyReportToClipboard() {
+            const reportText = document.getElementById('report-preview-text').value;
+            const textarea = document.createElement('textarea');
+            textarea.value = reportText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('تم نسخ نص التقرير المنسق إلى الحافظة بنجاح!');
+        }
+
+        document.getElementById('requirements-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            prepareReviewAndFormattedReport();
+
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin ml-2"></i> جاري الإرسال...';
+
+            const formData = new FormData(this);
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(async (response) => {
+                let json = await response.json();
+                if (response.status === 200) {
+                    document.getElementById('success-modal').classList.remove('hidden');
+                } else {
+                    alert('حدث خطأ أثناء الإرسال: ' + (json.message || 'يرجى المحاولة مرة أخرى.'));
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert('حدث خطأ في الاتصال بالشبكة.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane ml-2"></i> إرسال المتطلبات إلى Web3Forms';
+            });
+        });
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+        }
+
+        window.onload = function() {
+            renderChecklistSteps();
+            updateWizardUI();
+        };
+    </script>
+</body>
+</html>
