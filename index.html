@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>استمارة متطلبات متجر TheBest — نظام الخطة والربط</title>
+    <title>استمارة متطلبات متجر  — نظام الخطة والربط</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Cairo -->
@@ -63,7 +63,7 @@
                     <i class="fa-solid fa-bag-shopping text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-extrabold text-slate-900 tracking-tight">منصة TheBest للمتاجر الإلكترونية</h1>
+                    <h1 class="text-xl font-extrabold text-slate-900 tracking-tight">منصة  للمتاجر الإلكترونية</h1>
                     <p class="text-xs text-slate-500 font-medium">معالج تجميع المتطلبات وتصدير تقرير المشروع</p>
                 </div>
             </div>
@@ -152,8 +152,8 @@
             
             <!-- Web3Forms Hidden Required Fields -->
             <input type="hidden" name="apikey" value="4b12636d-dae7-4f07-b6c0-6eed2a57153c">
-            <input type="hidden" name="subject" id="email_subject" value="تقرير متطلبات جديد - متجر TheBest E-Commerce">
-            <input type="hidden" name="from_name" value="منصة متطلبات TheBest E-Commerce">
+            <input type="hidden" name="subject" id="email_subject" value="تقرير متطلبات جديد - متجر  E-Commerce">
+            <input type="hidden" name="from_name" value="منصة متطلبات  E-Commerce">
             
             <!-- Formatted Message Payload to ensure high quality Web3Forms Email Receive Structure -->
             <textarea id="email_formatted_message" name="message" class="hidden"></textarea>
@@ -506,7 +506,7 @@
             </div>
             <h3 class="text-2xl font-extrabold text-slate-900">تم الإرسال بنجاح!</h3>
             <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
-                شكراً لك. تم إرسال التقرير الهيكلي لمتطلبات متجر TheBest بنجاح عبر Web3Forms.
+                شكراً لك. تم إرسال التقرير الهيكلي لمتطلبات متجر  بنجاح عبر Web3Forms.
             </p>
             <div class="pt-2">
                 <button type="button" onclick="closeSuccessModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-2xl transition text-sm">
@@ -518,7 +518,7 @@
 
     <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
         <div class="max-w-7xl mx-auto px-4">
-            <p>© 2026 TheBest E-Commerce Engine. نظام إدارة وثائق المتطلبات وحلول خوادم VPS.</p>
+            <p>© 2026  E-Commerce Engine. نظام إدارة وثائق المتطلبات وحلول خوادم VPS.</p>
         </div>
     </footer>
 
@@ -1149,7 +1149,7 @@
 
         function buildFormattedTextReport(payload) {
             let txt = `==================================================\n`;
-            txt += `      تقرير متطلبات مشروع متجر TheBest E-Commerce      \n`;
+            txt += `      تقرير متطلبات مشروع متجر  E-Commerce      \n`;
             txt += `==================================================\n\n`;
 
             txt += `[1] بيانات العميل والمشروع:\n`;
@@ -1219,7 +1219,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `TheBest_Requirements_${payload.client.projectName || 'Store'}.json`;
+            a.download = `_Requirements_${payload.client.projectName || 'Store'}.json`;
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -1231,7 +1231,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `TheBest_Requirements_${payload.client.projectName || 'Store'}.txt`;
+            a.download = `_Requirements_${payload.client.projectName || 'Store'}.txt`;
             a.click();
             URL.revokeObjectURL(url);
         }
